@@ -9,30 +9,32 @@
 
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
+  
+  <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
 </head>
 
 <body>
-<nav class="navbar is-fixed-top bg-gray-100" role="navigation" aria-label="main navigation">
+<nav x-data="{ expanded: false }" class="navbar is-fixed-top bg-gray-100" role="navigation" aria-label="main navigation" x-on:click.outside="expanded = false" >
    <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <img class="ml-3" src="/assets/CodeIconBlue.svg" width="30" height="30">
+        <img class="ml-3" src="/assets/CodeIconBlue.svg" width="30" height="30" alt="Logo">
         <h1 class="ml-3 text-xl mr-3 text-blue-600 hover:underline">Sam Liu</h1>
       </a>
-      <a role="button" class="navbar-burger text-blue-600" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+      <button type="button" x-on:click="expanded = !expanded" class="navbar-burger text-blue-600" :class="expanded ? 'is-active' : ''" aria-label="menu" :aria-expanded="expanded" data-target="mainNavbar">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
-      </a>
+      </button>
    </div>
-   <div id="mainNavbar" class="navbar-menu">
+   <div id="mainNavbar" class="navbar-menu" :class="expanded ? 'is-active' : ''">
       <div class="navbar-start">
-         <a class="navbar-item -lg:pl-4" href="#about">
+         <a class="navbar-item -lg:pl-4" href="#about" x-on:click="expanded = false">
          About
          </a>
-         <a class="navbar-item -lg:pl-4" href="#projects">
+         <a class="navbar-item -lg:pl-4" href="#projects" x-on:click="expanded = false">
          Projects
          </a>
-         <a class="navbar-item -lg:pl-4" href="#contact">
+         <a class="navbar-item -lg:pl-4" href="#contact" x-on:click="expanded = false">
          Contact
          </a>
       </div>
@@ -41,8 +43,8 @@
 <div class="h-screen flex flex-col">
    <div class="text-center m-auto">
       <div class="mx-16">
-         <p class="text-xl text-blue-600 tracking-wide">Hello There</p>
-         <h1 class="text-5xl font-medium mt-2 text-gray-800">I'm Sam</h1>
+         <p class="text-2xl text-blue-600 tracking-wide">Hello There</p>
+         <h1 class="text-6xl font-medium mt-2 text-gray-800">I'm Sam</h1>
          <p class="text-gray-600 mt-4 text-lg">A student, a self taught developer, and a tech enthusiast.<br>I love making stuff.</p>
       </div>
    </div>
@@ -55,15 +57,15 @@
    </div>
 </div>
 <hr id="about" class="mx-10 text-gray-300">
-<div class="text-center py-16 mx-64 -lg:mx-16 2xl:mx-96">
+<div class="text-center py-16 mx-64 -lg:mx-8 2xl:mx-96">
   <h2 class="text-4xl font-medium text-gray-900">About Me</h2>
   <p class="text-gray-600 indent-8 mt-10 text-lg mx-4 text-justify">
-    Hello, my name is Sam. I'm a high school student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
+    Hello, my name is Sam. I'm a high school student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/" target="_blank">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/" target="_blank">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
   </p>
   <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">
-      I later switched to text-based coding, as Scratch was quite limited with what it could do. And as a beginner, I started with <a class="inline-url" href="https://www.python.org/">Python</a>. I first created some console programs, mostly simple calculators and storytelling. I then discovered <a class="inline-url" href="https://discord.com/">Discord</a>; Its <a class="inline-url" href="https://discord.dev/">bot API</a> sparked my interest. Discord bot development allowed me to further enhance my knowledge. It allowed me to understand best practices when writing code, and my code got better.
+      I later switched to text-based coding, as Scratch was quite limited with what it could do. And as a beginner, I started with <a class="inline-url" href="https://www.python.org/" target="_blank">Python</a>. I first created some console programs, mostly simple calculators and storytelling. I then discovered <a class="inline-url" href="https://discord.com/" target="_blank">Discord</a>; Its <a class="inline-url" href="https://discord.com/developers/docs/intro/" target="_blank">bot API</a> sparked my interest. Discord bot development allowed me to further enhance my knowledge. It allowed me to understand best practices when writing code, and my code got better.
   </p>
-  <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">Later, I moved on to web development, as it was something anyone could see. At first, CSS was really hard, but with the help of <a class="inline-url" href="https://tailwindcss.com/">Tailwind CSS</a>, I successfully made some simple sites. I then had to learn <a class="inline-url" href="https://developer.mozilla.org/en-US/docs/Web/javascript">JavaScript</a>. After some struggles, I was able to use simple APIs like <a class="inline-url" href="https://open-meteo.com/en">Open-Meteo</a> to integrate weather data into my site. I then learned more complex web development. I used Python, and although it's not the best language for this use case, it was the most comfortable language for me. I used <a class="inline-url" href="https://flask.palletsprojects.com/">Flask</a> to create dynamic sites, and I learned how to use databases such as <a class="inline-url" href="https://www.mongodb.com/">MongoDB</a>.
+  <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">Later, I moved on to web development, as it was something anyone could see. At first, CSS was really hard, but with the help of <a class="inline-url" href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a>, I successfully made some simple sites. I then had to learn <a class="inline-url" href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank">JavaScript</a>. After some struggles, I was able to use simple APIs like <a class="inline-url" href="https://open-meteo.com/en" target="_blank">Open-Meteo</a> to integrate weather data into my site. I then learned more complex web development. I used Python, and although it's not the best language for this use case, it was the most comfortable language for me. I used <a class="inline-url" href="https://flask.palletsprojects.com/" target="_blank">Flask</a> to create dynamic sites, and I learned how to use databases such as <a class="inline-url" href="https://www.mongodb.com/" target="_blank">MongoDB</a>.
   </p>
   <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">And now, here I am, working on my own personal website. My own personal website allows me to share what I do and what I'm passionate about. Scroll down further to learn about my projects.
   </a>
@@ -76,7 +78,8 @@
   </p>
 </div>
 <footer class="bg-gray-100 text-center py-2">
-   <p class="text-xs text-gray-400">Copyright © 2021 Sam Liu.</p>
+  <p class="text-xs text-gray-400">Copyright © 2021 Sam Liu.</p>
+  <p class="text-xs text-gray-400">See the source code <a class="hover:underline" href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
 </footer>
 </body>
 

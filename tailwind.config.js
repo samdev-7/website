@@ -19,6 +19,6 @@ module.exports = {
   plugins: [],
 }
 
-// https://play.tailwindcss.com/4giqp0pOAB?layout=horizontal
+// https://play.tailwindcss.com/smOF7iXoXr
 // npx tailwindcss -i ./tailwind.css -o ./main.css
 // npx postcss ./tailwind.css -o ./main.css
