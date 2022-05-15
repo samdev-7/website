@@ -1,43 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Sam Liu</title>
   <link href="/main.css" rel="stylesheet">
-  
-  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="msapplication-TileColor" content="#1f2937">
-  <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
-  <meta name="theme-color" content="#1f2937">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
 </head>
 
 <body>
-  <div>
-  <div class="my-32 mx-[10%]">
-    <div class="ml-1">
-      <img src="https://cdn.statically.io/gh/twitter/twemoji/master/assets/svg/1f44b.svg" alt="Hand Waving" class="h-14 float-left mr-5">
-      <p class="text-6xl font-bold uppercase text-blue-100">Hello there!</p>
-    </div>
-    <h1 class="text-9xl font-bold uppercase text-teal-300">I'm Sam</h2>
-    <h2 class="text-4xl uppercase font-bold tracking-wide text-gray-500">This page is a work in progress</h2>
-  </div>
+<nav class="navbar is-fixed-top bg-gray-100" role="navigation" aria-label="main navigation">
+   <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img class="ml-3" src="/assets/CodeIconBlue.svg" width="30" height="30">
+        <h1 class="ml-3 text-xl mr-3 text-blue-600 hover:underline">Sam Liu</h1>
+      </a>
+      <a role="button" class="navbar-burger text-blue-600" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+   </div>
+   <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+         <a class="navbar-item -lg:pl-4" href="#about">
+         About
+         </a>
+         <a class="navbar-item -lg:pl-4" href="#projects">
+         Projects
+         </a>
+         <a class="navbar-item -lg:pl-4" href="#contact">
+         Contact
+         </a>
+      </div>
+   </div>
+</nav>
+<div class="h-screen flex flex-col">
+   <div class="text-center m-auto">
+      <div class="mx-16">
+         <p class="text-xl text-blue-600 tracking-wide">Hello There</p>
+         <h1 class="text-5xl font-medium mt-2 text-gray-800">I'm Sam</h1>
+         <p class="text-gray-600 mt-4 text-lg">A student, a self taught developer, and a tech enthusiast.<br>I love making stuff.</p>
+      </div>
+   </div>
+   <div class="mx-auto mb-1 animate-bounce">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="text-gray-300" width="40" height="40" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+         <g fill="none">
+            <path d="M17 13l-5 5m0 0l-5-5m5 5V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+         </g>
+      </svg>
+   </div>
 </div>
-
+<hr id="about" class="mx-10 text-gray-300">
+<div class="text-center py-16 mx-64 -lg:mx-16 2xl:mx-96">
+  <h2 class="text-4xl font-medium text-gray-900">About Me</h2>
+  <p class="text-gray-600 indent-8 mt-10 text-lg mx-4 text-justify">
+    Hello, my name is Sam. I'm a high school student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
+  </p>
+  <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">
+      I later switched to text-based coding, as Scratch was quite limited with what it could do. And as a beginner, I started with <a class="inline-url" href="https://www.python.org/">Python</a>. I first created some console programs, mostly simple calculators and storytelling. I then discovered <a class="inline-url" href="https://discord.com/">Discord</a>; Its <a class="inline-url" href="https://discord.dev/">bot API</a> sparked my interest. Discord bot development allowed me to further enhance my knowledge. It allowed me to understand best practices when writing code, and my code got better.
+  </p>
+  <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">Later, I moved on to web development, as it was something anyone could see. At first, CSS was really hard, but with the help of <a class="inline-url" href="https://tailwindcss.com/">Tailwind CSS</a>, I successfully made some simple sites. I then had to learn <a class="inline-url" href="https://developer.mozilla.org/en-US/docs/Web/javascript">JavaScript</a>. After some struggles, I was able to use simple APIs like <a class="inline-url" href="https://open-meteo.com/en">Open-Meteo</a> to integrate weather data into my site. I then learned more complex web development. I used Python, and although it's not the best language for this use case, it was the most comfortable language for me. I used <a class="inline-url" href="https://flask.palletsprojects.com/">Flask</a> to create dynamic sites, and I learned how to use databases such as <a class="inline-url" href="https://www.mongodb.com/">MongoDB</a>.
+  </p>
+  <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">And now, here I am, working on my own personal website. My own personal website allows me to share what I do and what I'm passionate about. Scroll down further to learn about my projects.
+  </a>
+</div>
+<hr id="projects" class="mx-10 text-gray-300">
+<div class="text-center py-16 mx-64 -lg:mx-16 2xl:mx-96">
+  <h2 class="text-4xl font-medium text-gray-900">My Projects</h2>
+  <p class="text-gray-600 mt-10 text-lg mx-4 text-center">
+    This section is coming soon! I'm working on it!
+  </p>
+</div>
+<footer class="bg-gray-100 text-center py-2">
+   <p class="text-xs text-gray-400">Copyright © 2021 Sam Liu.</p>
+</footer>
 </body>
 
 </html>

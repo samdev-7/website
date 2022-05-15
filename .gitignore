@@ -4,5 +4,3 @@ replit.nix
 
 # Nodejs
 node_modules/
-package-lock.json
-package.json
