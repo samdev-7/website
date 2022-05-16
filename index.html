@@ -14,6 +14,8 @@
 </head>
 
 <body>
+
+<!-- Navbar -->
 <nav x-data="{ expanded: false }" class="navbar is-fixed-top bg-gray-100" role="navigation" aria-label="main navigation" x-on:click.outside="expanded = false" >
    <div class="navbar-brand">
       <a class="navbar-item" href="/">
@@ -40,6 +42,8 @@
       </div>
    </div>
 </nav>
+
+<!-- Section 1 -->
 <div class="h-screen flex flex-col">
    <div class="text-center m-auto">
       <div class="mx-16">
@@ -48,19 +52,25 @@
          <p class="text-gray-600 mt-4 text-lg">A student, a self-taught developer, and a tech enthusiast.<br>I love making stuff.</p>
       </div>
    </div>
-   <div class="mx-auto mb-1 animate-bounce">
+
+  <!-- Next Section Arrow -->
+  <div class="mx-auto mb-1 motion-safe:animate-spin">
+    <a href="#about">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="text-gray-300" width="40" height="40" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
          <g fill="none">
             <path d="M17 13l-5 5m0 0l-5-5m5 5V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
          </g>
       </svg>
-   </div>
+    </a>
+  </div>
 </div>
+
+<!-- Section 2 -->
 <hr id="about" class="mx-10 text-gray-300">
 <div class="text-center py-16 mx-64 -lg:mx-8 2xl:mx-96">
   <h2 class="text-4xl font-medium text-gray-900">About Me</h2>
   <p class="text-gray-600 indent-8 mt-10 text-lg mx-4 text-justify">
-    Hello, my name is Sam. I'm a high school student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/" target="_blank">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/" target="_blank">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
+    Hello, my name is Sam. I'm a student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/" target="_blank">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/" target="_blank">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
   </p>
   <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">
       I later switched to text-based coding, as Scratch was quite limited with what it could do. And as a beginner, I started with <a class="inline-url" href="https://www.python.org/" target="_blank">Python</a>. I first created some console programs, mostly simple calculators and storytelling. I then discovered <a class="inline-url" href="https://discord.com/" target="_blank">Discord</a>; Its <a class="inline-url" href="https://discord.com/developers/docs/intro/" target="_blank">bot API</a> sparked my interest. Discord bot development allowed me to further enhance my knowledge. It allowed me to understand best practices when writing code, and my code got better.
@@ -70,6 +80,8 @@
   <p class="text-gray-600 indent-8 mt-4 text-lg mx-4 text-justify">And now, here I am, working on my own personal website. My own personal website allows me to share what I do and what I'm passionate about. Scroll down further to learn about my projects.
   </a>
 </div>
+
+<!-- Section 3 -->
 <hr id="projects" class="mx-10 text-gray-300">
 <div class="text-center py-16 mx-64 -lg:mx-16 2xl:mx-96">
   <h2 class="text-4xl font-medium text-gray-900">My Projects</h2>
@@ -77,10 +89,13 @@
     This section is coming soon! I'm working on it!
   </p>
 </div>
+
+<!-- Footer -->
 <footer class="bg-gray-100 text-center py-2">
   <p class="text-xs text-gray-400">Copyright © 2022 Sam Liu.</p>
   <p class="text-xs text-gray-400">See the source code <a class="hover:underline" href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
 </footer>
+  
 </body>
 
 </html>
