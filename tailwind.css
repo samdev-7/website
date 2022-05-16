@@ -6,8 +6,7 @@
 @tailwind utilities;
 
 html {
-    scroll-behavior: smooth;
-    @apply font-poppins;
+    @apply scroll-smooth motion-reduce:scroll-auto font-poppins;
 }
 
 .navbar-burger span {
