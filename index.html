@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+
+<!-- 
+==============================================================
+👀 Hey there! I see you looking at my code!
+It's a bit of a mess, but I tried my best to make it readable.
+All of this is written by me, with help from CSS libraries.
+Credit will be givin if I copy paste code off of the internet.
+==============================================================
+-->
+
 <html lang="en">
 
 <head>
@@ -43,7 +53,7 @@
    </div>
 </nav>
 
-<!-- Section 1 -->
+<!-- Title Section -->
 <div class="h-screen flex flex-col">
    <div class="text-center m-auto">
       <div class="mx-16">
@@ -56,7 +66,7 @@
   <!-- Next Section Arrow -->
   <div class="mx-auto mb-1 animate-bounce motion-reduce:animate-none">
     <a href="#about">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="text-gray-300" width="40" height="40" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="text-gray-300" width="60" height="60" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
          <g fill="none">
             <path d="M17 13l-5 5m0 0l-5-5m5 5V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
          </g>
@@ -65,9 +75,9 @@
   </div>
 </div>
 
-<!-- Section 2 -->
-<hr id="about" class="mx-10 text-gray-300">
-<div class="text-center py-16 mx-64 -lg:mx-8 2xl:mx-96">
+<!-- About Section -->
+<a id="about" class="h-0"></a>
+<div class="text-center py-16 px-64 -lg:px-8  bg-gray-100">
   <h2 class="text-4xl font-medium text-gray-900">About Me</h2>
   <p class="text-gray-600 indent-8 mt-10 text-lg mx-4 text-justify">
     Hello, my name is Sam. I'm a student who is passionate about programming. I started my programming journey in grade 4 when my teacher introduced me to <a class="inline-url" href="https://code.org/" target="_blank">Hour of Code</a>. At the time, I was fascinated by how simple it was and the possibilities of code. <a class="inline-url" herf="https://scratch.mit.edu/users/Razpberry/" target="_blank">Scratch</a> was my first big platform for programming. Block coding was easy to work with.
@@ -81,18 +91,38 @@
   </a>
 </div>
 
-<!-- Section 3 -->
-<hr id="projects" class="mx-10 text-gray-300">
-<div class="text-center py-16 mx-64 -lg:mx-16 2xl:mx-96">
+<!-- Projects Section -->
+<div id="projects" class="h-0"></div>
+<div class="text-center py-16">
   <h2 class="text-4xl font-medium text-gray-900">My Projects</h2>
+
+  <!-- Dot Score -->
+  <div class=" py-12 mt-12">
+    <div class="grid grid-cols-5 space-x-6 mx-64 -lg:mx-8">
+      <div class="col-span-3 text-left">
+        <div>
+          <h3 class="text-blue-600 text-3xl">Dot Score.</h3>
+          <p class="text-gray-800">A Private Discord Utility Bot</p>
+        </div>
+        <div class="mt-3 text-gray-600">
+          <p>Dot Score is a utility bot built with <a class="hover:underline" href="https://disnake.dev/">Disnake</a>, a wrapper for <a class="hover:underline" href="https://discord.com/developers/docs/intro">Discord's API</a>. It is a bot intended for my friends, for ease-of-use utilities such as <a class="hover:underline" href="https://www.latex-project.org/">LaTeX</a> rendering. One popular feature is <strong class="font-semibold">Study Logs</strong>, a way to track your progress on your homework.</p>
+        </div>
+      </div>
+      <div class="col-span-2 flex">
+        <img class="my-auto" src="https://samdev-7githubio.samdev7.repl.co/assets/demos/studylog.gif" alt="Gif showcasing study logs.">
+      </div>
+    </div>
+  </div>
+
+  <!-- Soon! -->
   <p class="text-gray-600 mt-10 text-lg mx-4 text-center">
-    This section is coming soon! I'm working on it!
-  </p>
+      More are coming soon! I'm working on it!
+    </p>
 </div>
 
 <!-- Footer -->
-<footer class="bg-gray-100 text-center py-2">
-  <p class="text-xs text-gray-400">Copyright © 2022 Sam L.</p>
+<footer class="bg-gray-100 text-center py-2" x-data="{}">
+  <p class="text-xs text-gray-400">Copyright © <span x-text="new Date().getFullYear()"></span> Sam L.</p>
   <p class="text-xs text-gray-400">See the source code <a class="hover:underline" href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
 </footer>
   
