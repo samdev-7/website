@@ -1,5 +1,6 @@
 module.exports = {
   mode: 'jit',
+  darkMode: 'class',
   content: ["./**/*.{html,js}"],
   theme: {
     extend: {
@@ -20,5 +21,5 @@ module.exports = {
 }
 
 // https://play.tailwindcss.com/smOF7iXoXr
-// npx tailwindcss -i ./tailwind.css -o ./main.css
+// npx tailwindcss -i ./tailwind.css -o ./main.css --watch
 // npx postcss ./tailwind.css -o ./main.css

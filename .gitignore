@@ -4,3 +4,6 @@ replit.nix
 
 # Nodejs
 node_modules/
+
+# VS Code
+.vscode/
