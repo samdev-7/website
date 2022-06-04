@@ -237,6 +237,14 @@
         href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
   </footer>
 
+  <!-- Mobile User Detection -->
+  <script>
+    window.onload = function(){
+      if (/Mobi|Android/i.test(navigator.userAgent)) {
+        alert("This website is not optimized for mobile devices. Things may break!");
+      };
+    };
+  </script>
 </body>
 
 </html>
