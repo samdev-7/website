@@ -58,7 +58,7 @@
   <!-- Navbar -->
   <nav class="sticky top-0 z-50 flex h-16 transition-shadow bg-zinc-100 dark:bg-zinc-900" x-data="{ scroll: 0 }"
     @scroll.window="scroll = window.pageYOffset" :class="(scroll > 30) ? 'shadow-md' : ''">
-      
+
     <!-- Navbar Brand -->
     <div class="flex pl-8 my-auto text-blue-600 dark:text-blue-400 -sm:pl-4">
       <a class="flex my-3 -sm:my-1" href="/" @click.prevent="document.getElementById('top').scrollIntoView();">
@@ -107,8 +107,8 @@
               d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </a>
-        <a class="hover:text-zinc-800 mt-0.5 dark:hover:text-zinc-200"
-          href="https://github.com/SamDev-7/" target="_blank" title="GitHub">
+        <a class="hover:text-zinc-800 mt-0.5 dark:hover:text-zinc-200" href="https://github.com/SamDev-7/"
+          target="_blank" title="GitHub">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor"
             aria-hidden="true">
             <path
@@ -118,7 +118,7 @@
       </div>
 
     </div>
-  
+
   </nav>
 
   <!-- Title Section -->
@@ -128,7 +128,7 @@
       <div class="mx-16">
         <p class="text-2xl tracking-wide text-blue-600 dark:text-blue-400">Hello There</p>
         <h1 class="mt-2 text-6xl font-medium text-zinc-800 dark:text-white">I'm Sam</h1>
-        <p class="mt-4 text-lg text-zinc-600 dark:text-zinc-300">A student, a self-taught developer, and a tech
+        <p class="mt-4 text-lg text-zinc-600 dark:text-zinc-300">A learner, a self-taught developer, and a tech
           enthusiast.<br>I love
           making random things.</p>
       </div>
@@ -152,7 +152,7 @@
     <div class="px-64 pt-40 text-center pb-44 text-zinc-600 -lg:px-8 -xl:px-10 dark:text-zinc-200">
       <h2 class="text-4xl font-medium text-zinc-900 dark:text-white">About Me</h2>
       <p class="mx-4 mt-24 text-lg text-justify text-zinc-600 indent-8 dark:text-zinc-300">
-        Hello, I'm Sam, a student who is passionate about programming and tech. Here's what I did. I started my
+        Hello, I'm Sam, someone who is passionate about programming and tech. Here's what I did. I started my
         programming journey in
         at the age of 10, when my teacher introduced me to <a class="inline-url" href="https://code.org/"
           target="_blank">Hour of
@@ -175,11 +175,13 @@
       </p>
       <p class="mx-4 mt-4 text-lg text-justify indent-8">I wanted to explore something else. I discovered
         web development, it was something very useful. At first, it was really hard, but with the help of some libiaries
-        such as <a class="inline-url" href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a> and lots of tutorials, I successfully
+        such as <a class="inline-url" href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a> and lots of
+        tutorials, I successfully
         made some simple static sites. I then
         had to learn <a class="inline-url" href="https://developer.mozilla.org/en-US/docs/Web/javascript"
-          target="_blank">JavaScript</a> as I wanted to explore deeper into web development. After some struggles, I was able to use simple APIs like <a class="inline-url"
-          href="https://open-meteo.com/en" target="_blank">Open-Meteo</a> to integrate weather data into my site. I then
+          target="_blank">JavaScript</a> as I wanted to explore deeper into web development. After some struggles, I was
+        able to use simple APIs like <a class="inline-url" href="https://open-meteo.com/en"
+          target="_blank">Open-Meteo</a> to integrate weather data into my site. I then
         learned backend web development. I used Python, and although it's not the best language for this use case,
         it
         was the most comfortable language for me. I used <a class="inline-url" href="https://flask.palletsprojects.com/"
@@ -187,7 +189,12 @@
           class="inline-url" href="https://www.mongodb.com/" target="_blank">MongoDB</a>.
       </p>
       <p class="mx-4 mt-4 text-lg text-justify indent-8">Fast forward to now, here I am, working on my own personal
-        website. My own personal website allows me to share what I do and what I'm passionate about. I am always learning new things and exploring. Recently, I've been interested in artificial intelligence, I explored the <a class="inline-url" href="https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies" target="_blank">NEAT algorithim</a>. I've also been learning <a class="inline-url" href="https://www.java.com/" target="_blank">Java</a> and experimenting in making mods for <a class="inline-url" href="https://minecraft.net/" target="_blank">Minecraft</a>. Scroll down further
+        website. My own personal website allows me to share what I do and what I'm passionate about. I am always
+        learning new things and exploring. Recently, I've been interested in artificial intelligence, I explored the <a
+          class="inline-url" href="https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies"
+          target="_blank">NEAT algorithim</a>. I've also been learning <a class="inline-url"
+          href="https://www.java.com/" target="_blank">Java</a> and experimenting in making mods for <a
+          class="inline-url" href="https://minecraft.net/" target="_blank">Minecraft</a>. Scroll down further
         to learn about what I've been working on.
         </a>
     </div>
@@ -210,9 +217,9 @@
             <p class="text-justify">Dot Score is a utility bot built with <a class="hover:underline"
                 href="https://disnake.dev/">Disnake</a>, a wrapper for <a class="hover:underline"
                 href="https://discord.com/developers/docs/intro">Discord's API</a>. It is a bot intended for my friends,
-              for ease-of-use utilities such as <a class="hover:underline"
-                href="https://www.latex-project.org/">LaTeX</a> rendering. One popular feature is <strong
-                class="font-semibold">Study Logs</strong>, a way to track your progress on your homework.</p>
+              full of ease-of-use utilities from <a class="hover:underline"
+                href="https://www.latex-project.org/">LaTeX</a> rendering to smart computation. One popular feature is <strong
+                class="font-semibold">Study Logs</strong>, a way to track your progress on your tasks.</p>
           </div>
         </div>
         <div class="flex col-span-2 -lg:hidden">
@@ -232,14 +239,15 @@
 
   <!-- Footer -->
   <footer class="py-2 text-center bg-zinc-100 dark:bg-zinc-900" x-data="{}">
-    <p class="text-xs text-zinc-400 dark:text-zinc-500">Copyright © <span x-text="new Date().getFullYear()"></span> Sam Liu.</p>
+    <p class="text-xs text-zinc-400 dark:text-zinc-500">Copyright © <span x-text="new Date().getFullYear()"></span> Sam
+      Liu.</p>
     <p class="text-xs text-zinc-400 dark:text-zinc-500">See the source code <a class="hover:underline"
         href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
   </footer>
 
   <!-- Mobile User Detection -->
   <script>
-    window.onload = function(){
+    window.onload = function () {
       if (/Mobi|Android/i.test(navigator.userAgent)) {
         alert("This website is not optimized for mobile devices. Things may break!");
       };
