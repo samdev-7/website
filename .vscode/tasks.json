@@ -13,9 +13,6 @@
           "panel": "dedicated",
           "focus": false
         },
-        "runOptions": {
-          "runOn": "folderOpen"
-        },
         "isBackground": true
       }
     ]
