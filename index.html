@@ -56,11 +56,11 @@
 <body x-data :class="$store.darkMode.on && 'dark'">
 
   <!-- Navbar -->
-  <nav class="sticky top-0 z-50 flex h-16 transition-shadow bg-zinc-100 dark:bg-zinc-900" x-data="{ scroll: 0 }"
-    @scroll.window="scroll = window.pageYOffset" :class="(scroll > 30) ? 'shadow-md' : ''">
+  <nav class="sticky top-0 z-50 flex h-16 transition-shadow bg-white dark:bg-slate-800" x-data="{ scroll: 0 }"
+     @scroll.window="scroll = window.pageYOffset" :class="(scroll > 0) ? 'shadow' : ''">
 
     <!-- Navbar Brand -->
-    <div class="flex pl-8 my-auto text-blue-600 dark:text-blue-400 -sm:pl-4">
+    <div class="flex pl-16 my-auto text-blue-600 dark:text-blue-400 -sm:pl-4">
       <a class="flex my-3 -sm:my-1" href="/" @click.prevent="document.getElementById('top').scrollIntoView();">
         <svg class="-mt-0.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           aria-hidden="true" role="img" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20"
@@ -74,9 +74,9 @@
     </div>
 
     <!-- Navbar Menu -->
-    <div class="flex pr-10 my-auto ml-auto -sm:pr-8">
+    <div class="flex pr-16 my-auto ml-auto -sm:pr-8">
 
-      <div class="space-x-8 font-medium text-zinc-800 dark:text-zinc-300 -sm:space-x-4">
+      <div class="space-x-8 font-medium text-slate-800 dark:text-slate-200 -sm:space-x-4">
         <a class="hover:text-blue-600 dark:hover:text-blue-400" href="#about"
           @click.prevent="document.getElementById('about').scrollIntoView();">
           About
@@ -91,10 +91,10 @@
         </a>
       </div>
 
-      <div class="ml-8 mr-6 border-l border-zinc-300 dark:border-zinc-500 -sm:hidden"></div>
+      <div class="ml-8 mr-6 border-l border-slate-300 dark:border-slate-500 -sm:hidden"></div>
 
-      <div class="flex space-x-3 text-zinc-500 dark:text-zinc-400 -sm:hidden">
-        <a class="hover:text-zinc-800 dark:hover:text-zinc-200" role="button" @click="$store.darkMode.toggle()"
+      <div class="flex space-x-3 text-slate-500 dark:text-slate-400 -sm:hidden">
+        <a class="hover:text-slate-800 dark:hover:text-slate-200" role="button" @click="$store.darkMode.toggle()"
           title="Toggle Themes">
           <svg :class="$store.darkMode.on && 'hidden'" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -107,7 +107,7 @@
               d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </a>
-        <a class="hover:text-zinc-800 mt-0.5 dark:hover:text-zinc-200" href="https://github.com/SamDev-7/"
+        <a class="hover:text-slate-800 mt-0.5 dark:hover:text-slate-200" href="https://github.com/SamDev-7/"
           target="_blank" title="GitHub">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor"
             aria-hidden="true">
@@ -123,22 +123,21 @@
 
   <!-- Title Section -->
   <div id="top" class="h-0 -mt-16"></div>
-  <div class="flex flex-col h-screen dark:bg-zinc-800">
+  <div class="flex flex-col h-screen dark:bg-slate-800">
     <div class="m-auto text-center">
       <div class="mx-16">
-        <p class="text-2xl tracking-wide text-blue-600 dark:text-blue-400">Hello There</p>
-        <h1 class="mt-2 text-6xl font-medium text-zinc-800 dark:text-white">I'm Sam</h1>
-        <p class="mt-4 text-lg text-zinc-600 dark:text-zinc-300">A learner, a self-taught developer, and a tech
-          enthusiast.<br>I love
-          making random things.</p>
+        <p class="text-2xl tracking-wide text-blue-600 dark:text-blue-400">Hello there</p>
+        <h1 class="mt-2 text-6xl font-medium text-slate-800 dark:text-white">I'm Sam</h1>
+        <p class="mt-8 text-lg text-slate-600 dark:text-slate-300">I make random things and hope they work first try.</p>
+        <p class="text-slate-500 text-md dark:text-slate-400">They don't 95% of the time...</p>
       </div>
     </div>
 
     <!-- Next Section Arrow -->
-    <div class="mx-auto mb-1 animate-bounce motion-reduce:animate-none">
+    <div class="mx-auto mb-1 motion-safe:animate-bounce-slow">
       <a href="#about" @click.prevent="document.getElementById('about').scrollIntoView();">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-          class="text-zinc-300 dark:text-zinc-500" width="60" height="60" preserveAspectRatio="xMidYMid meet"
+          class="text-slate-300 dark:text-slate-500" width="60" height="60" preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 24 24" fill="currentColor" stroke="currentColor">>
           <path d="M17 13l-5 5m0 0l-5-5m5 5V6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
@@ -148,10 +147,10 @@
 
   <!-- About Section -->
   <a id="about" class="h-0"></a>
-  <div class="bg-zinc-100 dark:bg-zinc-900">
-    <div class="px-64 pt-40 text-center pb-44 text-zinc-600 -lg:px-8 -xl:px-10 dark:text-zinc-200">
-      <h2 class="text-4xl font-medium text-zinc-900 dark:text-white">About Me</h2>
-      <p class="mx-4 mt-24 text-lg text-justify text-zinc-600 indent-8 dark:text-zinc-300">
+  <div class="bg-white dark:bg-slate-800">
+    <div class="px-64 pt-40 text-center text-slate-600 pb-44 -lg:px-8 -xl:px-10 dark:text-slate-200">
+      <h2 class="text-4xl font-medium text-slate-800 dark:text-white">About Me</h2>
+      <p class="mx-4 mt-24 text-lg text-justify text-slate-600 indent-8 dark:text-slate-300">
         Hello, I'm Sam, someone who is passionate about programming and tech. Here's what I did. I started my
         programming journey in
         at the age of 10, when my teacher introduced me to <a class="inline-url" href="https://code.org/"
@@ -202,8 +201,8 @@
 
   <!-- Projects Section -->
   <div id="projects" class="h-0"></div>
-  <div class="py-40 text-center dark:bg-zinc-800">
-    <h2 class="text-4xl font-medium text-zinc-900 dark:text-white">My Projects</h2>
+  <div class="py-40 text-center dark:bg-slate-800">
+    <h2 class="text-4xl font-medium text-slate-800 dark:text-white">My Projects</h2>
 
     <!-- Dot Score -->
     <div class="py-12 mt-12">
@@ -212,9 +211,9 @@
           <div class="my-auto">
             <div>
               <h3 class="text-3xl text-blue-600 dark:text-blue-400">Dot Score.</h3>
-              <p class="text-zinc-800 dark:text-zinc-400">A Private Discord Utility Bot</p>
+              <p class="text-slate-800 dark:text-slate-400">A Private Discord Utility Bot</p>
             </div>
-            <div class="mt-3 text-zinc-600 dark:text-zinc-200">
+            <div class="mt-3 text-slate-600 dark:text-slate-200">
               <p class="text-justify">Dot Score is a utility bot built with <a class="hover:underline"
                   href="https://disnake.dev/" target="_blank">Disnake</a>, a wrapper for <a class="hover:underline"
                   href="https://discord.com/developers/docs/intro" target="_blank">Discord's API</a>. It is a bot
@@ -233,7 +232,8 @@
     </div>
 
     <!-- Diamond Nuggets -->
-    <div class="py-12" x-data="{ dn_downloads: ''}" x-init="dn_downloads = await (await(fetch('//api.saml.is-a.dev/projects/diamond_nuggets/downloads'))).text()">
+    <div class="py-12" x-data="{ dn_downloads: ''}"
+      x-init="dn_downloads = await (await(fetch('//api.saml.is-a.dev/projects/diamond_nuggets/downloads'))).text()">
       <div class="grid grid-cols-5 mx-64 space-x-12 -lg:mx-8 -lg:grid-cols-3">
         <div class="flex col-span-2 -lg:hidden">
           <img class="my-auto" src="/assets/demos/diamond_nuggets.png" alt="Screenshot of Diamond Nuggets in-game.">
@@ -243,11 +243,11 @@
             <div>
               <a href="https://www.curseforge.com/minecraft/mc-mods/diamond-nuggets" target="_blank">
                 <h3 class="text-3xl text-blue-600 dark:text-blue-400 hover:underline">Diamong Nuggets. <span
-                    class="text-sm text-zinc-400">(<span x-text="dn_downloads">--</span> Downloads)</span></h3>
-                </a>
-              <p class="text-zinc-800 dark:text-zinc-400">A Minecraft Mod</p>
+                    class="text-sm text-slate-400">(<span x-text="dn_downloads">--</span> Downloads)</span></h3>
+              </a>
+              <p class="text-slate-800 dark:text-slate-400">A Minecraft Mod</p>
             </div>
-            <div class="mt-3 text-zinc-600 dark:text-zinc-200">
+            <div class="mt-3 text-slate-600 dark:text-slate-200">
               <p class="text-justify">Diamond Nuggets is a <a class="hover:underline" href="https://minecraft.net/"
                   target="_blank">Minecraft</a> mod built for both <a class="hover:underline"
                   href="https://fabricmc.net/" target="_blank">Fabric</a> and <a class="hover:underline"
@@ -262,17 +262,17 @@
   </div>
 
   <!-- Soon! -->
-  <div class="dark:bg-zinc-800">
-    <p class="px-4 py-10 text-lg text-center text-zinc-600 dark:text-zinc-300">
+  <div class="dark:bg-slate-800">
+    <p class="px-4 py-10 text-lg text-center text-slate-600 dark:text-slate-300">
       More are coming soon! I'm working on it!
     </p>
   </div>
 
   <!-- Footer -->
-  <footer class="py-2 text-center bg-zinc-100 dark:bg-zinc-900" x-data="{}">
-    <p class="text-xs text-zinc-400 dark:text-zinc-500">Copyright © <span x-text="new Date().getFullYear()"></span> Sam
+  <footer class="py-2 text-center bg-slate-100 dark:bg-slate-800" x-data="{}">
+    <p class="text-xs text-slate-400 dark:text-slate-500">Copyright © <span x-text="new Date().getFullYear()"></span> Sam
       Liu.</p>
-    <p class="text-xs text-zinc-400 dark:text-zinc-500">See the source code <a class="hover:underline"
+    <p class="text-xs text-slate-400 dark:text-slate-500">See the source code <a class="hover:underline"
         href="https://github.com/SamDev-7/samdev-7.github.io">on Github</a>.</p>
   </footer>
 
