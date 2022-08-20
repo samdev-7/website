@@ -1,7 +1,9 @@
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   mode: 'jit',
   darkMode: 'class',
-  content: ["./**/*.{html,js}"],
+  content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
       fontFamily: {
@@ -22,7 +24,3 @@ module.exports = {
   variants: {},
   plugins: [],
 }
-
-// https://play.tailwindcss.com/smOF7iXoXr
-// npx tailwindcss -i ./tailwind.css -o ./main.css --watch
-// npx postcss ./tailwind.css -o ./main.css
