@@ -2,7 +2,9 @@ name: Build SvelteKit with Node.js CI
 
 on:
   push:
-  pull_request:
+    branches:
+      - main
+  
   workflow_dispatch:
 
 permissions:
