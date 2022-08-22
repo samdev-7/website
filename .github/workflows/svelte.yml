@@ -30,8 +30,6 @@ jobs:
         cache: 'npm'
     - name: Setup environment
       run: npm ci
-    - name: Check code
-      run: npm run check
     - name: Build Svelte static site
       run: npm run build
 
