@@ -15,7 +15,7 @@
 </script>
 
 <!-- Navbar -->
-<nav class="sticky top-0 z-40 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 {$scroll > 5 ? 'shadow' : ''}">
+<nav class="sticky top-0 z-40 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll > 5 ? 'shadow' : ''}">
 	<!-- Navbar Brand -->
 	<div class="flex my-auto text-blue-600 dark:text-blue-400 -2xs:hidden">
 		<a class="flex" href="/" on:click={(event) => scrollToHome(event)}>

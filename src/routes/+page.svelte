@@ -49,8 +49,10 @@
 
 <!-- About Section -->
 <a id="about" class="h-0"> </a>
-
-<div class="py-16">
-	<p class="text-lg text-center">I'm upgrading this site!</p>
-	<p class="text-center">It'll be back soon™️</p>
+<div class="py-16 text-center">
+	<div class="px-64 py-16 text-center text-slate-600 dark:text-slate-200">
+		<h2 class="text-4xl font-medium text-black dark:text-white">About Me</h2>
+		<p class="mt-12">Hi! I'm Sam, a student passionate about technology.<br>I am interested in computer science, engineering, and machine learning.</p>
+		<p class="mt-4">I created this site to share my experiences, show you what I have done, and post I've been working on.</p>
+	</div>
 </div>
