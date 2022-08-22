@@ -49,4 +49,8 @@
 
 <!-- About Section -->
 <a id="about" class="h-0"> </a>
-<div class="py-16" />
+
+<div class="py-16">
+	<p class="text-lg text-center">I'm upgrading this site!</p>
+	<p class="text-center">It'll be back soon™️</p>
+</div>
