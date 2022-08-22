@@ -1,14 +1,9 @@
-name: Build and Deploy Svelte with Node.js CI
+name: Build SvelteKit with Node.js CI
 
 on:
   push: 
   pull_request:
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -32,23 +27,16 @@ jobs:
       run: npm ci
     - name: Build Svelte Static Site
       run: npm run build
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: github-pages
-        path: ./build
         
   deploy:
     needs: build
-    if: success()
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: success() && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v1
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
