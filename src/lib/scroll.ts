@@ -4,7 +4,6 @@ export var scroll = writable(0)
 
 export function scrollToAnchor(event, elementId) {
     let element = document.getElementById(elementId);
-    console.log(element)
     if (element) {
         event.preventDefault();
         element.scrollIntoView({ behavior: 'smooth' });
