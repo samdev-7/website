@@ -28,11 +28,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Setup environment
+    - name: Setup Environment
       run: npm ci
-    - name: Build Svelte static site
+    - name: Build Svelte Static Site
       run: npm run build
-
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gh-pages
+        path: ./build
+        
   deploy:
     needs: build
     if: success()
