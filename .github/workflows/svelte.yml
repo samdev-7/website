@@ -1,11 +1,18 @@
 name: Build SvelteKit with Node.js CI
 
 on:
-  push: 
+  push:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   deploy:
