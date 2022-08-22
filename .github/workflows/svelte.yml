@@ -1,4 +1,4 @@
-name: Build SvelteKit with Node.js CI
+name: Deploy SvelteKit
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         node-version: [17.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -51,4 +51,3 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v1
-    
