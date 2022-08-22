@@ -1,17 +1,24 @@
 <script>
-	import Navbar from '$lib/header/Navbar.svelte';
 	import '../app.css';
 
-	import theme from '$lib/stores/theme'; 
-	$: currentTheme = $theme === 'dark' ? 'dark' : '';
-	console.log($theme)
+	import Navbar from '$lib/Navbar.svelte';
+
+	import { scroll } from '$lib/scroll';
+
+	function scrollHandler(event) {
+		scroll.set(window.scrollY);
+	}
 
 </script>
 
-<header class="{currentTheme}">
-	<Navbar />
-</header>
+<svelte:window on:scroll={scrollHandler}/>
 
-<main>
+<Navbar />
+
+<main class="bg-white dark:bg-slate-900">
 	<slot />
 </main>
+
+<footer class="bg-white dark:bg-slate-900">
+	<!--<Footer />-->
+</footer>

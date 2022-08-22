@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 body {
-    @apply font-poppins motion-safe:scroll-smooth motion-reduce:transition-none;
+	@apply font-poppins motion-safe:scroll-smooth motion-reduce:transition-none;
 }
 
 .inline-url {
-    @apply text-blue-500 hover:underline dark:text-blue-400;
+	@apply text-blue-500 hover:underline dark:text-blue-400;
 }

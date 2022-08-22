@@ -1,15 +1,24 @@
 <script>
-	import theme from '$lib/stores/theme';
+	import { scroll, scrollToAnchor, scrollToHome } from '$lib/scroll';
 
 	function toggleTheme() {
-		console.log('toggleTheme');
-		theme.set($theme === 'dark' ? 'light' : 'dark');
+		let theme = localStorage.theme || 'light';
+		if (theme === 'light') {
+			document.body.classList.add('dark');
+			localStorage.theme = 'dark';
+		} else {
+			document.body.classList.remove('dark');
+			localStorage.theme = 'light';
+		}
 	}
+
 </script>
 
-<nav class="sticky top-0 z-50 flex h-16 transition-shadow bg-white dark:bg-slate-900">
-	<div class="flex pl-16 my-auto text-blue-600 dark:text-blue-400">
-		<a class="flex my-3" href="/">
+<!-- Navbar -->
+<nav class="sticky top-0 z-40 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 {$scroll > 5 ? 'shadow' : ''}">
+	<!-- Navbar Brand -->
+	<div class="flex my-auto text-blue-600 dark:text-blue-400 -2xs:hidden">
+		<a class="flex" href="/" on:click={(event) => scrollToHome(event)}>
 			<svg
 				class="-mt-0.5"
 				xmlns="http://www.w3.org/2000/svg"
@@ -28,30 +37,49 @@
 					clip-rule="evenodd"
 				/>
 			</svg>
-			<h1 class="mx-3 text-xl hover:underline -md:hidden">Sam Liu</h1>
+			<h2 class="mx-3 text-xl hover:underline -xs:hidden">Sam Liu</h2>
 		</a>
 	</div>
 
-	<div class="flex pr-16 my-auto ml-auto -sm:pr-8">
-		<div class="space-x-8 font-medium text-slate-800 dark:text-slate-200 -sm:space-x-4">
-			<a class="hover:text-blue-600 dark:hover:text-blue-400" href="#about">About</a>
-			<a class="hover:text-blue-600 dark:hover:text-blue-400" href="/#projects">Projects</a>
-			<a class="hover:text-blue-600 dark:hover:text-blue-400" href="/#contact">Contact</a>
+	<!-- Navbar Content -->
+	<div class="flex my-auto 2xs:ml-auto -2xs:mx-auto">
+		<!-- Navbar Menu -->
+		<div
+			class="space-x-8 font-medium 2xs:-xs:space-x-4 -2xs:space-x-2 text-slate-800 dark:text-slate-200"
+		>
+			<a
+				class="hover:text-blue-600 dark:hover:text-blue-400"
+				href="/#about"
+				on:click={(event) => scrollToAnchor(event, 'about')}>About</a
+			>
+			<a
+				class="hover:text-blue-600 dark:hover:text-blue-400"
+				href="/#projects"
+				on:click={(event) => scrollToAnchor(event, 'projects')}>Projects</a
+			>
+			<a
+				class="hover:text-blue-600 dark:hover:text-blue-400"
+				href="/#contact"
+				on:click={(event) => scrollToAnchor(event, 'contact')}>Contact</a
+			>
 		</div>
 
-		<div class="ml-8 mr-6 border-l border-slate-300 dark:border-slate-500" />
+		<div class="ml-8 mr-6 border-l border-slate-300 dark:border-slate-500 -md:hidden" />
 
-		<div class="flex space-x-3 text-slate-500 dark:text-slate-400">
+		<!-- Navbar Utils -->
+		<div class="flex space-x-3 text-slate-500 dark:text-slate-400 -md:hidden">
 			<button
 				class="hover:text-slate-800 dark:hover:text-slate-200"
 				title="Toggle Themes"
 				on:click={toggleTheme}
 			>
 				<svg
-					class="hidden w-6 h-6"
+					class="dark:hidden"
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
+					width="24px"
+					height="24px"
 					stroke="currentColor"
 					stroke-width="2"
 				>
@@ -62,10 +90,12 @@
 					/>
 				</svg>
 				<svg
-					class="w-6 h-6"
+					class="hidden dark:block"
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
+					width="24px"
+					height="24px"
 					stroke="currentColor"
 					stroke-width="2"
 				>
@@ -85,7 +115,8 @@
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 16 16"
-					class="w-5 h-5"
+					width="20px"
+					height="20px"
 					fill="currentColor"
 					aria-hidden="true"
 				>
@@ -97,3 +128,5 @@
 		</div>
 	</div>
 </nav>
+
+<div class="h-0 -mt-16" />

@@ -8,6 +8,8 @@ node_modules
 !.env.example
 
 /.vscode
+LICENSE.md
+README.md
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
