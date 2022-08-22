@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<!-- 
+
+================================================
+  👀 Hey there! I see you looking at my code!
+     This website was built with SvelteKit.
+ https://github.com/SamDev-7/samdev-7.github.io
+================================================
+
+-->
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+		<link rel="icon" type="image/png" href="/assets/favicon.png" />
+
+		%sveltekit.head%
+	</head>
+
+	<body>
+		<noscript>
+			<div class="fixed z-50 flex w-screen h-screen bg-black bg-opacity-25 backdrop-blur-sm">
+				<div class="p-32 m-auto text-center bg-white rounded-md pt-">
+					<h1 class="text-4xl font-medium text-blue-500">Uh oh!</h1>
+					<p class="mt-6 text-lg">JavaScript is required for this page to function correctly</p>
+					<p class="text-slate-800">
+						<a class="inline-url" href="https://www.enablejavascript.io/" target="_blank"
+							>Click here</a
+						>
+						for instructions on how to enable JavaScript
+					</p>
+					<p class="pt-24 pb-8 -mb-32 text-sm text-slate-500">
+						Reload this page after enabling JavaScript
+					</p>
+				</div>
+			</div>
+		</noscript>
+
+		<script>
+			if (document) {
+				let theme = localStorage.theme || 'light';
+				if (theme === 'dark') {
+					document.body.classList.add('dark');
+					localStorage.theme = 'dark';
+				} else {
+					document.body.classList.remove('dark');
+					localStorage.theme = 'light';
+				}
+
+				function toggleTheme() {
+					let theme = localStorage.theme || 'light';
+					if (theme === 'light') {
+						document.body.classList.add('dark');
+						localStorage.theme = 'dark';
+					} else {
+						document.body.classList.remove('dark');
+						localStorage.theme = 'light';
+					}
+				}
+			}
+		</script>
+
+		%sveltekit.body%
+	</body>
+</html>

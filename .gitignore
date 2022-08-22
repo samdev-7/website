@@ -1,9 +1,12 @@
-# Replit
-.replit
-replit.nix
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+.vercel
+.output
 
-# Nodejs
-node_modules/
-
-# VS Code
-.vscode/
+/.vscode
