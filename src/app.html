@@ -24,21 +24,23 @@
 
 	<body>
 		<noscript>
-			<div class="fixed z-50 flex w-screen h-screen bg-black bg-opacity-25 backdrop-blur-sm">
-				<div class="p-32 m-auto text-center bg-white rounded-md pt-">
+			
+			<input class="peer hidden" id="hide-nojs" type="checkbox" title="Ignore warning" />
+			<label for="hide-nojs" class="z-50 fixed bottom-0 m-4 peer-checked:hidden hover:underline">Ignore Warning</label>
+			<div class="peer-checked:hidden flex fixed z-40 w-screen h-screen -sm:bg-white sm:bg-black sm:bg-opacity-25 sm:backdrop-blur-sm">
+				<div class="sm:p-32 sm:-md:px-16 -sm:px-8 m-auto text-center sm:bg-white sm:rounded-md">
 					<h1 class="text-4xl font-medium text-blue-500">Uh oh!</h1>
 					<p class="mt-6 text-lg">JavaScript is required for this page to function correctly</p>
 					<p class="text-slate-800">
-						<a class="inline-url" href="https://www.enablejavascript.io/" target="_blank"
-							>Click here</a
-						>
+						<a class="inline-url" href="https://www.enablejavascript.io/" target="_blank" aria-label="Read more about how to enable JavaScript">Click here</a>
 						for instructions on how to enable JavaScript
 					</p>
-					<p class="pt-24 pb-8 -mb-32 text-sm text-slate-500">
+					<p class="pt-24 pb-8 sm:-mb-32 text-sm text-slate-500">
 						Reload this page after enabling JavaScript
-					</p>
+					</p>	
 				</div>
 			</div>
+			
 		</noscript>
 
 		<script>
@@ -50,17 +52,6 @@
 				} else {
 					document.body.classList.remove('dark');
 					localStorage.theme = 'light';
-				}
-
-				function toggleTheme() {
-					let theme = localStorage.theme || 'light';
-					if (theme === 'light') {
-						document.body.classList.add('dark');
-						localStorage.theme = 'dark';
-					} else {
-						document.body.classList.remove('dark');
-						localStorage.theme = 'light';
-					}
 				}
 			}
 		</script>
