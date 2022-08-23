@@ -3,7 +3,7 @@
 
 	import Navbar from '$lib/Navbar.svelte';
 	import Footer from '$lib/Footer.svelte';
-	
+
 	import { onMount } from 'svelte';
 	import { scroll } from '$lib/scroll';
 
@@ -11,11 +11,10 @@
 		scroll.set(window.scrollY);
 	}
 
-	onMount(scrollHandler)
-
+	onMount(scrollHandler);
 </script>
 
-<svelte:window on:scroll={scrollHandler}/>
+<svelte:window on:scroll={scrollHandler} />
 
 <Navbar />
 
