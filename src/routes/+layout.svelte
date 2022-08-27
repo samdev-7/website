@@ -1,8 +1,8 @@
 <script>
 	import '../app.css';
 
-	import Navbar from '$lib/Navbar.svelte';
-	import Footer from '$lib/Footer.svelte';
+	import Navbar from '$lib/header/Navbar.svelte';
+	import Footer from '$lib/footer/Footer.svelte';
 
 	import { onMount } from 'svelte';
 	import { scroll } from '$lib/scroll';
@@ -21,8 +21,8 @@
 <main class="bg-white dark:bg-slate-900">
 	<slot />
 
-	<div class="py-16 text-center">
-		<p class="text-lg">I'm upgrading this site!</p>
+	<div class="py-16 text-center dark:text-white">
+		<p class="text-lg ">I'm upgrading this site!</p>
 		<p>It'll be back soon™️</p>
 	</div>
 </main>
