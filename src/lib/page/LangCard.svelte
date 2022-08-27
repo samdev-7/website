@@ -9,7 +9,7 @@
 
 <!-- Language Card -->
 <a href={link} id={name.replace('*', '')} target="_blank" class="scroll-mt-20">
-    <div class="bg-white dark:bg-slate-900 dark:border-slate-600 2xs:border-2 2xs:rounded-md text-left px-6 py-4 transition-transform 2xs:hover:scale-105 hover:drop-shadow-xl flex flex-col 2xs:min-h-full">
+    <div class="bg-white dark:bg-slate-900 dark:border-slate-600 2xs:border-2 2xs:rounded-md text-left px-6 py-4 transition-transform 2xs:hover:scale-105 2xs:hover:drop-shadow-xl flex flex-col 2xs:min-h-full">
         <!-- Title Section -->
         <div class="">
             <div class="float-left">

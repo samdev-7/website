@@ -72,7 +72,7 @@
 <div class="py-16 text-center">
 
 	<!-- Introduction -->
-	<div class="px-64 py-12 xs:-lg:px-32 2xs:-xs:px-16 -2xs:px-8 text-center text-slate-600 dark:text-slate-200">
+	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
 		<h2 class="text-5xl font-medium text-black dark:text-white">About Me</h2>
 		<p class="mt-12">Hi! I am Sam, a student passionate about computer science, engineering, and machine learning.<br>I am always learning to reach my ambitious goal of contributing back to society through the power of technology.</p>
 		<p class="mt-4">I created this site to share my experiences, to show you what I have done, and to post what I have been working on.</p>
@@ -80,7 +80,7 @@
 
 	<!-- Languages & Frameworks -->
 	<div class="text-center text-slate-600 dark:text-slate-200 py-6">
-		<div>
+		<div class="px-16 -lg:px-8 lg:-xl:px-10">
 			<h3 class="text-blue-600 dark:text-blue-400 text-2xl font-medium">Here are some languages, frameworks, and tools I know</h3>
 			<p class="mt-4">My programming journey started in grade 4. Since then, I have picked up many valuable skills.<br>This list will expand as I continue on my journey looking for opportunities.</p>
 			<p class="text-sm text-slate-500 mt-6 dark:text-slate-400">* Technically not programming languages, but I am putting them in anyways.</p>
