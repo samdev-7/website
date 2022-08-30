@@ -1,23 +1,33 @@
 <script>
 	import LangCard from '$lib/page/LangCard.svelte';
+	import ProjectCard from '$lib/page/ProjectCard.svelte';
 
 	import langs from '$lib/page/langs';
+	import projects from '$lib/page/projects';
+
 	import { scrollToAnchor } from '$lib/scroll';
 
 	let show_all_lang = false;
-	let sliced_langs;
+	let sliced_langs = langs.slice(0, 6);
+
+	let show_all_projects = false;
+	let sliced_projects = projects.slice(0, 6);
+
 	let width;
 
 	$: if (!show_all_lang) {
 		if (width > 1024) {
 			// lg breakpoint
 			sliced_langs = langs.slice(0, 9);
+			sliced_projects = projects.slice(0, 6);
 		} else if (width > 768) {
 			// md breakpoint
 			sliced_langs = langs.slice(0, 6);
+			sliced_projects = projects.slice(0, 6);
 		} else {
 			// sm breakpoint
 			sliced_langs = langs.slice(0, 4);
+			sliced_projects = projects.slice(0, 4);
 		}
 	}
 </script>
@@ -34,7 +44,7 @@
 	<div class="m-auto text-center">
 		<div class="mx-16 -xs:mx-8">
 			<p class="text-2xl tracking-wider text-blue-600 dark:text-blue-400">Hello, world!</p>
-			<h1 class="mt-2 text-6xl font-medium dark:text-white">I'm Sam</h1>
+			<h1 class="mt-2 text-7xl font-medium dark:text-white">I'm Sam</h1>
 			<h2 class="mt-8 text-lg text-slate-600 dark:text-slate-300">Developing software as a hobby.</h2>
 			<p class="text-slate-500 text-md dark:text-slate-400">I hope to build impactful and practical products.</p>
 		</div>
@@ -68,12 +78,11 @@
 </div>
 
 <!-- About Section -->
-<div id="about" class="h-0" />
-<div class="py-16 text-center">
+<div id="about" class="py-16 text-center">
 
 	<!-- Introduction -->
 	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
-		<h2 class="text-5xl font-medium text-black dark:text-white">About Me</h2>
+		<h2 class="text-4xl font-medium text-slate-800 dark:text-white">About Me</h2>
 		<p class="mt-12">Hi! I am Sam, a student passionate about computer science, engineering, and machine learning.<br>I am always learning to reach my ambitious goal of contributing back to society through the power of technology.</p>
 		<p class="mt-4">I created this site to share my experiences, to show you what I have done, and to post what I have been working on.</p>
 	</div>
@@ -101,12 +110,57 @@
 
 			{#if !show_all_lang}
 				<div class="relative">
-					<div class="absolute bg-gradient-to-t from-white dark:from-slate-900 w-full h-48 z-50 -top-48" aria-hidden="true">
+					<div class="absolute bg-gradient-to-t from-white dark:from-slate-900 w-full h-48 -top-48" aria-hidden="true">
 						
 					</div>
 					<div class="absolute w-full text-center">
 						<input class="hidden" type="checkbox" id="show_all_lang" bind:checked={show_all_lang} />
 						<label for="show_all_lang"><p class=" text-slate-500 dark:text-slate-300 px-4 py-2 hover:text-black dark:hover:text-white cursor-pointer">Show All</p></label>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+</div>
+
+<!-- Projects Section -->
+<div id="projects" class="py-16 text-center">
+
+	<!-- Introduction -->
+	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
+		<h2 class="text-4xl font-medium text-slate-800 dark:text-white">My Projects</h2>
+		<p class="mt-12">I like to build things by tinkering and improving it as I learn more things.<br>Experimentation allows me to learn new concepts and skills and to reinforce older ones I might have forgotten.<br></p>
+		<p class="mt-4">I want to use my skills to create impactful and useful things.</p>
+	</div>
+
+	<!-- Projects -->
+	<div class="text-center text-slate-600 dark:text-slate-200 py-6">
+		<div class="px-16 -lg:px-8 lg:-xl:px-10">
+			<h3 class="text-blue-600 dark:text-blue-400 text-2xl font-medium">Here are some things I have built</h3>
+			<p class="mt-4">Although it may not look impressive, all are small steps towards a big goal.<br>This list will expand as I sift though all my projects.</p>
+		</div>
+
+		<div>
+			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2">
+			{#if !show_all_projects}
+				{#each sliced_projects as project}
+					<ProjectCard {...project}/>
+				{/each}
+			{:else}
+				{#each projects as project}
+					<ProjectCard {...project}/>
+				{/each}
+			{/if}
+			</div>
+
+			{#if !show_all_projects}
+				<div class="relative">
+					<div class="absolute bg-gradient-to-t from-white dark:from-slate-900 w-full h-48 z-50 -top-48" aria-hidden="true">
+						
+					</div>
+					<div class="absolute w-full text-center">
+						<input class="hidden" type="checkbox" id="show_all_projects" bind:checked={show_all_projects} />
+						<label for="show_all_projects"><p class=" text-slate-500 dark:text-slate-300 px-4 py-2 hover:text-black dark:hover:text-white cursor-pointer">Show All</p></label>
 					</div>
 				</div>
 			{/if}

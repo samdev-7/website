@@ -11,11 +11,15 @@
 			localStorage.theme = 'light';
 		}
 	}
-
 </script>
 
 <!-- Navbar -->
-<nav class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll > 5 ? 'shadow' : ''}">
+<nav
+	class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll >
+	5
+		? 'shadow'
+		: ''}"
+>
 	<!-- Navbar Brand -->
 	<div class="flex my-auto text-blue-600 dark:text-blue-400 -2xs:hidden">
 		<a class="flex" href="/" on:click={(event) => scrollToHome(event)}>
@@ -59,9 +63,15 @@
 			>
 			<a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
+				href="/#scrapbook"
+				on:click={(event) => scrollToAnchor(event, 'scrapbook')}>Scrapbook</a
+			>
+			<a
+				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#contact"
 				on:click={(event) => scrollToAnchor(event, 'contact')}>Contact</a
 			>
+			
 		</div>
 
 		<div class="ml-8 mr-6 border-l border-slate-300 dark:border-slate-500 -md:hidden" />
