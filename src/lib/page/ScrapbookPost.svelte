@@ -5,7 +5,6 @@
     export let images = [];
 
     import MuxVideo from "$lib/utils/MuxVideo.svelte";
-    console.log(images)
 </script>
 
 <div class="my-6">
