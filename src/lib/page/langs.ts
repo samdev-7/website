@@ -50,7 +50,7 @@ let langs = [
         icon: "https://api.iconify.design/simple-icons:flask.svg",
         dark_icon: "https://api.iconify.design/simple-icons:flask.svg?color=%23ffffff",
         short: "Python Web Framework",
-        description: "Flask is the first web framework I learned. I still use it for smaller projects but I tend to use <a class='hover:underline' href='https://fastapi.tiangolo.com/' target='_blank'>FastAPI</a> more often."
+        description: "Flask is the first web framework I learned. I still use it for smaller projects but I tend to use <a rel='noopener' class='hover:underline' href='https://fastapi.tiangolo.com/' target='_blank'>FastAPI</a> more often."
     },
     {
         name: "Svelte",
@@ -78,7 +78,7 @@ let langs = [
         link: "https://disnake.dev/",
         icon: "https://disnake.dev/assets/disnake-logo.png",
         short: "Python API Wrapper",
-        description: "I use Disnake/<a class='hover:underline' href='https://github.com/Rapptz/discord.py' target='_blank'>Discord.py</a> to create bots using the <a class='hover:underline' href='https://discord.dev' target='_blank'>Discord API<a/>. It taught me how to maintain and host applications."
+        description: "I use Disnake/<a rel='noopener' class='hover:underline' href='https://github.com/Rapptz/discord.py' target='_blank'>Discord.py</a> to create bots using the <a rel='noopener' class='hover:underline' href='https://discord.dev' target='_blank'>Discord API<a/>. It taught me how to maintain and host applications."
     },
     {
         name: "MongoDB",

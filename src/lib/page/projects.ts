@@ -36,7 +36,7 @@ let projects = [
         lang: "Java",
         icon: "/assets/projects/furnideco.png",
         short: "Minecraft Mod (On Hold)",
-        description: "I am collaborating with <a href='https://github.com/arexon/furnideco' class='hover:underline'>@arexon</a> to bring Furnideco, his furniture addon for Minecraft Bedrock, to Minecraft Java. ",
+        description: "I am collaborating with <a rel='noopener' href='https://github.com/arexon/furnideco' class='hover:underline'>@arexon</a> to bring Furnideco, his furniture addon for Minecraft Bedrock, to Minecraft Java. ",
         link: "https://arexon.dev/project/furnideco",
         github_link: "https://github.com/arexon/furnideco-fabric"
     },

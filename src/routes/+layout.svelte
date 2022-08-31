@@ -4,14 +4,12 @@
 	import Navbar from '$lib/header/Navbar.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
 
-	import { onMount } from 'svelte';
-	import { scroll } from '$lib/scroll';
+	import { scroll } from '$lib/utils/scroll';
 
 	function scrollHandler() {
 		scroll.set(window.scrollY);
 	}
 
-	onMount(scrollHandler);
 </script>
 
 <svelte:window on:scroll={scrollHandler} />
@@ -20,11 +18,6 @@
 
 <main class="bg-white dark:bg-slate-900">
 	<slot />
-
-	<div class="py-16 text-center dark:text-white">
-		<p class="text-lg ">I'm upgrading this site!</p>
-		<p>It'll be back soon™️</p>
-	</div>
 </main>
 
 <footer class="bg-white dark:bg-slate-900">
