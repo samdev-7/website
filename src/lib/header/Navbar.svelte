@@ -49,7 +49,7 @@
 	<div class="flex my-auto 2xs:ml-auto -2xs:mx-auto">
 		<!-- Navbar Menu -->
 		<ul
-			class="space-x-8 font-medium 2xs:-xs:space-x-4 -2xs:space-x-2 text-slate-800 dark:text-slate-200"
+			class="space-x-8 font-medium 2xs:-xs:space-x-4 -2xs:space-x-2 -2xs:text-sm text-slate-800 dark:text-slate-200"
 		>
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"

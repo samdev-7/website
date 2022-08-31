@@ -116,7 +116,7 @@
 		</div>
 
 		<div style="overflow-anchor: none;">
-			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2">
+			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2 dark:divide-slate-700">
 			{#if !show_all_lang}
 				{#each sliced_langs as lang}
 					<LangCard {...lang}/>
@@ -161,7 +161,7 @@
 		</div>
 
 		<div style="overflow-anchor: none;">
-			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2">
+			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2 dark:divide-slate-700">
 			{#if !show_all_projects}
 				{#each sliced_projects as project}
 					<ProjectCard {...project}/>
