@@ -10,7 +10,7 @@
 
 <div class="my-6">
     <p class="font-medium">{time}</p>
-    <div class="mt-1">
+    <div class="mt-1 text-black dark:text-white">
         <p class="">{@html text}</p>
     </div>
     <div class="mt-2 flex flex-wrap space-x-8 xs:-md:space-x-1 -xs:space-x-0 -xs:space-y-2">
