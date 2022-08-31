@@ -13,12 +13,14 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@fontsource/fira-mono": "^4.5.0",
 		"@playwright/test": "^1.25.0",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-static": "^1.0.0-next.39",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.5.1",
 		"autoprefixer": "^10.4.8",
+		"cookie": "^0.4.1",
 		"cssnano": "^5.1.13",
 		"postcss": "^8.4.16",
 		"prettier": "^2.6.2",
@@ -28,10 +30,12 @@
 		"svelte-preprocess": "^4.10.7",
 		"tailwindcss": "^3.1.8",
 		"typescript": "^4.7.4",
-		"vite": "^3.0.8",
-		"@fontsource/fira-mono": "^4.5.0",
-		"cookie": "^0.4.1"
+		"vite": "^3.0.8"
 	},
 	"type": "module",
-	"dependencies": {}
+	"dependencies": {
+		"@vime/core": "^5.3.1",
+		"@vime/svelte": "^5.3.1",
+		"hls": "^0.0.1"
+	}
 }

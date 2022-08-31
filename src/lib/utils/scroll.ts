@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export var scroll = writable(0)
+export var scroll = writable(0);
 
 export function scrollToAnchor(event, elementId) {
     let element = document.getElementById(elementId);

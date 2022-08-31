@@ -15,9 +15,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-		<link rel="icon" type="image/png" href="/assets/favicon.png" />
+		<link rel="icon" type="image/x-icon" href="%sveltekit.assets%/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/assets/favicon.svg" />
+		<link rel="icon" type="image/png" href="%sveltekit.assets%/assets/favicon.png" />
+		<script src="https://cdn.jsdelivr.net/npm/hls.js@1.2.1/dist/hls.min.js"></script>
 
 		%sveltekit.head%
 	</head>
@@ -32,7 +33,7 @@
 					<h1 class="text-4xl font-medium text-blue-500">Uh oh!</h1>
 					<p class="mt-6 text-lg">JavaScript is required for this page to function correctly</p>
 					<p class="text-slate-800">
-						<a class="inline-url" href="https://www.enablejavascript.io/" target="_blank" aria-label="Read more about how to enable JavaScript">Click here</a>
+						<a rel="noopener" class="inline-url" href="https://www.enablejavascript.io/" target="_blank" aria-label="Read more about how to enable JavaScript">Click here</a>
 						for instructions on how to enable JavaScript
 					</p>
 					<p class="pt-24 pb-8 sm:-mb-32 text-sm text-slate-500">
