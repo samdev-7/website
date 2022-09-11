@@ -24,14 +24,6 @@ let projects = [
         github_link: "https://github.com/SamDev-7/samdev-7.github.io"
     },
     {
-        name: "Neat Target",
-        lang: "Python",
-        icon: "/assets/projects/neat_target.png",
-        short: "NEAT Project",
-        description: "Experimenting with N.E.A.T. algorithm to create a neural network that can play a simple game. Drive the missile to the flag.",
-        github_link: "https://github.com/SamDev-7/neat-target"
-    },
-    {
         name: "Furnideco (Fabric)",
         lang: "Java",
         icon: "/assets/projects/furnideco.png",
@@ -48,6 +40,22 @@ let projects = [
         description: "A simple minesweeper game made using Sprig. 9 by 9 grid with 10 mines.",
         link: "https://editor.sprig.hackclub.com/?file=https://raw.githubusercontent.com/hackclub/sprig/main/games/minesweeper.js",
         github_link: "https://github.com/hackclub/sprig/blob/main/games/minesweeper.js"
+    },
+    {
+        name: "The Garbage Game",
+        lang: "Python, JavaScript",
+        icon: "https://api.iconify.design/mdi:recycle.svg?color=%2316a34a",
+        short: "Web App",
+        description: "Built for the <a rel='noopener' href='https://ecohacks.devpost.com/' class='hover:underline'>Eco Hacks 2022</a> hackathon. A quiz/game to test your knowledge in recycling.",
+        github_link: "https://github.com/SamDev-7/the-garbage-game",
+    },
+    {
+        name: "Neat Target",
+        lang: "Python",
+        icon: "/assets/projects/neat_target.png",
+        short: "NEAT Project",
+        description: "Experimenting with N.E.A.T. algorithm to create a neural network that can play a simple game. Drive the missile to the flag.",
+        github_link: "https://github.com/SamDev-7/neat-target"
     },
     {
         name: "Connect Four",
