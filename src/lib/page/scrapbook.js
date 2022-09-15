@@ -1,5 +1,8 @@
+import { browser } from '$app/env';
+
 let url = "https://scrapbook.hackclub.com/api/";
-let emojis = undefined;
+var emojis = undefined;
+var fetching_emojis = false;
 
 function timestampToDate(timestamp) {
     let date = new Date(timestamp);
@@ -32,15 +35,34 @@ function stripColons(str) {
     return str
 }
 
-async function getEmoji(name) {
+function waitForEmoji(resolve, reject) {
     if (emojis === undefined) {
+        setTimeout(waitForEmoji, 50, resolve, reject);
+    } else {
+        resolve(emojis);
+    }
+}
+
+async function fetchEmoji() {
+    if (emojis === undefined && !fetching_emojis) {
+        fetching_emojis = true;
         let res = await fetch(url+'emoji');
         if (res.ok) {
             emojis = await res.json();
+            return emojis;
         } else {
             return false;
         }
+    } else {
+        return new Promise(waitForEmoji);
     }
+
+}
+
+async function getEmoji(name) {
+    await fetchEmoji();
+
+    console.log("after")
 
     let emoji = stripColons(name);
     if (emojis[emoji]?.includes('http')) {
@@ -54,7 +76,7 @@ async function formatText(text) {
         if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
             let emoji = await getEmoji(chunk);
             if (emoji) {
-                return `<img loading="lazy" class="h-4 align-middle inline" src="${emoji}" alt="${chunk}" />`;
+                return `<img loading="lazy" height=1rem class="h-4 align-middle inline" src="${emoji}" alt="${chunk}" />`;
             } else { 
                 return ``;
             };
@@ -91,6 +113,7 @@ async function formatText(text) {
 }
 
 async function getEntries() {
+    if (!browser) return [];
     let posts = []
 
     // Thanks! https://github.com/sampoder/website/blob/main/src/routes/index.svelte#L30-L32
@@ -99,8 +122,9 @@ async function getEntries() {
     let res = await fetch(url+'users/Sam');
     if (res.ok) {
         let data = await res.json();
-        data.posts = data.posts.slice(0,10)
-        for (let post of data.posts) {
+        data.posts = data.posts.slice(0,10);
+
+        await Promise.all(data.posts.map(async(post) => {
             let post_t = {};
 
             post_t.time = timestampToDate(post.postedAt);
@@ -114,9 +138,15 @@ async function getEntries() {
                 }
             });
             post_t.images = images;
+            post_t.timestamp = post.timestamp;
 
             posts.push(post_t);
-        };
+        }));
+
+        posts = posts.sort((a, b) => {
+            return b.timestamp - a.timestamp;
+        });
+
         return posts;
     } else {
         throw new Error(await res.text());
