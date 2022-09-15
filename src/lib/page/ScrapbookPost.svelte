@@ -3,6 +3,9 @@
     export let text;
     export let mux = [];
     export let images = [];
+    export let timestamp = 0;
+
+    timestamp;
 
     import MuxVideo from "$lib/utils/MuxVideo.svelte";
 </script>
