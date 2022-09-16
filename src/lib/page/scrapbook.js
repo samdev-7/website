@@ -62,8 +62,6 @@ async function fetchEmoji() {
 async function getEmoji(name) {
     await fetchEmoji();
 
-    console.log("after")
-
     let emoji = stripColons(name);
     if (emojis[emoji]?.includes('http')) {
         return emojis[emoji];
