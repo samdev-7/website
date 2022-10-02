@@ -13,27 +13,41 @@
 	import ScrapbookPost from '$lib/page/ScrapbookPost.svelte';
 
 	let show_all_lang = false;
-	let sliced_langs = langs.slice(0, 9);
+	let shown_langs = langs;
 
 	let show_all_projects = false;
-	let sliced_projects = projects.slice(0, 6);
+	let shown_projects = projects;
 
 	let width;
 
 	$: if (!show_all_lang) {
 		if (width > 1024) {
 			// lg breakpoint
-			sliced_langs = langs.slice(0, 9);
-			sliced_projects = projects.slice(0, 6);
+			shown_langs = langs.slice(0, 9);
 		} else if (width > 768) {
 			// md breakpoint
-			sliced_langs = langs.slice(0, 6);
-			sliced_projects = projects.slice(0, 6);
+			shown_langs = langs.slice(0, 6);
 		} else {
 			// sm breakpoint
-			sliced_langs = langs.slice(0, 4);
-			sliced_projects = projects.slice(0, 4);
+			shown_langs = langs.slice(0, 4);
 		}
+	} else {
+		shown_langs = langs;
+	}
+
+	$: if (!show_all_projects) {
+		if (width > 1024) {
+			// lg breakpoint
+			shown_projects = projects.slice(0, 6);
+		} else if (width > 768) {
+			// md breakpoint
+			shown_projects = projects.slice(0, 6);
+		} else {
+			// sm breakpoint
+			shown_projects = projects.slice(0, 4);
+		}
+	} else {
+		shown_projects = projects;
 	}
 
 	let promise = getEntries();
@@ -102,12 +116,12 @@
 	<!-- Introduction -->
 	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
 		<h2 class="text-4xl font-medium text-slate-800 dark:text-white">About Me</h2>
-		<p class="mt-12">Hi! I am Sam, a student passionate about computer science, engineering, and machine learning.<br>I am always learning to reach my ambitious goal of contributing back to society through the power of technology.</p>
-		<p class="mt-4">I created this site to share my experiences, to show you what I have done, and to post what I have been working on.</p>
+		<p class="mt-12">Hi! I am Sam, a student passionate about computer science, engineering, and creating.<br>I am always looking for learning opportunities to reach my ambitious goal of contributing to society through the power of technology.</p>
+		<p class="mt-4">I created this site to share my experiences, show you what I have done, and post what I have been working on.</p>
 	</div>
 
 	<!-- Languages & Frameworks -->
-	<div class="text-center text-slate-600 dark:text-slate-200 py-6">
+	<div id="skills" class="text-center text-slate-600 dark:text-slate-200 py-6 scroll-mt-16">
 		<div class="px-16 -lg:px-8 lg:-xl:px-10">
 			<h3 class="text-blue-600 dark:text-blue-400 text-2xl font-medium">Here are some languages, frameworks, and tools I know</h3>
 			<p class="mt-4">My programming journey started in grade 4. Since then, I have picked up many valuable skills.<br>This list will expand as I continue my journey looking for opportunities.</p>
@@ -116,15 +130,9 @@
 
 		<div style="overflow-anchor: none;">
 			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2 dark:divide-slate-700">
-			{#if !show_all_lang}
-				{#each sliced_langs as lang}
-					<LangCard {...lang}/>
-				{/each}
-			{:else}
-				{#each langs as lang}
-					<LangCard {...lang}/>
-				{/each}
-			{/if}
+			{#each shown_langs as lang}
+				<LangCard {...lang}/>
+			{/each}
 			</div>
 
 			{#if !show_all_lang}
@@ -161,15 +169,9 @@
 
 		<div style="overflow-anchor: none;">
 			<div class="mt-16 px-64 grid grid-cols-3 gap-12 xl:-2xl:px-32 xs:-xl:px-16 md:-lg:grid-cols-2 -md:grid-cols-1 2xs:-xs:px-8 -2xs:px-0 -2xs:gap-6 -2xs:divide-y-2 dark:divide-slate-700">
-			{#if !show_all_projects}
-				{#each sliced_projects as project}
-					<ProjectCard {...project}/>
-				{/each}
-			{:else}
-				{#each projects as project}
-					<ProjectCard {...project}/>
-				{/each}
-			{/if}
+			{#each shown_projects as project}
+				<ProjectCard {...project}/>
+			{/each}
 			</div>
 
 			{#if !show_all_projects}
@@ -193,15 +195,15 @@
 	<!-- Introduction -->
 	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
 		<h2 class="text-4xl font-medium text-slate-800 dark:text-white">My Scrapbook</h2>
-		<p class="mt-12">The scrapbook is where I document my progress and learning.<br><a  rel="noopener" href="https://scrapbook.hackclub.com/Sam" target="_blank" class="hover:underline">Click here to see my full Scrapbook.</a></p>
-		<p class="mt-4">Scrapbook is built by <a rel="noopener" href="https://hackclub.com" target="_blank" class="hover:underline">Hack Club</a>. <a rel="noopener" href="https://scrapbook.hackclub.com/" target="_blank" class="hover:underline">Click here to see what other Hack Clubbers are doing.</a></p>
+		<p class="mt-12">The scrapbook is where I document my progress and learning.<br><a  rel="noopener" href="https://scrapbook.hackclub.com/Sam" target="_blank" class="inline-url">Click here to see my full Scrapbook.</a></p>
+		<p class="mt-4">Scrapbook is built by <a rel="noopener" href="https://hackclub.com" target="_blank" class="inline-url">Hack Club</a>. <a rel="noopener" href="https://scrapbook.hackclub.com/" target="_blank" class="secondary-inline-url"><br>See what other Hack Clubbers are doing.</a></p>
 	</div>
 
 	<!-- Scrapbook Content -->
 	<div class="text-center text-slate-600 dark:text-slate-200 py-6">
 		<div class="mx-16 -lg:mx-8 lg:-xl:mx-10">
 			<h3 class="text-blue-600 dark:text-blue-400 text-2xl font-medium">Here is what I have been up to</h3>
-			<p class="mt-4">Interested in something you see? Come chat with me on the <a rel="noopener" href="https://hackclub.com/slack" target="_blank" class="hover:underline">Hack Club Slack</a>, or <a rel="noopener" href="/" on:click={(event) => scrollToHome(event)} class="hover:underline">contact me</a>.</p>
+			<p class="mt-4">Interested in something you see? Come chat with me on the <a rel="noopener" href="https://hackclub.com/slack" target="_blank" class="inline-url">Hack Club Slack</a>, or <a rel="noopener" href="/" on:click={(event) => scrollToHome(event)} class="inline-url">contact me</a>.</p>
 		</div>
 
 		<div class="text-left mx-64 md:-xl:mx-32 xs:-md:mx-16 -xs:mx-2 -xs:text-center" style="overflow-anchor: none;">
