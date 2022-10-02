@@ -92,10 +92,10 @@ async function formatText(text) {
             return `<a class="hover:underline" href="${url}" target="_blank" rel="noopener">${children}</a>`;
         }
         if (chunk?.startsWith('```')) {
-            return `<pre>${chunk.replace(/```/g, '')}</pre>`;
+            return `<pre class="break-words">${chunk.replace(/```/g, '')}</pre>`;
         }
         if (chunk?.startsWith('`')) {
-            return `<code>${chunk.replace(/`/g, '')}</code>`;
+            return `<code class="break-words">${chunk.replace(/`/g, '')}</code>`;
         }
         if (chunk?.startsWith('*')) {
             return `<strong>${chunk.replace(/\*/g, '')}</strong>`;

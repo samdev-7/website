@@ -15,10 +15,7 @@
 
 <!-- Navbar -->
 <nav
-	class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 -sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll >
-	5
-		? 'shadow'
-		: ''}"
+	class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 2xs:-sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll > 5 ? 'shadow' : ''}"
 >
 	<!-- Navbar Brand -->
 	<div class="flex my-auto text-blue-600 dark:text-blue-400 -2xs:hidden">
@@ -59,6 +56,11 @@
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#projects"
+				on:click={(event) => scrollToAnchor(event, 'skills')}>Skills</a
+			></li>
+			<li class="inline"><a
+				class="hover:text-blue-600 dark:hover:text-blue-400"
+				href="/#scrapbook"
 				on:click={(event) => scrollToAnchor(event, 'projects')}>Projects</a
 			></li>
 			<li class="inline"><a
