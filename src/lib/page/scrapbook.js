@@ -117,7 +117,7 @@ async function getEntries() {
     // Thanks! https://github.com/sampoder/website/blob/main/src/routes/index.svelte#L30-L32
     let imgFileTypes = ['jpg', 'jpeg', 'png', 'gif'];
 
-    let res = await fetch(url+'users/Sam');
+    let res = await fetch(url+'users/Sam?max=10');
     if (res.ok) {
         let data = await res.json();
         data.posts = data.posts.slice(0,10);
