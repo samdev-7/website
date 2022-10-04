@@ -77,14 +77,14 @@
 			<ul class="space-x-4 mt-4">
 				<li class="inline text-blue-500 dark:text-blue-400 hover:underline"><a rel="noopener" href="mailto:{email}" target="_blank">Email</a></li>
 				<li class="inline text-blue-500 dark:text-blue-400 hover:underline"><a rel="noopener" href="https://github.com/SamDev-7" target="_blank">Github</a></li>
-			</ul>
+			</ul> 
 		</div>
 	</div>
 
 	<div class="absolute bottom-0 flex flex-col w-full">
 		<!-- Next Section Arrow-->
 		<div class="mx-auto mb-1 motion-safe:animate-bounce-slow">
-			<a rel="noopener" href="#about" on:click={(event) => scrollToAnchor(event, 'about')}>
+			<a rel="noopener" href="#about" on:click={(event) => scrollToAnchor(event, 'about')} aria-label="Scroll down to read more">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink"
