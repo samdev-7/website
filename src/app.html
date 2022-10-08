@@ -48,10 +48,6 @@
 		</noscript>
 
 		<script>
-			if (window.location.pathname.endsWith('/') && window.location.pathname !== '/') {
-				window.location.pathname = window.location.pathname.slice(0, -1);
-			}
-
 			if (document) {
 				let theme = localStorage.theme || 'light';
 				if (theme === 'dark') {
