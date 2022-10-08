@@ -1,9 +1,14 @@
+<svelte:head>
+	<title>Not Found</title>
+    <meta name="robots" content="noindex">
+</svelte:head>
+
 <div class="w-full -mb-16 h-screen flex">
 
     <div class="m-auto text-center">
         <div>
             <h1 class="text-blue-600 dark:text-blue-400 text-9xl font-medium">404</h1>
-            <h2 class="text-xl">Uh oh! This page could not be found.</h2>
+            <h2 class="text-xl dark:text-white">Uh oh! This page could not be found.</h2>
         </div>
         <div class="mt-12">
             <a class="text-blue-600 dark:text-blue-400 hover:underline" rel="noopener" href="/">
