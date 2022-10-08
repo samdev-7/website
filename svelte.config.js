@@ -12,8 +12,7 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		prerender: { default: true },
-		trailingSlash: 'never',
+		prerender: { default: true }
 	}
 };
 
