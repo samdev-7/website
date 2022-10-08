@@ -4,7 +4,7 @@ let projects = [
         lang: "Python",
         icon: "/assets/projects/dot_score.png",
         short: "Discord Bot",
-        description: "Dot Score is a Discord utility bot build with <a rel='noopener' class='secondary-inline-url' href='https://disnake.dev/' target='_blank'>Disnake</a> for my study group. Dot Score logs your progress keeps you on track on homework.",
+        description: "Dot Score is a Discord utility bot build with <a rel='noopener' class='secondary-inline-url' href='https://disnake.dev/' target='_blank'>Disnake</a> for my study group. Dot Score logs your progress and keeps you on track on homework.",
     },
     {
         name: "Diamond Nuggets",
