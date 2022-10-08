@@ -13,8 +13,7 @@ const config = {
 	kit: {
 		adapter: adapter({
 			edge: true
-		}),
-		prerender: { default: true }
+		})
 	}
 };
 
