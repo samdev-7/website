@@ -55,7 +55,7 @@
 	let email;
 
 	if (browser) {
-		email = window.atob('aGVsbG9Ac2FtbC5pcy1hLmRldg==');
+		email = window.atob('aGVsbG9Ac2FtbGl1LmRldg==');
 	}
 
 </script>
