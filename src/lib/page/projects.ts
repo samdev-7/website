@@ -16,12 +16,12 @@ let projects = [
     },
     {
         name: "Personal Website",
-        link: "https://saml.is-a.dev/",
+        link: "https://samliu.dev/",
         lang: "HTML, CSS, JavaScript",
         icon: "/assets/CodeIconBlue.svg",
         short: "Website",
         description: "You are here right now! My personal website showcases my skills, works, and information about me. Built with <a rel='noopener' class='secondary-inline-url' href='https://svelte.dev/' target='_blank'>Svelte</a> and styled with <a rel='noopener' class='secondary-inline-url' href='https://tailwindcss.com/' target='_blank'>TailwindCSS</a>.",
-        github_link: "https://github.com/SamDev-7/samdev-7.github.io"
+        github_link: "https://github.com/SamDev-7/website"
     },
     {
         name: "Furnideco (Fabric)",
