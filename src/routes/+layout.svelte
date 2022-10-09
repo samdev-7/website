@@ -1,10 +1,10 @@
 <script>
-	import '../app.css';
+	import "../app.css";
 
-	import Navbar from '$lib/header/Navbar.svelte';
-	import Footer from '$lib/footer/Footer.svelte';
+	import Navbar from "$lib/header/Navbar.svelte";
+	import Footer from "$lib/footer/Footer.svelte";
 
-	import { scroll } from '$lib/utils/scroll';
+	import { scroll } from "$lib/utils/scroll";
 
 	function scrollHandler() {
 		scroll.set(window.scrollY);

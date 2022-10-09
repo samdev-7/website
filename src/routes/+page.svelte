@@ -1,16 +1,16 @@
 <script>
-	import { browser } from '$app/env';
+	import { browser } from "$app/env";
 
-	import LangCard from '$lib/page/LangCard.svelte';
-	import ProjectCard from '$lib/page/ProjectCard.svelte';
+	import LangCard from "$lib/page/LangCard.svelte";
+	import ProjectCard from "$lib/page/ProjectCard.svelte";
 
-	import langs from '$lib/page/langs';
-	import projects from '$lib/page/projects';
+	import langs from "$lib/page/langs";
+	import projects from "$lib/page/projects";
 
-	import getEntries from '$lib/page/scrapbook';
+	import getEntries from "$lib/page/scrapbook";
 
-	import { scrollToAnchor, scrollToHome } from '$lib/utils/scroll';
-	import ScrapbookPost from '$lib/page/ScrapbookPost.svelte';
+	import { scrollToAnchor, scrollToHome } from "$lib/utils/scroll";
+	import ScrapbookPost from "$lib/page/ScrapbookPost.svelte";
 
 	let show_all_lang = false;
 	let shown_langs = langs;
@@ -55,7 +55,7 @@
 	let email;
 
 	if (browser) {
-		email = window.atob('aGVsbG9Ac2FtbGl1LmRldg==');
+		email = window.atob("aGVsbG9Ac2FtbGl1LmRldg==");
 	}
 
 </script>
@@ -71,7 +71,7 @@
 	<div class="m-auto text-center">
 		<div class="mx-16 -xs:mx-8">
 			<p class="text-2xl tracking-wider text-blue-600 dark:text-blue-400">Hello, World!</p>
-			<h1 class="mt-2 text-7xl font-medium dark:text-white">I'm Sam</h1>
+			<h1 class="mt-2 text-7xl font-medium dark:text-white">I"m Sam</h1>
 			<h2 class="mt-6 text-lg text-slate-600 dark:text-slate-300">Developing software as a hobby.</h2>
 			<p class="text-slate-500 text-md dark:text-slate-400">I hope to build impactful and practical products.</p>
 			<ul class="space-x-4 mt-4">
@@ -84,7 +84,7 @@
 	<div class="absolute bottom-0 flex flex-col w-full">
 		<!-- Next Section Arrow-->
 		<div class="mx-auto mb-1 motion-safe:animate-bounce-slow">
-			<a rel="noopener" href="#about" on:click={(event) => scrollToAnchor(event, 'about')} aria-label="Scroll down to read more">
+			<a rel="noopener" href="#about" on:click={(event) => scrollToAnchor(event, "about")} aria-label="Scroll down to read more">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink"

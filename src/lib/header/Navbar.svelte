@@ -1,21 +1,21 @@
 <script>
-	import { scroll, scrollToAnchor, scrollToHome } from '$lib/utils/scroll';
+	import { scroll, scrollToAnchor, scrollToHome } from "$lib/utils/scroll";
 
 	function toggleTheme() {
-		let theme = localStorage.theme || 'light';
-		if (theme === 'light') {
-			document.body.classList.add('dark');
-			localStorage.theme = 'dark';
+		let theme = localStorage.theme || "light";
+		if (theme === "light") {
+			document.body.classList.add("dark");
+			localStorage.theme = "dark";
 		} else {
-			document.body.classList.remove('dark');
-			localStorage.theme = 'light';
+			document.body.classList.remove("dark");
+			localStorage.theme = "light";
 		}
 	}
 </script>
 
 <!-- Navbar -->
 <nav
-	class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 2xs:-sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll > 5 ? 'shadow' : ''}"
+	class="sticky top-0 z-30 flex h-16 transition-shadow sm:px-16 2xs:-sm:px-8 -2xs:px-0 bg-white dark:bg-slate-900 {$scroll > 5 ? "shadow" : ""}"
 >
 	<!-- Navbar Brand -->
 	<div class="flex my-auto text-blue-600 dark:text-blue-400 -2xs:hidden">
@@ -51,22 +51,22 @@
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#about"
-				on:click={(event) => scrollToAnchor(event, 'about')}>About</a
+				on:click={(event) => scrollToAnchor(event, "about")}>About</a
 			></li>
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#projects"
-				on:click={(event) => scrollToAnchor(event, 'skills')}>Skills</a
+				on:click={(event) => scrollToAnchor(event, "skills")}>Skills</a
 			></li>
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#scrapbook"
-				on:click={(event) => scrollToAnchor(event, 'projects')}>Projects</a
+				on:click={(event) => scrollToAnchor(event, "projects")}>Projects</a
 			></li>
 			<li class="inline"><a
 				class="hover:text-blue-600 dark:hover:text-blue-400"
 				href="/#scrapbook"
-				on:click={(event) => scrollToAnchor(event, 'scrapbook')}>Scrapbook</a
+				on:click={(event) => scrollToAnchor(event, "scrapbook")}>Scrapbook</a
 			></li>
 			</ul>
 

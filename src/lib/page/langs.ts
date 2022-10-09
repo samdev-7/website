@@ -9,13 +9,13 @@ let langs = [
         name: "JavaScript",
         link: "https://developer.mozilla.org/en-US/docs/Glossary/JavaScript",
         icon: "https://api.iconify.design/logos:javascript.svg",
-        description: "I learned JavaScript for web development. It powers a lot of this site. I can use JavaScript efficiently as well as with <a rel='noopener' class='secondary-inline-url' href='https://nodejs.org/en/' target='_blank'>Node.Js</a>."
+        description: "I learned JavaScript for web development. It powers a lot of this site. I can use JavaScript efficiently as well as with <a rel="noopener" class="secondary-inline-url" href="https://nodejs.org/en/" target="_blank">Node.Js</a>."
     },
     {
         name: "Java",
         link: "https://www.java.com/",
         icon: "https://api.iconify.design/logos:java.svg",
-        description: "I learned Java to mod <a rel='noopener' class='secondary-inline-url' href='https://minecraft.net/' target='_blank'>Minecraft</a>. I use the <a rel='noopener' class='secondary-inline-url' href='https://docs.minecraftforge.net/en/latest' target='_blank'>Minecraft Forge</a> and <a rel='noopener' class='secondary-inline-url' href='https://fabricmc.net/' target='_blank'>Fabric</a> toolchains. I am still learning Java and loving it so far."
+        description: "I learned Java to mod <a rel="noopener" class="secondary-inline-url" href="https://minecraft.net/" target="_blank">Minecraft</a>. I use the <a rel="noopener" class="secondary-inline-url" href="https://docs.minecraftforge.net/en/latest" target="_blank">Minecraft Forge</a> and <a rel="noopener" class="secondary-inline-url" href="https://fabricmc.net/" target="_blank">Fabric</a> toolchains. I am still learning Java and loving it so far."
     },
     {
         name: "C++",
@@ -35,7 +35,7 @@ let langs = [
         link: "https://developer.mozilla.org/en-US/docs/Web/CSS",
         icon: "https://api.iconify.design/vscode-icons:file-type-css.svg",
         short: "Style Sheet Language",
-        description: "CSS makes this page look awesome. I use CSS libraries such as <a rel='noopener' class='secondary-inline-url' href='https://tailwindcss.com/' target='_blank'>Tailwind CSS</a>. I know how to write vanilla CSS, just not as well."
+        description: "CSS makes this page look awesome. I use CSS libraries such as <a rel="noopener" class="secondary-inline-url" href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a>. I know how to write vanilla CSS, just not as well."
     },
     {
         name: "Scratch",
@@ -64,7 +64,7 @@ let langs = [
         icon: "https://api.iconify.design/simple-icons:flask.svg",
         dark_icon: "https://api.iconify.design/simple-icons:flask.svg?color=%23ffffff",
         short: "Python Web Framework",
-        description: "Flask is the first web framework I learned. I still use it for smaller projects, but I tend to use <a rel='noopener' class='secondary-inline-url' href='https://fastapi.tiangolo.com/' target='_blank'>FastAPI</a> when I use Python."
+        description: "Flask is the first web framework I learned. I still use it for smaller projects, but I tend to use <a rel="noopener" class="secondary-inline-url" href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a> when I use Python."
     },
     {
         name: "Tailwind CSS",
@@ -85,21 +85,21 @@ let langs = [
         link: "https://disnake.dev/",
         icon: "https://disnake.dev/assets/disnake-logo.png",
         short: "Python API Wrapper",
-        description: "I use Disnake/<a rel='noopener' class='secondary-inline-url' href='https://github.com/Rapptz/discord.py' target='_blank'>Discord.py</a> to create bots using the <a rel='noopener' class='secondary-inline-url' href='https://discord.dev' target='_blank'>Discord API<a/>. I learned how to host and maintaining applications."
+        description: "I use Disnake/<a rel="noopener" class="secondary-inline-url" href="https://github.com/Rapptz/discord.py" target="_blank">Discord.py</a> to create bots using the <a rel="noopener" class="secondary-inline-url" href="https://discord.dev" target="_blank">Discord API<a/>. I learned how to host and maintaining applications."
     },
     {
         name: "Minecraft Forge",
         link: "https://docs.minecraftforge.net/en/latest/",
         icon: "https://files.minecraftforge.net/static/images/apple-touch-icon.png",
         short: "Minecraft Modding Toolchain",
-        description: "Minecrft Forge is one of the reasons I started to learn Java. I use Forge to create mods and to add additional features to <a rel='noopener' class='secondary-inline-url' href='https://minecraft.net/' target='_blank'>Minecraft</a>."
+        description: "Minecrft Forge is one of the reasons I started to learn Java. I use Forge to create mods and to add additional features to <a rel="noopener" class="secondary-inline-url" href="https://minecraft.net/" target="_blank">Minecraft</a>."
     },
     {
         name: "Fabric",
         link: "https://fabricmc.net/",
         icon: "https://fabricmc.net/assets/logo.png",
         short: "Minecraft Modding Toolchain",
-        description: "Fabric is lightweight and allows me to add additional content and features into <a rel='noopener' class='secondary-inline-url' href='https://minecraft.net/' target='_blank'>Minecraft</a> with the power of Java."
+        description: "Fabric is lightweight and allows me to add additional content and features into <a rel="noopener" class="secondary-inline-url" href="https://minecraft.net/" target="_blank">Minecraft</a> with the power of Java."
     }
 ]
 

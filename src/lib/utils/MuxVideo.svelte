@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount } from "svelte";
 
     export let playback_id;
     export let _class = undefined;
@@ -12,7 +12,7 @@
 
 		video.controls = true;
 		let hls;
-        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        if (video.canPlayType("application/vnd.apple.mpegurl")) {
             // This will run in safari, where HLS is supported natively
             video.src = src;
         // @ts-ignore

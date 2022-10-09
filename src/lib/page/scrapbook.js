@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from "$app/env";
 
 let url = "https://scrapbook.hackclub.com/api/";
 var emojis = undefined;
@@ -7,8 +7,8 @@ var fetching_emojis = false;
 function timestampToDate(timestamp) {
     let date = new Date(timestamp);
 
-    let month = date.toLocaleDateString(undefined, {month: 'long'});
-    let day = date.toLocaleDateString(undefined, {weekday: 'short'});
+    let month = date.toLocaleDateString(undefined, {month: "long"});
+    let day = date.toLocaleDateString(undefined, {weekday: "short"});
 
     return `${day}, ${month} ${date.getDate()}`;
 }
@@ -21,7 +21,7 @@ function endsWithAny(string, suffixes) {
 const dataDetector = /(<.+?\|?\S+>)|(@\S+)|(`{3}[\S\s]+`{3})|(`[^`]+`)|(_[^_]+_)|(\*[^\*]+\*)|(:[^ .,;`\u2013~!@#$%^&*(){}=\\:"<>?|A-Z]+:)/;
 
 function stripColons(str) {
-    const colonIndex = str.indexOf(':')
+    const colonIndex = str.indexOf(":")
     if (colonIndex > -1) {
       // :emoji:
       if (colonIndex === str.length - 1) {
@@ -46,7 +46,7 @@ function waitForEmoji(resolve, reject) {
 async function fetchEmoji() {
     if (emojis === undefined && !fetching_emojis) {
         fetching_emojis = true;
-        let res = await fetch(url+'emoji');
+        let res = await fetch(url+"emoji");
         if (res.ok) {
             emojis = await res.json();
             return emojis;
@@ -63,7 +63,7 @@ async function getEmoji(name) {
     await fetchEmoji();
 
     let emoji = stripColons(name);
-    if (emojis[emoji]?.includes('http')) {
+    if (emojis[emoji]?.includes("http")) {
         return emojis[emoji];
     }
 
@@ -71,7 +71,7 @@ async function getEmoji(name) {
 
 async function formatText(text) {
 	text = await Promise.all(text.split(dataDetector).map(async(chunk, i) => {
-        if (chunk?.startsWith(':') && chunk?.endsWith(':')) {
+        if (chunk?.startsWith(":") && chunk?.endsWith(":")) {
             let emoji = await getEmoji(chunk);
             if (emoji) {
                 return `<img loading="lazy" height=1rem class="h-4 align-middle inline" src="${emoji}" alt="${chunk}" />`;
@@ -79,34 +79,34 @@ async function formatText(text) {
                 return ``;
             };
         }
-        if (chunk?.startsWith('@') || chunk?.startsWith('<@')) {
-            const punct = /([,!:.'"’”]|’s|'s|\))+$/g;
-            const username = chunk.replace(/[@<>]/g, '').replace(punct, '');
+        if (chunk?.startsWith("@") || chunk?.startsWith("<@")) {
+            const punct = /([,!:.""’”]|’s|"s|\))+$/g;
+            const username = chunk.replace(/[@<>]/g, "").replace(punct, "");
             return `<a class="hover:underline" href="https://scrapbook.hackclub.com/${username}" target="_blank" rel="noopener">@${username}</a>`;
         }
-        if (chunk?.startsWith('<')) {
+        if (chunk?.startsWith("<")) {
             const parts = chunk.match(/<(([^\|]+)\|)?([^>]+?)>/);
             const url = parts?.[2] || parts[parts.length - 1];
-            const children = parts[parts.length - 1]?.replace(/https?:\/\//, '').replace(/\/$/, '');
+            const children = parts[parts.length - 1]?.replace(/https?:\/\//, "").replace(/\/$/, "");
 
             return `<a class="hover:underline" href="${url}" target="_blank" rel="noopener">${children}</a>`;
         }
-        if (chunk?.startsWith('```')) {
-            return `<pre class="break-words">${chunk.replace(/```/g, '')}</pre>`;
+        if (chunk?.startsWith("```")) {
+            return `<pre class="break-words">${chunk.replace(/```/g, "")}</pre>`;
         }
-        if (chunk?.startsWith('`')) {
-            return `<code class="break-words">${chunk.replace(/`/g, '')}</code>`;
+        if (chunk?.startsWith("`")) {
+            return `<code class="break-words">${chunk.replace(/`/g, "")}</code>`;
         }
-        if (chunk?.startsWith('*')) {
-            return `<strong>${chunk.replace(/\*/g, '')}</strong>`;
+        if (chunk?.startsWith("*")) {
+            return `<strong>${chunk.replace(/\*/g, "")}</strong>`;
         }
-        if (chunk?.startsWith('_')) {
-            return `<i>${chunk.replace(/_/g, '')}</i>`;
+        if (chunk?.startsWith("_")) {
+            return `<i>${chunk.replace(/_/g, "")}</i>`;
         }
-        return chunk?.replace(/&amp;/g, '&');
+        return chunk?.replace(/&amp;/g, "&");
     }));
-    text = text.join('');
-    text = text.replace(/\n/g, '<br/>');
+    text = text.join("");
+    text = text.replace(/\n/g, "<br/>");
     return text;
 }
 
@@ -115,9 +115,9 @@ async function getEntries() {
     let posts = []
 
     // Thanks! https://github.com/sampoder/website/blob/main/src/routes/index.svelte#L30-L32
-    let imgFileTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    let imgFileTypes = ["jpg", "jpeg", "png", "gif"];
 
-    let res = await fetch(url+'users/Sam?max=10');
+    let res = await fetch(url+"users/Sam?max=10");
     if (res.ok) {
         let data = await res.json();
         data.posts = data.posts.slice(0,10);
