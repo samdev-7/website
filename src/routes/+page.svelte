@@ -77,6 +77,7 @@
 			<ul class="space-x-4 mt-4">
 				<li class="inline text-blue-500 dark:text-blue-400 hover:underline"><a rel="noopener" href="mailto:{email}" target="_blank">Email</a></li>
 				<li class="inline text-blue-500 dark:text-blue-400 hover:underline"><a rel="noopener" href="https://github.com/SamDev-7" target="_blank">Github</a></li>
+				<li class="inline text-blue-500 dark:text-blue-400 hover:underline"><a rel="me" href="https://social.dino.icu/@sam" target="_blank">Mastodon</a></li>
 			</ul> 
 		</div>
 	</div>
