@@ -15,7 +15,6 @@
 	}
 
 	let snowEnabled = true; 
-	$: console.log(snowEnabled);
 
 	// Snowfall from https://mannes.tech/svelte-snowfall/
 	// a bunch of variables defining the snow and how it falls
