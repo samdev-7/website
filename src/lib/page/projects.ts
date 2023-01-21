@@ -42,6 +42,14 @@ let projects = [
         github_link: "https://github.com/hackclub/sprig/blob/main/games/minesweeper.js"
     },
     {
+        name: "Two Player Snake",
+        lang: "Java",
+        icon: "/assets/projects/two_player_snake.png",
+        short: "Swing Game",
+        description: "The classic snake game, but with two players. Made with <a rel='noopener' class='secondary-inline-url' href='https://docs.oracle.com/javase/8/docs/api/javax/swing/package-summary.html' target='_blank'>Swing</a>. The player with the longest snake wins.",
+        github_link: "https://github.com/SamDev-7/two-player-snake"
+    },
+    {
         name: "The Garbage Game",
         lang: "Python, JavaScript",
         icon: "https://api.iconify.design/mdi:recycle.svg?color=%2316a34a",
