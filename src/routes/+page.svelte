@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import { randomGreeting } from "../lib/random-hello";
+</script>
+
+<div class="w-screen h-screen flex">
+    <div class="m-auto">
+        {randomGreeting()}
+    </div>
+</div>
