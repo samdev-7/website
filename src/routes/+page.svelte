@@ -1,15 +1,17 @@
 <script lang="ts">
-    import { randomGreeting } from "../lib/random-greeting";
-    import type { PageData } from './$types';
+    import { greetings } from "../lib/random-greeting";
+    import Typewriter from 'svelte-typewriter';
 
-    export let data: PageData;
-    let random = data.random;
-
-    let greeting = randomGreeting(random); 
 </script>
 
 <div class="w-screen h-screen flex">
     <div class="m-auto">
-        {greeting}
+        <div style="--cursor-color: #2563eb; --cursor-width: 0.20ch">
+            <Typewriter mode="loopRandom" interval={50} unwriteInterval={20} wordInterval={5000} showCursorOnDelay={false}>
+                {#each greetings as greeting}
+                    <h2 class="text-blue-600 text-3xl">{greeting}</h2>
+                {/each}
+            </Typewriter>
+        </div>
     </div>
 </div>
