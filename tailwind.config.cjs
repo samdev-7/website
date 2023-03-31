@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
-  theme: {
-    extend: {
+	content: ['./src/**/*.{html,js,svelte,ts}'],
+	theme: {
+		extend: {
 			fontFamily: {
 				poppins: ["'Poppins'", 'sans-serif']
 			},
 			screens: {
-				'xs': { min: '512px' },
+				xs: { min: '512px' },
 				'2xs': { min: '384px' },
 				'-2xs': { max: '384px' },
 				'-xs': { max: '512px' },
@@ -21,7 +21,6 @@ export default {
 				'bounce-slow': 'bounce 2s infinite'
 			}
 		}
-  },
-  plugins: [],
-}
-
+	},
+	plugins: []
+};

@@ -1,7 +1,7 @@
 export const greetings = [
     'print("Hello, world!")',
     'console.log("Hello, world!");',
-    'printf("Hello World");',
+    'printf("Hello, world!");',
     'std::cout ＜＜ "Hello, world!";',
     'System.out.println("Hello, world!");',
     'print "Hello, world!"',
@@ -9,7 +9,3 @@ export const greetings = [
     'echo "Hello, world!";',
     'System.Console.WriteLine("Hello, world!");'
 ]
-
-export const randomGreeting = (random: number) => {
-    return greetings[Math.floor(random * greetings.length)]
-}
