@@ -18,7 +18,7 @@
 						{/each}
 					</Typewriter>
 				</div>
-				<div class="font-medium text-7xl">
+				<div class="font-medium tracking-wide text-7xl">
 					<h1>I'm Sam</h1>
 				</div>
 			</div>
@@ -32,7 +32,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="absolute bottom-0 flex flex-col items-center w-full animate-bounce-slow" aria-hidden="true">
+	<div
+		class="absolute bottom-0 flex flex-col items-center w-full animate-bounce-slow"
+		aria-hidden="true"
+	>
 		<a href="#about" on:click={(event) => scrollToAnchor(event, 'about')}>
 			<div class="mx-auto text-slate-300">
 				<svg
@@ -52,4 +55,3 @@
 		</a>
 	</div>
 </div>
-
