@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 let url = "https://scrapbook.hackclub.com/api/";
 var emojis = undefined;

@@ -1,5 +1,5 @@
 <script>
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	import LangCard from '$lib/page/LangCard.svelte';
 	import ProjectCard from '$lib/page/ProjectCard.svelte';
