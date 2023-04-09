@@ -12,7 +12,9 @@
 	<div class="m-auto text-center">
 		<div class="space-y-6">
 			<div class="space-y-2">
-				<div class="text-blue-600 text-2xl tracking-wider font-mono typewriter-cursor">
+				<div
+					class="text-blue-600 text-2xl tracking-wider font-mono min-h-[1.5em] typewriter-cursor"
+				>
 					<div class="nojs-hidden">
 						<Typewriter mode="loopRandom" interval={75} unwriteInterval={20} wordInterval={5000}>
 							{#each greetings as greeting}
