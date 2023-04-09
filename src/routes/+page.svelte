@@ -4,6 +4,7 @@
 	import { greetings } from '../lib/random-greeting';
 	import Typewriter from 'svelte-typewriter';
 	import { scrollToAnchor } from '$lib/scroll';
+	import Navbar from '../components/Navbar.svelte';
 
 	var email = 'Enable JavaScript to view';
 
@@ -15,6 +16,8 @@
 <svelte:head>
 	<title>Sam Liu</title>
 </svelte:head>
+
+<Navbar />
 
 <div id="landing" class="flex flex-col h-screen">
 	<div class="m-auto text-center">
@@ -90,3 +93,5 @@
 		</a>
 	</div>
 </div>
+
+<div id="about" class="h-screen" />
