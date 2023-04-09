@@ -1,7 +1,15 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import { greetings } from '../lib/random-greeting';
 	import Typewriter from 'svelte-typewriter';
 	import { scrollToAnchor } from '$lib/scroll';
+
+	var email = 'Enable JavaScript to view';
+
+	onMount(() => {
+		email = window.atob('aGVsbG9Ac2FtbGl1LmRldg==');
+	});
 </script>
 
 <svelte:head>
@@ -40,6 +48,25 @@
 				<div class="text-md">
 					<h3>Learning, building, and striving to create impact.</h3>
 				</div>
+			</div>
+			<div class="text-blue-500">
+				<ul class="space-x-6">
+					<li class="inline hover:underline">
+						<a href="mailto:{email}" target="_blank" rel="noopener noreferrer">
+							Email<noscript>&nbsp;(Enable Javascript to view)</noscript>
+						</a>
+					</li>
+					<li class="inline hover:underline">
+						<a href="https://github.com/SamDev-7/" target="_blank" rel="noopener noreferrer"
+							>GitHub</a
+						>
+					</li>
+					<li class="inline hover:underline">
+						<a href="https://social.dino.icu/@sam/" target="_blank" rel="noopener noreferrer"
+							>Mastodon</a
+						>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
