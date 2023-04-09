@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export const scroll = writable(0);
 
 export function scrollToAnchor(event: MouseEvent, elementId: string) {
+    event.preventDefault();
     const element = document.getElementById(elementId);
     if (element) {
         event.preventDefault();

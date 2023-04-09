@@ -4,39 +4,42 @@
 	import { scrollToAnchor } from '$lib/scroll';
 </script>
 
+<svelte:head>
+	<title>Sam Liu</title>
+</svelte:head>
+
 <div id="landing" class="flex flex-col h-screen">
 	<div class="m-auto text-center">
 		<div class="space-y-6">
 			<div class="space-y-2">
-				<div
-					style="--cursor-color: #2563eb; --cursor-width: 0.20ch"
-					class="text-blue-600 text-2xl tracking-wider font-mono min-h-[1.5em]"
-				>
-					<Typewriter mode="loopRandom" interval={75} unwriteInterval={20} wordInterval={5000}>
-						{#each greetings as greeting}
-							<h2>{greeting}</h2>
-						{/each}
-					</Typewriter>
+				<div class="text-blue-600 text-2xl tracking-wider font-mono typewriter-cursor">
+					<div class="nojs-hidden">
+						<Typewriter mode="loopRandom" interval={75} unwriteInterval={20} wordInterval={5000}>
+							{#each greetings as greeting}
+								<h2>{greeting}</h2>
+							{/each}
+						</Typewriter>
+					</div>
+					<noscript>
+						<h2>{greetings[0]}</h2>
+					</noscript>
 				</div>
 				<div class="font-medium tracking-wide text-7xl">
 					<h1>I'm Sam</h1>
 				</div>
 			</div>
-			<div class="space-y-2 tracking-wide text-slate-600">
-				<div class="text-lg">
-					<h3>Student learning, building, and striving to create impact.</h3>
+			<div class="space-y-2 tracking-wide text-slate-700">
+				<div class="text-xl">
+					<h3>Student developer and maker of things.</h3>
 				</div>
 				<div class="text-md">
-					<p>One line of code at a time...</p>
+					<p>Learning, building, and striving to create impact.</p>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div
-		class="absolute bottom-0 flex flex-col items-center w-full animate-bounce-slow"
-		aria-hidden="true"
-	>
-		<a href="#about" on:click={(event) => scrollToAnchor(event, 'about')}>
+	<div class="absolute bottom-0 flex flex-col items-center w-full animate-bounce-slow">
+		<a href="#about" on:click={(event) => scrollToAnchor(event, 'about')} aria-label="Next section">
 			<div class="mx-auto text-slate-300">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

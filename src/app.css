@@ -7,3 +7,8 @@
 body {
 	@apply font-poppins motion-safe:scroll-smooth motion-reduce:transition-none;
 }
+
+.typewriter-cursor {
+	--cursor-color: #2563eb;
+	--cursor-width: 0.20ch
+}
