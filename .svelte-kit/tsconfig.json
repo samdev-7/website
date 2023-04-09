@@ -23,9 +23,7 @@
 		"moduleResolution": "node",
 		"module": "esnext",
 		"target": "esnext",
-		"ignoreDeprecations": "5.0",
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
+		"ignoreDeprecations": "5.0"
 	},
 	"include": [
 		"ambient.d.ts",
