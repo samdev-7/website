@@ -41,11 +41,11 @@
 					<h1>I'm Sam</h1>
 				</div>
 			</div>
-			<div class="space-y-2 tracking-wide text-slate-700">
-				<div class="text-xl">
+			<div class="space-y-1 tracking-wide text-slate-700">
+				<div class="text-lg">
 					<h2>Student, developer, and maker of things.</h2>
 				</div>
-				<div class="text-md">
+				<div class="text-md text-slate-600">
 					<h3>Learning, building, and striving to create impact.</h3>
 				</div>
 			</div>
