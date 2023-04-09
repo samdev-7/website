@@ -32,7 +32,7 @@
 
 <noscript>
 	<style>
-		.nojs-hidden {
+		.nojs\:hidden {
 			display: none;
 		}
 	</style>

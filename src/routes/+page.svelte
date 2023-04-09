@@ -15,12 +15,15 @@
 				<div
 					class="text-blue-600 text-2xl tracking-wider font-mono min-h-[1.5em] typewriter-cursor"
 				>
-					<div class="nojs-hidden">
+					<div class="nojs:hidden motion-reduce:hidden">
 						<Typewriter mode="loopRandom" interval={75} unwriteInterval={20} wordInterval={5000}>
 							{#each greetings as greeting}
 								<h2>{greeting}</h2>
 							{/each}
 						</Typewriter>
+					</div>
+					<div class="motion-safe:hidden nojs:hidden">
+						<h2>{greetings[0]}</h2>
 					</div>
 					<noscript>
 						<h2>{greetings[0]}</h2>
@@ -32,15 +35,15 @@
 			</div>
 			<div class="space-y-2 tracking-wide text-slate-700">
 				<div class="text-xl">
-					<h3>Student developer and maker of things.</h3>
+					<h2>Student, developer, and maker of things.</h2>
 				</div>
 				<div class="text-md">
-					<p>Learning, building, and striving to create impact.</p>
+					<h3>Learning, building, and striving to create impact.</h3>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="absolute bottom-0 flex flex-col items-center w-full animate-bounce-slow">
+	<div class="absolute bottom-0 flex flex-col items-center w-full motion-safe:animate-bounce-slow">
 		<a href="#about" on:click={(event) => scrollToAnchor(event, 'about')} aria-label="Next section">
 			<div class="mx-auto text-slate-300">
 				<svg
