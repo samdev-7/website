@@ -109,7 +109,7 @@
 				</p>
 				<p>
 					The web offers great opportunities for me to learn, create, and share what I have done. I
-					decided to build my website, line by line from the ground up, not with some website
+					decided to build my website, line by line, from the ground up, not with some website
 					builder. This has been a great learning experience for me. Continue scrolling to see more
 					of what I do!
 				</p>
