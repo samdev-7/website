@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { onMount } from 'svelte';
 
 	import { scroll, nearestAnchor } from '$lib/scroll';
 
@@ -28,6 +29,10 @@
 			}
 		}
 	}
+
+	onMount(() => {
+		scrollHandler();
+	});
 </script>
 
 <noscript>
