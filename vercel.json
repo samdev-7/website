@@ -1,7 +1,7 @@
 {
     "crons": [
         {
-            "path": "/api/cron",
+            "path": "/api/gh-stats",
             "schedule": "0 10 * * *"
         }
     ]
