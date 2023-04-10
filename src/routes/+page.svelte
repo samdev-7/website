@@ -157,6 +157,10 @@
 							<p class="mr-auto">Total files on Github:</p>
 							<p class="font-medium text-blue-600">{data ? data.total_files : 'Loading'}</p>
 						</div>
+						<div class="flex flex-row w-full text-lg">
+							<p class="mr-auto">Total repositories:</p>
+							<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -11,8 +11,9 @@ const headers = {
 export const load = (async ({ fetch }) => {
   const result = {
     "total_commits": await getTotalCommits(fetch),
-    "total_files": await getTotalFiles(fetch)
-  } 
+    "total_files": await getTotalFiles(fetch),
+    "total_repos": await getRepos(fetch),
+  }
 
   return result;
 }) satisfies PageServerLoad;
@@ -37,4 +38,16 @@ async function getTotalFiles(fetch: { (input: RequestInfo | URL, init?: RequestI
 
   const data = await res.json();
   return data.total_count;
+}
+
+async function getRepos(fetch: { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (arg0: string, arg1: { headers: { Accept: string; "X-GitHub-Api-Version": string; Authorization: string; }; }): unknown; }): Promise<number> {
+  const res = await fetch('https://api.github.com/user/repos', { headers });
+
+  const data = await res.json()
+
+  if (!res.ok) {
+    return -1;
+  }
+
+  return data.length;
 }
