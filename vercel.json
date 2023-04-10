@@ -2,7 +2,7 @@
     "crons": [
         {
             "path": "/api/gh-stats",
-            "schedule": "0 10 * * *"
+            "schedule": "0 * * * *"
         }
     ]
 }
