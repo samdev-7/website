@@ -98,7 +98,7 @@
 </div>
 
 <div id="about" class="scroll-m-16">
-	<div class="grid grid-cols-5 py-24 mx-6">
+	<div class="grid grid-cols-5 py-24 mx-12">
 		<div class="col-span-3 space-y-12">
 			<div>
 				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600">About me</h4>
