@@ -94,4 +94,29 @@
 	</div>
 </div>
 
-<div id="about" class="h-screen" />
+<div id="about" class="scroll-m-16">
+	<div class="grid grid-cols-5 py-24 mx-12">
+		<div class="col-span-3 space-y-12">
+			<div>
+				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600">About me</h4>
+			</div>
+			<div class="space-y-[1em] text-justify tracking-wide indent-6 text-lg mx-12">
+				<p>
+					👋 Hi! I am Sam, a student with a passion for programming, learning, and creating. My
+					coding journey began in grade 4 with Scratch, and since then I have acquired many skills
+					and languages. I can now create various projects ranging from games to robots and
+					websites. I always seek new learning opportunities and challenges to grow.
+				</p>
+				<p>
+					The web offers great opportunities for me to learn, create, and share what I have done. I
+					decided to build my website, line by line from the ground up, not with some website
+					builder. This has been a great learning experience for me. Continue scrolling to see more
+					of what I do!
+				</p>
+			</div>
+		</div>
+		<div class="col-span-2 bg-green-100">
+			<p class="text-center">Some stats here</p>
+		</div>
+	</div>
+</div>
