@@ -103,7 +103,7 @@
 			<div>
 				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600">About me</h4>
 			</div>
-			<div class="space-y-[1em] text-justify tracking-wide leading-relaxed indent-6 text-lg mx-12">
+			<div class="space-y-[1em] text-justify tracking-wide leading-relaxed indent-8 text-lg mx-12">
 				<p>
 					👋 Hi! I am Sam, a student with a passion for programming, learning, and creating. My
 					coding journey began in grade 4 with Scratch, and since then I have acquired many skills
