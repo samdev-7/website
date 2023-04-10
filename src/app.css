@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-	@apply font-poppins motion-safe:scroll-smooth motion-reduce:transition-none;
+	@apply font-poppins tracking-wide motion-safe:scroll-smooth motion-reduce:transition-none;
 }
 
 .typewriter-cursor {

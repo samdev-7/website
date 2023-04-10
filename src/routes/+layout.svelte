@@ -18,8 +18,6 @@
 
 			let nearest = nearestAnchor(anchors, $scroll);
 
-			console.log(nearest);
-
 			if (nearest != null) {
 				if (nearest == 'landing') {
 					window.history.pushState('', '', window.location.pathname.replace(/#/, ''));
