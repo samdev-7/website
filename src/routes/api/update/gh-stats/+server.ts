@@ -64,6 +64,7 @@ async function getTotalCommits(fetch: { (input: RequestInfo | URL, init?: Reques
     const res = await fetch('https://api.github.com/search/commits?q=author:SamDev-7&per_page=1', { headers });
 
     if (!res.ok) {
+        console.error("Error fetching commits with status " + res.status + ".")
         return -1;
     }
 
@@ -75,6 +76,7 @@ async function getTotalFiles(fetch: { (input: RequestInfo | URL, init?: RequestI
     const res = await fetch('https://api.github.com/search/code?q=user:SamDev-7&per_page=1', { headers });
 
     if (!res.ok) {
+        console.error("Error fetching files with status " + res.status + ".")
         return -1;
     }
 
@@ -88,6 +90,7 @@ async function getRepos(fetch: { (input: RequestInfo | URL, init?: RequestInit |
     const data = await res.json()
 
     if (!res.ok) {
+        console.error("Error fetching repos with status " + res.status + ".")
         return -1;
     }
 

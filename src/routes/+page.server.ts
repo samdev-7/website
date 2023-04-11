@@ -1,20 +1,39 @@
 import type { PageServerLoad } from './$types';
 import { statsCol } from '$lib/mongo';
 
+type resultType = {
+  total_commits: number,
+  total_files: number,
+  total_repos: number,
+  total_messages: number,
+  latest_message_time: Date
+}
+
 export const load = (async ({ fetch }) => {
-  const record = await statsCol.findOne({ source: "github" })
+  let ghRecord = await statsCol.findOne({ source: "github" })
 
-  if (!record) {
-    const res = await fetch('/api/cron/gh-stats');
-    const data = await res.json();
-
-    return data;
+  if (!ghRecord) {
+    await fetch('/api/update/gh-stats');
+    ghRecord = await statsCol.findOne({ source: "github" })
   }
 
-  const result = {
-    "total_commits": record.total_commits,
-    "total_files": record.total_files,
-    "total_repos": record.total_repos,
+  let slackRecord = await statsCol.findOne({ source: "hc_slack" })
+
+  if (!slackRecord) {
+    await fetch('/api/update/slack-stats');
+    slackRecord = await statsCol.findOne({ source: "hc_slack" })
+  }
+
+  if (!ghRecord || !slackRecord) {
+    throw new Error("Failed to load stats, missing records in database.");
+  }
+
+  const result: resultType = {
+    total_commits: ghRecord.total_commits,
+    total_files: ghRecord.total_files,
+    total_repos: ghRecord.total_repos,
+    total_messages: slackRecord.total_messages,
+    latest_message_time: slackRecord.latest_message_time
   }
 
   return result;

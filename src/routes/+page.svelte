@@ -7,6 +7,8 @@
 	import { scrollToAnchor } from '$lib/scroll';
 	import Navbar from '../components/Navbar.svelte';
 
+	import moment from 'moment';
+
 	var email = 'Enable JavaScript to view';
 
 	onMount(() => {
@@ -103,7 +105,7 @@
 			<div>
 				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600">About me</h4>
 			</div>
-			<div class="space-y-[1em] text-justify tracking-wide leading-relaxed indent-8 text-lg mx-12">
+			<div class="space-y-[1em] text-justify tracking-wide leading-relaxed indent-10 text-lg mx-12">
 				<p>
 					👋 Hi! I am Sam, a student with a passion for programming, learning, and creating. My
 					coding journey began in grade 4 with Scratch, and since then I have acquired many skills
@@ -118,10 +120,8 @@
 				</p>
 			</div>
 		</div>
-		<div class="flex flex-col col-span-2 mx-6 space-y-6">
-			<div
-				class="flex items-center px-6 py-2 mx-auto my-4 space-x-4 border-2 rounded-full border-slate-300"
-			>
+		<div class="flex flex-col col-span-2 mx-6 space-y-6 border-slate-300 border-2 p-8 rounded-xl">
+			<div class="flex items-center mx-auto space-x-4 my-3">
 				<span class="relative flex w-4 h-4">
 					<span
 						class="absolute inline-flex w-full h-full bg-green-500 rounded-full opacity-75 motion-safe:animate-ping"
@@ -131,35 +131,46 @@
 				<p class="text-2xl font-medium text-center">Live Statistics</p>
 			</div>
 			<div>
-				<div class="flex flex-row px-10 pt-6 pb-4 space-x-16 border-2 rounded-xl border-slate-300">
-					<div class="space-y-1 text-slate-800">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 16 16"
-							width="64px"
-							height="64px"
-							fill="currentColor"
-							aria-label="GitHub Icon"
-							class="w-16 h-16"
-						>
-							<path
-								d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
-							/>
-						</svg>
-						<p class="mr-0.5 text-center">GitHub</p>
-					</div>
-					<div class="w-full space-y-1">
-						<div class="flex flex-row w-full text-lg">
-							<p class="mr-auto">Total GitHub commits:</p>
-							<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
+				<div class="flex flex-row space-x-16 mx-6">
+					<div class="w-full space-y-3">
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">Total GitHub commits:</p>
+								<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
+							</div>
+							<div class="mx-10 text-slate-800 text-sm italic">
+								<p class="truncate">Latest commit: Update endpoint.ymlfsdcxwefsdcx</p>
+							</div>
 						</div>
-						<div class="flex flex-row w-full text-lg">
-							<p class="mr-auto">Total files on Github:</p>
-							<p class="font-medium text-blue-600">{data ? data.total_files : 'Loading'}</p>
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">Total files on Github:</p>
+
+								<p class="font-medium text-blue-600">{data ? data.total_files : 'Loading'}</p>
+							</div>
+							<div class="mx-10 text-slate-800 text-sm italic">
+								<p class="truncate">Random file: hello_world.txt</p>
+							</div>
 						</div>
-						<div class="flex flex-row w-full text-lg">
-							<p class="mr-auto">Total repositories:</p>
-							<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">Total GitHub repositories:</p>
+
+								<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
+							</div>
+							<div class="mx-10 text-slate-800 text-sm italic">
+								<p class="truncate">Most stars: website</p>
+							</div>
+						</div>
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">Total Hack Club messages:</p>
+
+								<p class="font-medium text-blue-600">{data ? data.total_messages : 'Loading'}</p>
+							</div>
+							<div class="mx-10 text-slate-800 text-sm italic">
+								<p class="truncate">Latest message: {moment(data.latest_message_time).fromNow()}</p>
+							</div>
 						</div>
 					</div>
 				</div>
