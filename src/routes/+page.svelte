@@ -11,13 +11,9 @@
 	import moment from 'moment';
 	import Typewriter from 'svelte-typewriter';
 
-	var email = 'Enable JavaScript to view';
-
 	export let data: PageData;
 
 	onMount(() => {
-		email = window.atob('aGVsbG9Ac2FtbGl1LmRldg==');
-
 		setInterval(async () => {
 			data = await refreshStats();
 		}, 60000);
@@ -66,9 +62,7 @@
 			<div class="text-blue-600">
 				<ul class="space-x-6">
 					<li class="inline hover:underline">
-						<a href="mailto:{email}" target="_blank" rel="noopener noreferrer">
-							Email<noscript>&nbsp;(Enable Javascript to view)</noscript>
-						</a>
+						<a href="mailto:hello@samliu.dev" target="_blank" rel="noopener noreferrer">Email</a>
 					</li>
 					<li class="inline hover:underline">
 						<a href="https://github.com/SamDev-7/" target="_blank" rel="noopener noreferrer"
