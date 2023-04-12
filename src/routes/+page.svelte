@@ -3,19 +3,25 @@
 	import { onMount } from 'svelte';
 
 	import { greetings } from '../lib/random-greeting';
-	import Typewriter from 'svelte-typewriter';
 	import { scrollToAnchor } from '$lib/scroll';
+	import { refreshStats } from '$lib/stats-refresher';
+
 	import Navbar from '../components/Navbar.svelte';
 
 	import moment from 'moment';
+	import Typewriter from 'svelte-typewriter';
 
 	var email = 'Enable JavaScript to view';
 
+	export let data: PageData;
+
 	onMount(() => {
 		email = window.atob('aGVsbG9Ac2FtbGl1LmRldg==');
-	});
 
-	export let data: PageData;
+		setInterval(async () => {
+			data = await refreshStats();
+		}, 60000);
+	});
 </script>
 
 <svelte:head>
@@ -121,14 +127,20 @@
 			</div>
 		</div>
 		<div class="flex flex-col col-span-2 mx-6 space-y-6 border-slate-300 border-2 p-8 rounded-xl">
-			<div class="flex items-center mx-auto space-x-4 my-3">
-				<span class="relative flex w-4 h-4">
-					<span
-						class="absolute inline-flex w-full h-full bg-green-500 rounded-full opacity-75 motion-safe:animate-ping"
-					/>
-					<span class="relative inline-flex w-4 h-4 bg-green-500 rounded-full" />
-				</span>
-				<p class="text-2xl font-medium text-center">Live Statistics</p>
+			<div class="flex flex-col items-center mx-auto my-2">
+				<div class="flex flex-row items-center space-x-4 mx-auto">
+					<span class="relative flex w-4 h-4">
+						<span
+							class="absolute inline-flex w-full h-full bg-green-500 rounded-full opacity-75 motion-safe:animate-ping"
+						/>
+						<span class="relative inline-flex w-4 h-4 bg-green-500 rounded-full" />
+					</span>
+					<p class="text-2xl font-medium text-center">Live Statistics</p>
+				</div>
+				<p class="text-sm text-center text-slate-600 nojs:hidden">Refreshes every minute</p>
+				<noscript>
+					<p class="text-sm text-center text-slate-600">Enable JavaScript for live updates</p>
+				</noscript>
 			</div>
 			<div>
 				<div class="flex flex-row space-x-16 mx-6">
@@ -138,7 +150,7 @@
 								<p class="mr-auto">Total GitHub commits:</p>
 								<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
 							</div>
-							<div class="mx-10 text-slate-800 text-sm italic">
+							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">Latest commit: Update endpoint.ymlfsdcxwefsdcx</p>
 							</div>
 						</div>
@@ -148,7 +160,7 @@
 
 								<p class="font-medium text-blue-600">{data ? data.total_files : 'Loading'}</p>
 							</div>
-							<div class="mx-10 text-slate-800 text-sm italic">
+							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">Random file: hello_world.txt</p>
 							</div>
 						</div>
@@ -158,7 +170,7 @@
 
 								<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
 							</div>
-							<div class="mx-10 text-slate-800 text-sm italic">
+							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">Most stars: website</p>
 							</div>
 						</div>
@@ -168,7 +180,7 @@
 
 								<p class="font-medium text-blue-600">{data ? data.total_messages : 'Loading'}</p>
 							</div>
-							<div class="mx-10 text-slate-800 text-sm italic">
+							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">Latest message: {moment(data.latest_message_time).fromNow()}</p>
 							</div>
 						</div>
