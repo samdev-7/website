@@ -63,7 +63,7 @@
 					<h3>Learning, building, and striving to create impact.</h3>
 				</div>
 			</div>
-			<div class="text-blue-500">
+			<div class="text-blue-600">
 				<ul class="space-x-6">
 					<li class="inline hover:underline">
 						<a href="mailto:{email}" target="_blank" rel="noopener noreferrer">
