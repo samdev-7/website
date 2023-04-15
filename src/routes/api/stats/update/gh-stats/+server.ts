@@ -61,7 +61,9 @@ export const GET: RequestHandler = (async () => {
             total_commits: record.total_commits,
             total_repos: record.total_repos,
             latest_commit_message: record.latest_commit_message,
-            latest_commit_link: record.latest_commit_link
+            latest_commit_link: record.latest_commit_link,
+            most_stars_name: record.most_stars_name,
+            most_stars_link: record.most_stars_link
         }
 
         return json(result);
