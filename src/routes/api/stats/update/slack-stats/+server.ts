@@ -7,7 +7,8 @@ import { statsCol } from '$lib/mongo';
 
 type slackStat = {
     total_messages: number,
-    latest_message_time: Date
+    latest_message_time: Date,
+    latest_message_link: string
 }
 
 export type slackRecord = slackStat & {
@@ -37,7 +38,7 @@ export const GET = (async () => {
     const date = new Date(record.timestamp.getTime());
 
     // If the cache is older than a minute
-    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
+    if (date.setMinutes(date.getMinutes() + 0) < new Date().getTime()) {
         const result = await fetchResult(fetch);
 
         statsCol.updateOne({
@@ -64,8 +65,9 @@ async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit 
     const messages = await fetchMessages(fetch);
 
     return {
-        total_messages: messages.total_messages,
-        latest_message_time: messages.latest_message_time
+        total_messages: messages.total,
+        latest_message_time: new Date(messages.matches[0].ts * 1000),
+        latest_message_link: messages.matches[0].permalink
     }
 }
 
@@ -93,9 +95,5 @@ async function fetchMessages(fetch: (input: RequestInfo | URL, init?: RequestIni
         }
     }
 
-
-    return {
-        total_messages: data.messages.total,
-        latest_message_time: new Date(data.messages.matches[0].ts * 1000)
-    };
+    return data.messages;
 }

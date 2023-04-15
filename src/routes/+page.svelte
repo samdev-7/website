@@ -187,7 +187,12 @@
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">
-									Latest message sent {moment(data.latest_message_time).fromNow()}
+									<a
+										href={data ? data.latest_message_link : undefined}
+										target="_blank"
+										rel="noopener noreferrer"
+										>Latest message sent {moment(data.latest_message_time).fromNow()}</a
+									>
 								</p>
 							</div>
 						</div>

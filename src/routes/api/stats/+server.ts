@@ -13,7 +13,8 @@ export type resultType = {
     most_stars_name: string,
     most_stars_link: string,
     total_messages: number,
-    latest_message_time: Date
+    latest_message_time: Date,
+    latest_message_link: string
 }
 
 export const GET = (async () => {
@@ -43,7 +44,8 @@ export const GET = (async () => {
         most_stars_name: ghRecord.most_stars_name,
         most_stars_link: ghRecord.most_stars_link,
         total_messages: slackRecord.total_messages,
-        latest_message_time: slackRecord.latest_message_time
+        latest_message_time: slackRecord.latest_message_time,
+        latest_message_link: slackRecord.latest_message_link
     }
 
     return json(result);
