@@ -18,19 +18,9 @@ export type resultType = {
 }
 
 export const GET = (async () => {
-    let ghRecord = await statsCol.findOne({ source: "github" }) as ghRecord | null;
+    const ghRecord = await statsCol.findOne({ source: "github" }) as ghRecord | null;
 
-    if (!ghRecord) {
-        await fetch('/api/update/gh-stats');
-        ghRecord = await statsCol.findOne({ source: "github" }) as ghRecord | null;
-    }
-
-    let slackRecord = await statsCol.findOne({ source: "hc_slack" }) as slackRecord | null;
-
-    if (!slackRecord) {
-        await fetch('/api/update/slack-stats');
-        slackRecord = await statsCol.findOne({ source: "hc_slack" }) as slackRecord | null;
-    }
+    const slackRecord = await statsCol.findOne({ source: "hc_slack" }) as slackRecord | null;
 
     if (!ghRecord || !slackRecord) {
         throw new Error("Failed to load stats, missing records in database.");
