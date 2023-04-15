@@ -191,7 +191,7 @@
 										href={data ? data.latest_message_link : undefined}
 										target="_blank"
 										rel="noopener noreferrer"
-										>Latest message sent {moment(data.latest_message_time).fromNow()}</a
+										>Latest message was sent {moment(data.latest_message_time).fromNow()}</a
 									>
 								</p>
 							</div>
