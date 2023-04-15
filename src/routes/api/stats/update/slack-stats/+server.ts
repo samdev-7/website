@@ -5,24 +5,29 @@ import { json } from '@sveltejs/kit';
 
 import { statsCol } from '$lib/mongo';
 
+type slackStat = {
+    total_messages: number,
+    latest_message_time: Date
+}
+
+export type slackRecord = slackStat & {
+    source: "hc_slack",
+    timestamp: Date
+}
+
 const headers = {
-    "Accept": "application/json",
-    "Authorization": `Bearer ${SLACK_USER_TOKEN}`
+    Accept: "application/json",
+    Authorization: `Bearer ${SLACK_USER_TOKEN}`
 }
 
 export const GET = (async () => {
     const record = await statsCol.findOne({ source: "hc_slack" })
     if (!record) {
-        const data = await getMessages(fetch);
-
-        const result = {
-            "total_messages": data.total_messages,
-            "latest_message_time": data.latest_message_time
-        }
+        const result = await fetchResult(fetch);
 
         statsCol.insertOne({
-            "source": "hc_slack",
-            "timestamp": new Date(),
+            source: "hc_slack",
+            timestamp: new Date(),
             ...result
         })
 
@@ -33,18 +38,13 @@ export const GET = (async () => {
 
     // If the cache is older than a minute
     if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
-        const data = await getMessages(fetch);
-
-        const result = {
-            "total_messages": data.total_messages,
-            "latest_message_time": data.latest_message_time
-        }
+        const result = await fetchResult(fetch);
 
         statsCol.updateOne({
-            "source": "hc_slack"
+            source: "hc_slack"
         }, {
             $set: {
-                "timestamp": new Date(),
+                timestamp: new Date(),
                 ...result
             }
         })
@@ -52,15 +52,24 @@ export const GET = (async () => {
         return json(result);
     } else {
         const result = {
-            "total_messages": record.total_messages,
-            "latest_message_time": record.latest_message_time
+            total_messages: record.total_messages,
+            latest_message_time: record.latest_message_time
         }
 
         return json(result);
     }
 }) satisfies RequestHandler;
 
-async function getMessages(fetch: { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (arg0: string, arg1: { headers: { Accept: string; "X-GitHub-Api-Version": string; Authorization: string; }; }): unknown; }): Promise<{ total_messages: number; latest_message_time: Date; }> {
+async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>): Promise<slackStat> {
+    const messages = await fetchMessages(fetch);
+
+    return {
+        total_messages: messages.total_messages,
+        latest_message_time: messages.latest_message_time
+    }
+}
+
+async function fetchMessages(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
     const res = await fetch('https://slack.com/api/search.messages?query=from%3A%40samliu&count=1', {
         method: 'POST',
         headers: headers

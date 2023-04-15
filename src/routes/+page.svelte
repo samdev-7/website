@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 
-	import { greetings } from '../lib/random-greeting';
+	import { greetings } from '$lib/random-greeting';
 	import { scrollToAnchor } from '$lib/scroll';
 	import { refreshStats } from '$lib/stats-refresher';
 
@@ -145,37 +145,50 @@
 								<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
-								<p class="truncate">Latest commit: Update endpoint.ymlfsdcxwefsdcx</p>
+								<p class="truncate">
+									Latest commit: <span
+										><a
+											href={data ? data.latest_commit_link : undefined}
+											target="_blank"
+											rel="noopener noreferrer">{data ? data.latest_commit_message : 'Loading'}</a
+										></span
+									>
+								</p>
 							</div>
 						</div>
 						<div>
 							<div class="flex flex-row text-lg">
-								<p class="mr-auto">Total files on Github:</p>
-
-								<p class="font-medium text-blue-600">{data ? data.total_files : 'Loading'}</p>
-							</div>
-							<div class="mx-10 text-slate-700 text-sm italic">
-								<p class="truncate">Random file: hello_world.txt</p>
-							</div>
-						</div>
-						<div>
-							<div class="flex flex-row text-lg">
-								<p class="mr-auto">Total GitHub repositories:</p>
+								<p class="mr-auto">Total public GitHub repositories:</p>
 
 								<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
-								<p class="truncate">Most stars: website</p>
+								<p class="truncate">
+									Most stars: <span
+										><a
+											href={data ? data.most_stars_link : undefined}
+											target="_blank"
+											rel="noopener noreferrer">{data ? data.most_stars_name : 'Loading'}</a
+										></span
+									>
+								</p>
 							</div>
 						</div>
 						<div>
 							<div class="flex flex-row text-lg">
-								<p class="mr-auto">Total Hack Club messages:</p>
-
+								<p class="mr-auto">
+									Total <span
+										><a href="https://hackclub.com/slack" target="_blank" rel="noopener noreferrer"
+											>Hack Club</a
+										></span
+									> messages:
+								</p>
 								<p class="font-medium text-blue-600">{data ? data.total_messages : 'Loading'}</p>
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
-								<p class="truncate">Latest message: {moment(data.latest_message_time).fromNow()}</p>
+								<p class="truncate">
+									Latest message sent {moment(data.latest_message_time).fromNow()}
+								</p>
 							</div>
 						</div>
 					</div>

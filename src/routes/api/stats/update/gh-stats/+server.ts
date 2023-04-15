@@ -1,28 +1,39 @@
 import type { RequestHandler } from './$types';
 
 import { GITHUB_PAT } from '$env/static/private';
-import { json } from '@sveltejs/kit';
+import { json, } from '@sveltejs/kit';
 
 import { statsCol } from '$lib/mongo';
 
-const headers = {
-    "Accept": "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-    "Authorization": `Bearer ${GITHUB_PAT}`
+type ghStat = {
+    total_commits: number,
+    total_repos: number,
+    latest_commit_message: string,
+    latest_commit_link: string,
+    most_stars_name: string,
+    most_stars_link: string,
 }
 
-export const GET = (async () => {
-    const record = await statsCol.findOne({ source: "github" })
+export type ghRecord = ghStat & {
+    source: "github",
+    timestamp: Date
+}
+
+const headers = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    Authorization: `Bearer ${GITHUB_PAT}`
+}
+
+export const GET: RequestHandler = (async () => {
+    const record = await statsCol.findOne({ source: "github" }) as ghRecord | null;
+
     if (!record) {
-        const result = {
-            "total_commits": await getTotalCommits(fetch),
-            "total_files": await getTotalFiles(fetch),
-            "total_repos": await getRepos(fetch),
-        }
+        const result = await fetchResult(fetch);
 
         statsCol.insertOne({
-            "source": "github",
-            "timestamp": new Date(),
+            source: "github",
+            timestamp: new Date(),
             ...result
         })
 
@@ -33,17 +44,13 @@ export const GET = (async () => {
 
     // If the cache is older than a minute
     if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
-        const result = {
-            "total_commits": await getTotalCommits(fetch),
-            "total_files": await getTotalFiles(fetch),
-            "total_repos": await getRepos(fetch),
-        }
+        const result = await fetchResult(fetch);
 
         statsCol.updateOne({
-            "source": "github"
+            source: "github"
         }, {
             $set: {
-                "timestamp": new Date(),
+                timestamp: new Date(),
                 ...result
             }
         })
@@ -51,17 +58,32 @@ export const GET = (async () => {
         return json(result);
     } else {
         const result = {
-            "total_commits": record.total_commits,
-            "total_files": record.total_files,
-            "total_repos": record.total_repos,
+            total_commits: record.total_commits,
+            total_repos: record.total_repos,
+            latest_commit_message: record.latest_commit_message,
+            latest_commit_link: record.latest_commit_link
         }
 
         return json(result);
     }
-}) satisfies RequestHandler;
+});
 
-async function getTotalCommits(fetch: { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (arg0: string, arg1: { headers: { Accept: string; "X-GitHub-Api-Version": string; Authorization: string; }; }): unknown; }): Promise<number> {
-    const res = await fetch('https://api.github.com/search/commits?q=author:SamDev-7&per_page=1', { headers });
+async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>): Promise<ghStat> {
+    const commits = await fetchCommits(fetch);
+    const repos = await fetchRepos(fetch);
+
+    return {
+        total_commits: commits.total_count,
+        total_repos: repos.total_count,
+        latest_commit_message: commits.items[0].commit.message,
+        latest_commit_link: commits.items[0].html_url,
+        most_stars_name: repos.items[0].name,
+        most_stars_link: repos.items[0].html_url
+    }
+}
+
+async function fetchCommits(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
+    const res = await fetch('https://api.github.com/search/commits?q=author:SamDev-7&sort=author-date&order=acs&per_page=1', { headers });
 
     if (!res.ok) {
         console.error("Error fetching commits with status " + res.status + ".")
@@ -69,23 +91,11 @@ async function getTotalCommits(fetch: { (input: RequestInfo | URL, init?: Reques
     }
 
     const data = await res.json();
-    return data.total_count;
+    return data;
 }
 
-async function getTotalFiles(fetch: { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (arg0: string, arg1: { headers: { Accept: string; "X-GitHub-Api-Version": string; Authorization: string; }; }): unknown; }): Promise<number> {
-    const res = await fetch('https://api.github.com/search/code?q=user:SamDev-7&per_page=1', { headers });
-
-    if (!res.ok) {
-        console.error("Error fetching files with status " + res.status + ".")
-        return -1;
-    }
-
-    const data = await res.json();
-    return data.total_count;
-}
-
-async function getRepos(fetch: { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (arg0: string, arg1: { headers: { Accept: string; "X-GitHub-Api-Version": string; Authorization: string; }; }): unknown; }): Promise<number> {
-    const res = await fetch('https://api.github.com/user/repos', { headers });
+async function fetchRepos(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
+    const res = await fetch('https://api.github.com/search/repositories?q=user:SamDev-7&sort=stars&order=desc&per_page=1', { headers });
 
     const data = await res.json()
 
@@ -94,5 +104,5 @@ async function getRepos(fetch: { (input: RequestInfo | URL, init?: RequestInit |
         return -1;
     }
 
-    return data.length;
+    return data;
 }
