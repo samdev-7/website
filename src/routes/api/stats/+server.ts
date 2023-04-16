@@ -21,9 +21,11 @@ export type resultType = {
 }
 
 export const GET = (async () => {
-    const ghRecord = await statsCol.findOne({ source: "github" }) as ghRecord | null;
-    const slackRecord = await statsCol.findOne({ source: "hc_slack" }) as slackRecord | null;
-    const cfRecord = await statsCol.findOne({ source: "cloudflare" }) as cfRecord | null;
+    const records = await statsCol.find({ source: { $ne: null } }).toArray();
+    console.log(records)
+    const ghRecord = records.find(record => record.source === "github") as ghRecord | undefined;
+    const slackRecord = records.find(record => record.source === "hc_slack") as slackRecord | undefined;
+    const cfRecord = records.find(record => record.source === "cloudflare") as cfRecord | undefined;
 
     if (!ghRecord || !slackRecord || !cfRecord) {
         throw new Error("Failed to load stats, missing records in database.");
