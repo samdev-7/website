@@ -141,23 +141,6 @@
 					<div class="w-full space-y-3">
 						<div>
 							<div class="flex flex-row text-lg">
-								<p class="mr-auto">Total GitHub commits:</p>
-								<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
-							</div>
-							<div class="mx-10 text-slate-700 text-sm italic">
-								<p class="truncate">
-									Latest commit: <span class="underline"
-										><a
-											href={data ? data.latest_commit_link : undefined}
-											target="_blank"
-											rel="noopener noreferrer">{data ? data.latest_commit_message : 'Loading'}</a
-										></span
-									>.
-								</p>
-							</div>
-						</div>
-						<div>
-							<div class="flex flex-row text-lg">
 								<p class="mr-auto">Public GitHub repositories created:</p>
 
 								<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
@@ -171,6 +154,23 @@
 											rel="noopener noreferrer">{data ? data.most_stars_name : 'Loading'}</a
 										></span
 									> has the most stars.
+								</p>
+							</div>
+						</div>
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">Total GitHub commits:</p>
+								<p class="font-medium text-blue-600">{data ? data.total_commits : 'Loading'}</p>
+							</div>
+							<div class="mx-10 text-slate-700 text-sm italic">
+								<p class="truncate">
+									Latest commit: <span class="underline"
+										><a
+											href={data ? data.latest_commit_link : undefined}
+											target="_blank"
+											rel="noopener noreferrer">{data ? data.latest_commit_message : 'Loading'}</a
+										></span
+									>.
 								</p>
 							</div>
 						</div>
