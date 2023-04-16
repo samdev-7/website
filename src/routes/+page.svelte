@@ -199,10 +199,7 @@
 						</div>
 						<div>
 							<div class="flex flex-row text-lg">
-								<p class="mr-auto">
-									Unique website visitors<span title="In the past year" class="cursor-help">*</span
-									>:
-								</p>
+								<p class="mr-auto">Website visitors in the past year:</p>
 								<p class="font-medium text-blue-600">
 									{data ? data.total_unique_visitors : 'Loading'}
 								</p>
