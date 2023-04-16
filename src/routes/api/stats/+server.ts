@@ -22,7 +22,6 @@ export type resultType = {
 
 export const GET = (async () => {
     const records = await statsCol.find({ source: { $ne: null } }).toArray();
-    console.log(records)
     const ghRecord = records.find(record => record.source === "github") as ghRecord | undefined;
     const slackRecord = records.find(record => record.source === "hc_slack") as slackRecord | undefined;
     const cfRecord = records.find(record => record.source === "cloudflare") as cfRecord | undefined;
