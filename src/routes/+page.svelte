@@ -146,54 +146,74 @@
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">
-									Latest commit: <span
+									Latest commit: <span class="underline"
 										><a
 											href={data ? data.latest_commit_link : undefined}
 											target="_blank"
 											rel="noopener noreferrer">{data ? data.latest_commit_message : 'Loading'}</a
 										></span
-									>
+									>.
 								</p>
 							</div>
 						</div>
 						<div>
 							<div class="flex flex-row text-lg">
-								<p class="mr-auto">Total public GitHub repositories:</p>
+								<p class="mr-auto">Public GitHub repositories created:</p>
 
 								<p class="font-medium text-blue-600">{data ? data.total_repos : 'Loading'}</p>
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">
-									Most stars: <span
+									Repository <span class="underline"
 										><a
 											href={data ? data.most_stars_link : undefined}
 											target="_blank"
 											rel="noopener noreferrer">{data ? data.most_stars_name : 'Loading'}</a
 										></span
-									>
+									> has the most stars.
 								</p>
 							</div>
 						</div>
 						<div>
 							<div class="flex flex-row text-lg">
 								<p class="mr-auto">
-									Total <span
+									<span
 										><a href="https://hackclub.com/slack" target="_blank" rel="noopener noreferrer"
 											>Hack Club</a
 										></span
-									> messages:
+									> messages sent:
 								</p>
 								<p class="font-medium text-blue-600">{data ? data.total_messages : 'Loading'}</p>
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">
-									<a
-										href={data ? data.latest_message_link : undefined}
-										target="_blank"
-										rel="noopener noreferrer"
-										>Latest message was sent {moment(data.latest_message_time).fromNow()}</a
-									>
+									Latest message was sent <span class="underline">
+										<a
+											href={data ? data.latest_message_link : undefined}
+											target="_blank"
+											rel="noopener noreferrer">{moment(data.latest_message_time).fromNow()}</a
+										></span
+									>.
 								</p>
+							</div>
+						</div>
+						<div>
+							<div class="flex flex-row text-lg">
+								<p class="mr-auto">
+									Unique website visitors<span title="In the past year" class="cursor-help">*</span
+									>:
+								</p>
+								<p class="font-medium text-blue-600">
+									{data ? data.total_unique_visitors : 'Loading'}
+								</p>
+							</div>
+							<div class="mx-10 text-slate-700 text-sm italic">
+								<p class="truncate">
+									Most visitors are from <span class="underline">
+										{data ? data.most_visitor_location : 'Loading'}
+									</span>
+								</p>
+								.
 							</div>
 						</div>
 					</div>

@@ -4,6 +4,7 @@ import { statsCol } from '$lib/mongo';
 import { json } from '@sveltejs/kit';
 import type { ghRecord } from './update/gh-stats/+server';
 import type { slackRecord } from './update/slack-stats/+server';
+import type { cfRecord } from './update/cf-stats/+server';
 
 export type resultType = {
     total_commits: number,
@@ -14,15 +15,17 @@ export type resultType = {
     most_stars_link: string,
     total_messages: number,
     latest_message_time: Date,
-    latest_message_link: string
+    latest_message_link: string,
+    total_unique_visitors: number,
+    most_visitor_location: string
 }
 
 export const GET = (async () => {
     const ghRecord = await statsCol.findOne({ source: "github" }) as ghRecord | null;
-
     const slackRecord = await statsCol.findOne({ source: "hc_slack" }) as slackRecord | null;
+    const cfRecord = await statsCol.findOne({ source: "cloudflare" }) as cfRecord | null;
 
-    if (!ghRecord || !slackRecord) {
+    if (!ghRecord || !slackRecord || !cfRecord) {
         throw new Error("Failed to load stats, missing records in database.");
     }
 
@@ -35,7 +38,9 @@ export const GET = (async () => {
         most_stars_link: ghRecord.most_stars_link,
         total_messages: slackRecord.total_messages,
         latest_message_time: slackRecord.latest_message_time,
-        latest_message_link: slackRecord.latest_message_link
+        latest_message_link: slackRecord.latest_message_link,
+        total_unique_visitors: cfRecord.total_unique_visitors,
+        most_visitor_location: cfRecord.most_visitor_location
     }
 
     return json(result);
