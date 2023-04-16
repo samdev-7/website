@@ -209,9 +209,9 @@
 							</div>
 							<div class="mx-10 text-slate-700 text-sm italic">
 								<p class="truncate">
-									Most visitors are from <span class="underline">
-										{data ? data.most_visitor_location : 'Loading'}
-									</span>.
+									Most visitors are from <span class="underline"
+										>{data ? data.most_visitor_location : 'Loading'}</span
+									>.
 								</p>
 							</div>
 						</div>
