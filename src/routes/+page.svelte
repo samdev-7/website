@@ -211,9 +211,8 @@
 								<p class="truncate">
 									Most visitors are from <span class="underline">
 										{data ? data.most_visitor_location : 'Loading'}
-									</span>
+									</span>.
 								</p>
-								.
 							</div>
 						</div>
 					</div>
