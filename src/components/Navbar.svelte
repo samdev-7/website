@@ -7,6 +7,7 @@
 	function goHome(event: MouseEvent) {
 		if (window.location.pathname == '/') {
 			scrollToAnchor(event, 'landing');
+			shrinkNav();
 		} else {
 			window.location.pathname = '/';
 		}
@@ -150,27 +151,42 @@
 			<a
 				href="/#about"
 				class="hover:text-blue-600 px-10 py-2"
-				on:click={(event) => toAnchorInHome(event, 'about')}>About</a
+				on:click={(event) => {
+					toAnchorInHome(event, 'about');
+					shrinkNav();
+				}}>About</a
 			><a
 				href="/#projects"
 				class="hover:text-blue-600 px-10 flex py-2"
-				on:click={(event) => toAnchorInHome(event, 'projects')}><p class="my-auto">Projects</p></a
+				on:click={(event) => {
+					toAnchorInHome(event, 'projects');
+					shrinkNav();
+				}}><p class="my-auto">Projects</p></a
 			>
 			<a
 				href="/#skills"
 				class="hover:text-blue-600 px-10 py-2"
-				on:click={(event) => toAnchorInHome(event, 'skills')}>Skills</a
+				on:click={(event) => {
+					toAnchorInHome(event, 'skills');
+					shrinkNav();
+				}}>Skills</a
 			>
 
 			<a
 				href="/#scrapbook"
 				class="hover:text-blue-600 px-10 py-2"
-				on:click={(event) => toAnchorInHome(event, 'scrapbook')}>Scrapbook</a
+				on:click={(event) => {
+					toAnchorInHome(event, 'scrapbook');
+					shrinkNav();
+				}}>Scrapbook</a
 			>
 			<a
 				href="/#contact"
 				class="hover:text-blue-600 px-10 py-2"
-				on:click={(event) => toAnchorInHome(event, 'contact')}>Contact</a
+				on:click={(event) => {
+					toAnchorInHome(event, 'contact');
+					shrinkNav();
+				}}>Contact</a
 			>
 		</div>
 	</div>
