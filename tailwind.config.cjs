@@ -15,7 +15,9 @@ export default {
 				'-md': { max: '768px' },
 				'-lg': { max: '1024px' },
 				'-xl': { max: '1280px' },
-				'-2xl': { max: '1536px' }
+				'-2xl': { max: '1536px' },
+				'-3xl': { max: '2048px' },
+				'3xl': { min: '2048px' }
 			},
 			animation: {
 				'bounce-slow': 'bounce 2s infinite'
