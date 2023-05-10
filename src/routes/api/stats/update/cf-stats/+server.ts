@@ -38,7 +38,7 @@ export const GET: RequestHandler = (async () => {
 
     const date = new Date(record.timestamp);
 
-    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
+    if (date.setMinutes(date.getMinutes() + 5) < new Date().getTime()) {
         const result = await fetchResult(fetch);
         const record = { ...result, timestamp: new Date() };
 

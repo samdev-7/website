@@ -35,7 +35,7 @@ export const GET = (async () => {
     const date = new Date(record.timestamp);
 
     // If the cache is older than a minute
-    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
+    if (date.setMinutes(date.getMinutes() + 5) < new Date().getTime()) {
         const result = await fetchResult(fetch);
 
         await kv.json.set("slack-stats", '$', record);
