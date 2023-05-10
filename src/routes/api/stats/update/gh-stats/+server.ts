@@ -71,8 +71,7 @@ export const GET: RequestHandler = (async () => {
 });
 
 async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>): Promise<ghStat> {
-    const commits = await fetchCommits(fetch);
-    const repos = await fetchRepos(fetch);
+    const [commits, repos] = await Promise.all([fetchCommits(fetch), fetchRepos(fetch)])
 
     return {
         total_commits: commits.total_count,
