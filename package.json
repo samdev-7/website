@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@vercel/kv": "^0.1.2",
 		"moment": "^2.29.4",
 		"mongodb": "^5.2.0"
 	}
