@@ -1,10 +1,11 @@
 import type { RequestHandler } from './$types';
 
 import { CLOUDFLARE_TOKEN, CLOUDFLARE_ZONE_ID } from '$env/static/private';
+
 import { json } from '@sveltejs/kit';
 
 import { statsCol } from '$lib/mongo';
-import { countries, getCountryByCode } from '$lib/countries';
+import { getCountryByCode } from '$lib/countries';
 
 type cfStat = {
     total_unique_visitors: number,
@@ -72,14 +73,13 @@ async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit 
 
 async function fetchVisitors(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
     const today = new Date();
-    console.log(new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).toISOString())
 
     const query = `query {
         viewer {
          zones (filter: {zoneTag: "${CLOUDFLARE_ZONE_ID}"}) {
            httpRequests1dGroups(
             limit: 10000,
-            filter: {date_gt: "${new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).toISOString().slice(0, 10)}"},
+            filter: {date_gt: "${new Date(today.getFullYear() - 1, today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds()).toISOString().slice(0, 10)}"},
            ) {
              sum {
               countryMap {
@@ -104,8 +104,6 @@ async function fetchVisitors(fetch: (input: RequestInfo | URL, init?: RequestIni
     }
 
     const data = await res.json();
-
-    console.log(data);
 
     const most_locations: string = data.data.viewer.zones[0].httpRequests1dGroups[0].sum.countryMap.reduce((a: { requests: number; }, b: { requests: number; }) => a.requests > b.requests ? a : b).clientCountryName;
 
