@@ -1,9 +1,9 @@
 import type { RequestHandler } from './$types';
 
 import { GITHUB_PAT } from '$env/static/private';
-import { json, } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 
-import { statsCol } from '$lib/mongo';
+import kv from "@vercel/kv";
 
 type ghStat = {
     total_commits: number,
@@ -15,8 +15,7 @@ type ghStat = {
 }
 
 export type ghRecord = ghStat & {
-    source: "github",
-    timestamp: Date
+    timestamp: string
 }
 
 const headers = {
@@ -26,34 +25,24 @@ const headers = {
 }
 
 export const GET: RequestHandler = (async () => {
-    const record = await statsCol.findOne({ source: "github" }) as ghRecord | null;
+    const record = await kv.json.get("gh-stats") as ghRecord | null;
 
     if (!record) {
         const result = await fetchResult(fetch);
+        const record = { ...result, timestamp: new Date() };
 
-        statsCol.insertOne({
-            source: "github",
-            timestamp: new Date(),
-            ...result
-        })
+        await kv.json.set("gh-stats", '$', record);
 
         return json(result);
     }
 
-    const date = new Date(record.timestamp.getTime());
+    const date = new Date(record.timestamp);
 
     // If the cache is older than a minute
     if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
         const result = await fetchResult(fetch);
 
-        statsCol.updateOne({
-            source: "github"
-        }, {
-            $set: {
-                timestamp: new Date(),
-                ...result
-            }
-        })
+        await kv.json.set("gh-stats", '$', record);
 
         return json(result);
     } else {
