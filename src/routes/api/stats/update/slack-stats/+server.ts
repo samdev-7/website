@@ -64,25 +64,17 @@ async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit 
 async function fetchMessages(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>) {
     const res = await fetch('https://slack.com/api/search.messages?query=from%3A%40samliu&count=1', {
         method: 'POST',
-        headers: headers
+        headers
     });
 
     if (!res.ok) {
-        console.error("Slack API request failed with status " + res.status + ".");
-        return {
-            total_messages: -1,
-            latest_message_time: new Date(0)
-        }
+        throw new Error(`Error fetching Slack stats with status ${res.status}.`)
     }
 
     const data = await res.json();
 
     if (!data.ok) {
-        console.error("Slack API request failed with error: " + data.error);
-        return {
-            total_messages: -1,
-            latest_message_time: new Date(0)
-        }
+        throw new Error(`Slack error with status ${res.status}.`)
     }
 
     return data.messages;

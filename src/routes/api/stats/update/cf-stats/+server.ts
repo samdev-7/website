@@ -27,14 +27,10 @@ export const GET: RequestHandler = (async () => {
     if (!record) {
         const result = await fetchResult(fetch);
         const record = { ...result, timestamp: new Date() };
-
-        console.log(JSON.stringify(record))
         await kv.json.set("cf-stats", '$', record);
 
         return json(result);
     }
-
-    console.log(record.timestamp);
 
     const date = new Date(record.timestamp);
 
@@ -93,7 +89,7 @@ async function fetchVisitors(fetch: (input: RequestInfo | URL, init?: RequestIni
     });
 
     if (!res.ok) {
-        throw new Error("Error fetching cloudflare stats with status " + res.status + ".")
+        throw new Error(`Error fetching cloudflare stats with status ${res.status}.`)
     }
 
     const data = await res.json();

@@ -76,8 +76,7 @@ async function fetchCommits(fetch: (input: RequestInfo | URL, init?: RequestInit
     const res = await fetch('https://api.github.com/search/commits?q=author:SamDev-7&sort=author-date&order=acs&per_page=1', { headers });
 
     if (!res.ok) {
-        console.error("Error fetching commits with status " + res.status + ".")
-        return -1;
+        throw new Error(`Error fetching commits with status ${res.status}.`)
     }
 
     const data = await res.json();
@@ -90,8 +89,7 @@ async function fetchRepos(fetch: (input: RequestInfo | URL, init?: RequestInit |
     const data = await res.json()
 
     if (!res.ok) {
-        console.error("Error fetching repos with status " + res.status + ".")
-        return -1;
+        throw new Error(`Error fetching repos with status ${res.status}.`)
     }
 
     return data;

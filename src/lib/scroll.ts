@@ -22,9 +22,9 @@ export function scrollToAnchor(event: MouseEvent, elementId: string) {
 }
 
 export function nearestAnchor(ids: string[], scroll: number) {
-    const anchors = ids.map(id => document.getElementById(id) as HTMLElement).filter(a => a != null);
+    const anchors = ids.map(id => document.getElementById(id) as HTMLElement).filter(a => a !== null);
 
-    if (anchors.length == 0) {
+    if (anchors.length === 0) {
         return null;
     }
 
