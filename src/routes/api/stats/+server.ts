@@ -1,11 +1,10 @@
 import type { RequestHandler } from './$types';
 
+import { statsCol } from '$lib/mongo';
 import { json } from '@sveltejs/kit';
 import type { ghRecord } from './update/gh-stats/+server';
 import type { slackRecord } from './update/slack-stats/+server';
 import type { cfRecord } from './update/cf-stats/+server';
-
-import kv from "@vercel/kv";
 
 export type resultType = {
     total_commits: number,
@@ -22,11 +21,10 @@ export type resultType = {
 }
 
 export const GET = (async () => {
-    const ghRecordProm = kv.json.get("gh-stats") as Promise<ghRecord | null>;
-    const slackRecordProm = kv.json.get("slack-stats") as Promise<slackRecord | null>;
-    const cfRecordProm = kv.json.get("cf-stats") as Promise<cfRecord | null>;
-
-    const [ghRecord, slackRecord, cfRecord] = await Promise.all([ghRecordProm, slackRecordProm, cfRecordProm]);
+    const records = await statsCol.find({ source: { $ne: null } }).toArray();
+    const ghRecord = records.find(record => record.source === "github") as ghRecord | undefined;
+    const slackRecord = records.find(record => record.source === "hc_slack") as slackRecord | undefined;
+    const cfRecord = records.find(record => record.source === "cloudflare") as cfRecord | undefined;
 
     if (!ghRecord || !slackRecord || !cfRecord) {
         throw new Error("Failed to load stats, missing records in database.");

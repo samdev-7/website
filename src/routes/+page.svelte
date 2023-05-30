@@ -16,7 +16,7 @@
 	onMount(() => {
 		setInterval(async () => {
 			data = await refreshStats();
-		}, 300000);
+		}, 60000);
 	});
 </script>
 
@@ -146,7 +146,7 @@
 					</span>
 					<p class="text-2xl font-medium text-center -2xs:text-base">Live Statistics</p>
 				</div>
-				<p class="text-sm text-center text-slate-600 nojs:hidden">Refreshes every 5 minutes</p>
+				<p class="text-sm text-center text-slate-600 nojs:hidden">Refreshes every minute</p>
 				<noscript>
 					<p class="text-sm text-center text-slate-600">Enable JavaScript for live updates</p>
 				</noscript>

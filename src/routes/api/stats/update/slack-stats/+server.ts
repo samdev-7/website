@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import { SLACK_USER_TOKEN } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 
-import kv from "@vercel/kv";
+import { statsCol } from '$lib/mongo';
 
 type slackStat = {
     total_messages: number,
@@ -12,7 +12,8 @@ type slackStat = {
 }
 
 export type slackRecord = slackStat & {
-    timestamp: string
+    source: "hc_slack",
+    timestamp: Date
 }
 
 const headers = {
@@ -21,24 +22,33 @@ const headers = {
 }
 
 export const GET = (async () => {
-    const record = await kv.json.get("slack-stats") as slackRecord | null;
-
+    const record = await statsCol.findOne({ source: "hc_slack" })
     if (!record) {
         const result = await fetchResult(fetch);
-        const record = { ...result, timestamp: new Date() };
 
-        await kv.json.set("slack-stats", '$', record);
+        statsCol.insertOne({
+            source: "hc_slack",
+            timestamp: new Date(),
+            ...result
+        })
 
         return json(result);
     }
 
-    const date = new Date(record.timestamp);
+    const date = new Date(record.timestamp.getTime());
 
     // If the cache is older than a minute
-    if (date.setMinutes(date.getMinutes() + 5) < new Date().getTime()) {
+    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
         const result = await fetchResult(fetch);
 
-        await kv.json.set("slack-stats", '$', record);
+        statsCol.updateOne({
+            source: "hc_slack"
+        }, {
+            $set: {
+                timestamp: new Date(),
+                ...result
+            }
+        })
 
         return json(result);
     } else {

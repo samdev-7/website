@@ -4,9 +4,8 @@ import { CLOUDFLARE_TOKEN, CLOUDFLARE_ZONE_ID } from '$env/static/private';
 
 import { json } from '@sveltejs/kit';
 
+import { statsCol } from '$lib/mongo';
 import { getCountryByCode } from '$lib/countries';
-
-import kv from "@vercel/kv";
 
 type cfStat = {
     total_unique_visitors: number,
@@ -14,7 +13,8 @@ type cfStat = {
 }
 
 export type cfRecord = cfStat & {
-    timestamp: string
+    source: "cloudflare",
+    timestamp: Date
 }
 
 const headers = {
@@ -22,23 +22,34 @@ const headers = {
 }
 
 export const GET: RequestHandler = (async () => {
-    const record = await kv.json.get("cf-stats") as cfRecord | null;
+    const record = await statsCol.findOne({ source: "cloudflare" }) as cfRecord | null;
 
     if (!record) {
         const result = await fetchResult(fetch);
-        const record = { ...result, timestamp: new Date() };
-        await kv.json.set("cf-stats", '$', record);
+
+        statsCol.insertOne({
+            source: "cloudflare",
+            timestamp: new Date(),
+            ...result
+        })
 
         return json(result);
     }
 
-    const date = new Date(record.timestamp);
+    const date = new Date(record.timestamp.getTime());
 
-    if (date.setMinutes(date.getMinutes() + 5) < new Date().getTime()) {
+    // If the cache is older than a minute
+    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
         const result = await fetchResult(fetch);
-        const record = { ...result, timestamp: new Date() };
 
-        await kv.json.set("cf-stats", '$', record);
+        statsCol.updateOne({
+            source: "cloudflare"
+        }, {
+            $set: {
+                timestamp: new Date(),
+                ...result
+            }
+        })
 
         return json(result);
     } else {
