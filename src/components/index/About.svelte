@@ -120,7 +120,7 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Unique website visits in the past year:</p>
+							<p class="mr-auto">Unique website visits (past year):</p>
 							<p class="font-medium text-blue-600">
 								{stats ? stats.total_unique_visitors : 'Loading'}
 							</p>

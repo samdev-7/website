@@ -14,7 +14,7 @@
 	onMount(() => {
 		if (location.hostname == 'v2.samliu.dev') {
 			alert(
-				'This site is still under development! Everything You see is a work in progress and is subject to change.'
+				'This site is still under development! Everything you see is a work in progress and is subject to change.'
 			);
 		}
 	});
