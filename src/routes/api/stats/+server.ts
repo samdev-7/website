@@ -6,7 +6,7 @@ import type { ghRecord } from './update/gh-stats/+server';
 import type { slackRecord } from './update/slack-stats/+server';
 import type { cfRecord } from './update/cf-stats/+server';
 
-export type resultType = {
+export type statsType = {
     total_commits: number,
     total_repos: number,
     latest_commit_message: string,
@@ -30,7 +30,7 @@ export const GET = (async () => {
         throw new Error("Failed to load stats, missing records in database.");
     }
 
-    const result: resultType = {
+    const result: statsType = {
         total_commits: ghRecord.total_commits,
         total_repos: ghRecord.total_repos,
         latest_commit_message: ghRecord.latest_commit_message,

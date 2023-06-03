@@ -1,8 +1,8 @@
-import type { resultType } from "../routes/api/stats/+server";
+import type { statsType } from "../routes/api/stats/+server";
 
 export async function refreshStats() {
     const res = await fetch('/api/stats');
-    const result: resultType = await res.json();
+    const result: statsType = await res.json();
 
     return result;
 } 

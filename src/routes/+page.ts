@@ -1,9 +1,11 @@
 import type { PageLoad } from './$types';
-import type { resultType } from './api/stats/+server';
+import type { statsType } from './api/stats/+server';
 
 export const load = (async ({ fetch }) => {
-  const res = await fetch('/api/stats');
-  const result: resultType = await res.json();
+  const stats_res = await fetch('/api/stats');
+  const stats: statsType = await stats_res.json();
 
-  return result;
+  return {
+    stats
+  };
 }) satisfies PageLoad;
