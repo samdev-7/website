@@ -9,8 +9,8 @@
 	class="absolute flex justify-center p-4 mx-10 text-center bg-white border-2 mt-28 md:hidden rounded-xl border-slate-300 -xs:text-sm -sm:mx-3 -xs:mx-1 -2xs:p-2"
 >
 	<p>
-		Hello fellow mobile user! This website is not optimized for mobile use, try accessing it on a
-		desktop computer or laptop.
+		This website is not yet optimized for small screens, try accessing it on a desktop computer or
+		laptop.
 	</p>
 </div>
 
