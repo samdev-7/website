@@ -1,9 +1,9 @@
 import type { RequestHandler } from './$types';
 
-import { GITHUB_PAT } from '$env/static/private';
-import { json, } from '@sveltejs/kit';
+import { GITHUB_PAT } from "$env/static/private";
+import { statsCol } from "$lib/mongo";
 
-import { statsCol } from '$lib/mongo';
+import { json } from "@sveltejs/kit";
 
 type ghStat = {
     total_commits: number,
