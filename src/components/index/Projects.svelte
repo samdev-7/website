@@ -73,12 +73,14 @@
 						<a
 							href="https://angelhacksto.hackclub.com/"
 							target="_blank"
-							class="bg-[#FDB32B] py-4 rounded-xl">Visit Website</a
+							class="bg-[#FDB32B] py-4 rounded-xl hover:scale-105 motion-safe:transition-transform"
+							>Visit Website</a
 						>
 						<a
 							href="https://bank.hackclub.com/angelhacks-toronto"
 							target="_blank"
-							class="bg-[#FDB32B] py-4 rounded-xl">See Finances</a
+							class="bg-[#FDB32B] py-4 rounded-xl hover:scale-105 motion-safe:transition-transform"
+							>See Finances</a
 						>
 					</div>
 				</div>
