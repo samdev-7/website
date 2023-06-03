@@ -67,7 +67,7 @@
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
 							<p class="lg:truncate">
-								Repository <span class="underline"
+								Repository <span class="underline hover:text-blue-600"
 									><a
 										href={stats ? stats.most_stars_link : undefined}
 										target="_blank"
@@ -84,7 +84,7 @@
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
 							<p class="lg:truncate">
-								Latest commit: <span class="underline"
+								Latest commit: <span class="underline hover:text-blue-600"
 									><a
 										href={stats ? stats.latest_commit_link : undefined}
 										target="_blank"
@@ -107,7 +107,7 @@
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
 							<p class="lg:truncate">
-								Latest message was sent <span class="underline">
+								Latest message was sent <span class="underline hover:text-blue-600">
 									<a
 										href={stats ? stats.latest_message_link : undefined}
 										target="_blank"
@@ -127,8 +127,7 @@
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
 							<p class="lg:truncate">
-								Most requests are from <span class="underline"
-									>{stats ? stats.most_visitor_location : 'Loading'}</span
+								Most requests are from <span>{stats ? stats.most_visitor_location : 'Loading'}</span
 								>.
 							</p>
 						</div>

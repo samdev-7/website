@@ -1,14 +1,30 @@
 <script lang="ts">
+	import { scrollToAnchor } from '$lib/scroll';
 </script>
 
 <div id="projects" class="scroll-m-16 flex justify-center">
 	<div class="sm:mx-10 lg:mx-20 mx-0 max-w-7xl space-y-16 py-16">
 		<!-- Section -->
-		<div class="text-center space-y-4">
+		<div class="text-center space-y-6 mx-4">
 			<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl">
 				Projects
 			</h4>
-			<p class="text-lg text-gray-800">Stuff I have done or are still working on!</p>
+			<div class="space-y-2">
+				<p class="text-lg text-slate-800">
+					These are things that I am working on, contributing to, or stuff that I have done in the
+					past.
+				</p>
+				<p class="text-slate-700">
+					Interested in something you see? Questions?
+					<a
+						href="#contact"
+						on:click={(event) => scrollToAnchor(event, 'contact')}
+						class="underline hover:text-blue-600"
+					>
+						Let's connect</a
+					>!
+				</p>
+			</div>
 		</div>
 
 		<!-- Project List-->
@@ -51,7 +67,7 @@
 							<!-- Project headings -->
 							<div class="space-y-1">
 								<p class="text-4xl font-medium tracking-wide">AngelHacks Toronto</p>
-								<p class="text-xl text-gray-800">Organizer</p>
+								<p class="text-xl text-slate-800">Organizer</p>
 							</div>
 						</div>
 						<!-- Description -->
@@ -174,7 +190,7 @@
 							<!-- Project headings -->
 							<div class="space-y-1">
 								<p class="text-4xl font-medium tracking-wide">Sprig</p>
-								<p class="text-xl text-gray-200">Contributor, Workshops, Reviewer</p>
+								<p class="text-xl text-slate-200">Contributor, Workshops, Reviewer</p>
 							</div>
 						</div>
 						<!-- Description -->
