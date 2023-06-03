@@ -15,6 +15,7 @@
 
 <div id="about" class="scroll-m-16">
 	<div class="grid py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12">
+		<!-- About Text -->
 		<div class="space-y-12 xl:col-span-3 mx-6 sm:mr-12 xl:mr-24 3xl:mr-48">
 			<div>
 				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl">
@@ -37,8 +38,10 @@
 				</p>
 			</div>
 		</div>
+
+		<!-- Stats -->
 		<div
-			class="flex flex-col justify-center p-4 py-8 mx-6 space-y-6 border-2 xl:col-span-2 border-slate-300 sm:p-8 rounded-xl"
+			class="flex flex-col justify-center p-4 py-8 space-y-6 sm:border-2 border-t-2 border-b-2 xl:col-span-2 border-slate-300 sm:p-8 sm:rounded-xl"
 		>
 			<div class="flex flex-col items-center mx-auto">
 				<div class="flex flex-row items-center mx-auto space-x-4">
