@@ -14,15 +14,19 @@
 		}
 
 		if (window.location.pathname == '/') {
-			const anchors = ['landing', 'about', 'abouwt'];
+			const anchors = ['landing', 'about', 'projects'];
 
 			let nearest = nearestAnchor(anchors, $scroll);
 
 			if (nearest != null) {
 				if (nearest == 'landing') {
-					window.history.pushState('', '', window.location.pathname.replace(/#/, ''));
+					if (location.hash != '') {
+						window.history.pushState('', '', window.location.pathname.replace(/#/, ''));
+					}
 				} else {
-					window.history.pushState('', '', window.location.pathname + '#' + nearest);
+					if (location.hash != '#' + nearest) {
+						window.history.pushState('', '', window.location.pathname + '#' + nearest);
+					}
 				}
 			}
 		}

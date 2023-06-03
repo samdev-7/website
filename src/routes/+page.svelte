@@ -5,6 +5,7 @@
 	import Navbar from '../components/Navbar.svelte';
 	import Landing from '../components/index/Landing.svelte';
 	import About from '../components/index/About.svelte';
+	import Projects from '../components/index/Projects.svelte';
 
 	export let data: PageData;
 
@@ -27,7 +28,8 @@
 
 <Landing />
 <div class="w-full flex flex-col">
-	<div class="mx-auto max-w-[120rem]">
+	<div class="mx-auto max-w-[120rem] space-y-8">
 		<About {stats} />
+		<Projects />
 	</div>
 </div>
