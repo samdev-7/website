@@ -2,7 +2,7 @@
 </script>
 
 <div id="projects" class="scroll-m-16 flex justify-center">
-	<div class="sm:mx-10 lg:mx-20 mx-0 max-w-7xl space-y-16 py-24">
+	<div class="sm:mx-10 lg:mx-20 mx-0 max-w-7xl space-y-16 py-16">
 		<!-- Section -->
 		<div class="text-center space-y-4">
 			<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl">
