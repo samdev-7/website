@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 
-	import { scroll, nearestAnchor } from '$lib/scroll';
+	import { scroll } from '$lib/scroll';
 
 	function scrollHandler() {
 		scroll.set(window.scrollY);
