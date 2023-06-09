@@ -3,9 +3,11 @@
 	import { onMount } from 'svelte';
 
 	import Navbar from '../components/Navbar.svelte';
+
 	import Landing from '../components/index/Landing.svelte';
 	import About from '../components/index/About.svelte';
 	import Projects from '../components/index/Projects.svelte';
+	import Skills from '../components/index/Skills.svelte';
 
 	export let data: PageData;
 
@@ -31,5 +33,6 @@
 	<div class="mx-auto max-w-[120rem] space-y-8">
 		<About {stats} />
 		<Projects />
+		<Skills />
 	</div>
 </div>

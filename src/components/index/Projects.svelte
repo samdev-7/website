@@ -257,5 +257,12 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="text-center">
+			<p>This section is not complete yet. Check back later!</p>
+			<a class="text-slate-800 underline hover:text-blue-600" href="/projects"
+				>Go to the work in progress projects page.</a
+			>
+		</div>
 	</div>
 </div>

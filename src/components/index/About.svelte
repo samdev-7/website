@@ -32,7 +32,7 @@
 				</p>
 				<p>
 					The web offers great opportunities for me to learn, create, and share what I love. This
-					website was built from scratch using SvelteKit and libaries, not website generators or
+					website was built from scratch using SvelteKit and libraries, not website generators or
 					builders and is open source. Making a website has been a great learning experience. Thanks
 					for stopping by! Continue scrolling to see more of what I do.
 				</p>

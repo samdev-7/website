@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/click_outside';
+	import { goto } from '$app/navigation';
+	import { clickOutside } from '$lib/click-outside';
 	import { scroll, scrollToAnchor } from '$lib/scroll';
 
 	let expanded = false;
@@ -17,7 +18,7 @@
 		if (window.location.pathname == '/') {
 			scrollToAnchor(event, anchor);
 		} else {
-			window.location.pathname = '/' + anchor;
+			goto('/#' + anchor);
 		}
 	}
 
@@ -73,7 +74,7 @@
 				</div>
 			</a>
 		</div>
-		<div class="flex flex-row my-auto ml-auto space-x-6 -md:hidden">
+		<div class="flex-row my-auto ml-auto space-x-6 hidden md:flex">
 			<div class="space-x-5 font-medium text-slate-900">
 				<a
 					href="/#about"
