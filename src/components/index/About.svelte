@@ -62,7 +62,7 @@
 				<div class="flex flex-col mx-6 space-y-3">
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Public GitHub repositories created:</p>
+							<p class="mr-auto">GitHub repository count:</p>
 
 							<p class="font-medium text-blue-600">
 								{stats ? stats.total_repos : 'Loading'}
@@ -82,8 +82,8 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Total GitHub commits:</p>
-							<p class="font-medium text-blue-600">{stats ? stats.total_commits : 'Loading'}</p>
+							<p class="mr-auto">Total GitHub additions:</p>
+							<p class="font-medium text-blue-600">{stats ? stats.total_additions : 'Loading'}</p>
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
 							<p class="lg:truncate">
@@ -123,7 +123,7 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Unique website visits (past year):</p>
+							<p class="mr-auto">Yearly unique website visits:</p>
 							<p class="font-medium text-blue-600">
 								{stats ? stats.total_unique_visitors : 'Loading'}
 							</p>
