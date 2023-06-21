@@ -43,7 +43,7 @@
 		<div
 			class="flex flex-col justify-center p-4 py-8 space-y-6 sm:border-2 border-t-2 border-b-2 xl:col-span-2 border-slate-300 sm:p-8 sm:rounded-xl"
 		>
-			<div class="flex flex-col items-center mx-auto">
+			<div class="flex flex-col items-center mx-auto space-y-2">
 				<div class="flex flex-row items-center mx-auto space-x-4">
 					<span class="relative flex w-4 h-4">
 						<span
@@ -53,7 +53,9 @@
 					</span>
 					<p class="text-2xl font-medium text-center -2xs:text-base">Live Statistics</p>
 				</div>
-				<p class="text-sm text-center text-slate-600 nojs:hidden">Refreshes every minute</p>
+				<p class="text-sm text-center text-slate-600 nojs:hidden">
+					Refreshes every minute.<br />Hover over a field for more detail.
+				</p>
 				<noscript>
 					<p class="text-sm text-center text-slate-600">Enable JavaScript for live updates</p>
 				</noscript>
@@ -62,14 +64,19 @@
 				<div class="flex flex-col mx-6 space-y-3">
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">GitHub repository count:</p>
+							<p
+								class="mr-auto"
+								title="Includes private repositories that I have created and contributed to."
+							>
+								GitHub repository count:
+							</p>
 
 							<p class="font-medium text-blue-600">
 								{stats ? stats.total_repos : 'Loading'}
 							</p>
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
-							<p class="lg:truncate">
+							<p class="lg:truncate" title="Please star it. 🥺">
 								Repository <span class="underline hover:text-blue-600"
 									><a
 										href={stats ? stats.most_stars_link : undefined}
@@ -82,11 +89,19 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Total GitHub additions:</p>
+							<p
+								class="mr-auto"
+								title="An addition is adding or modifying one line of code. Some additions are not included due to history limitations in the GitHub API."
+							>
+								Total GitHub additions:
+							</p>
 							<p class="font-medium text-blue-600">{stats ? stats.total_additions : 'Loading'}</p>
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
-							<p class="lg:truncate">
+							<p
+								class="lg:truncate"
+								title="Only includes commits on the default branch due to GitHub API limitations."
+							>
 								Latest commit: <span class="underline hover:text-blue-600"
 									><a
 										href={stats ? stats.latest_commit_link : undefined}
@@ -99,7 +114,7 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">
+							<p class="mr-auto" title="Includes private messages. 👀">
 								<span
 									><a href="https://hackclub.com/slack" target="_blank" rel="noopener noreferrer"
 										>Hack Club</a
@@ -109,7 +124,7 @@
 							<p class="font-medium text-blue-600">{stats ? stats.total_messages : 'Loading'}</p>
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
-							<p class="lg:truncate">
+							<p class="lg:truncate" title="Wow I'm so active!">
 								Latest message was sent <span class="underline hover:text-blue-600">
 									<a
 										href={stats ? stats.latest_message_link : undefined}
@@ -123,13 +138,21 @@
 					</div>
 					<div>
 						<div class="flex flex-row text-lg -2xs:text-base">
-							<p class="mr-auto">Yearly unique website visits:</p>
+							<p
+								class="mr-auto"
+								title="Unique website visits in the past year, calculated by Cloudflare based off requests. I do not use trackers on this website."
+							>
+								Yearly unique website visits:
+							</p>
 							<p class="font-medium text-blue-600">
 								{stats ? stats.total_unique_visitors : 'Loading'}
 							</p>
 						</div>
 						<div class="mx-10 text-sm italic text-slate-700 -2xs:hidden">
-							<p class="lg:truncate">
+							<p
+								class="lg:truncate"
+								title="A unique visit can have multiple requests. Cloudflare's API does not provide unique visit counts per country."
+							>
 								Most requests are from <span>{stats ? stats.most_visitor_location : 'Loading'}</span
 								>.
 							</p>
