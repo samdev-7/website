@@ -93,7 +93,7 @@
 								class="mr-auto"
 								title="An addition is adding or modifying one line of code. Some additions are not included due to history limitations in the GitHub API."
 							>
-								Total GitHub additions:
+								Approximate GitHub additions:
 							</p>
 							<p class="font-medium text-blue-600">{stats ? stats.total_additions : 'Loading'}</p>
 						</div>
