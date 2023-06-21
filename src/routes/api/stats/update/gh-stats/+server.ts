@@ -190,7 +190,7 @@ async function fetchRepos(fetch: (input: RequestInfo | URL, init?: RequestInit |
     }
 }
 
-async function fetchContributions(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>, repo: ghRepo): Promise<ghContribution> {
+async function fetchContributions(fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>, repo: ghRepo, attempts = 0): Promise<ghContribution> {
     const res = await fetch(`https://api.github.com/repos/${repo.nameWithOwner}/stats/contributors?per_page=100`, { headers });
 
     if (!res.ok) {
@@ -202,10 +202,14 @@ async function fetchContributions(fetch: (input: RequestInfo | URL, init?: Reque
     try {
         contributions = all_contributions.filter((contribution: rawGhContribution) => contribution.author.login === "SamDev-7")
     } catch (e) {
-        return {
-            additions: 0,
-            deletions: 0,
-            commits: 0
+        if (attempts < 3) {
+            return fetchContributions(fetch, repo, attempts + 1)
+        } else {
+            return {
+                additions: 0,
+                deletions: 0,
+                commits: 0
+            }
         }
     }
 
