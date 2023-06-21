@@ -7,7 +7,7 @@ import type { slackRecord } from './update/slack-stats/+server';
 import type { cfRecord } from './update/cf-stats/+server';
 
 export type statsType = {
-    total_commits: number,
+    total_additions: number,
     total_repos: number,
     latest_commit_message: string,
     latest_commit_link: string,
@@ -31,7 +31,7 @@ export const GET = (async () => {
     }
 
     const result: statsType = {
-        total_commits: ghRecord.total_commits,
+        total_additions: ghRecord.total_additions,
         total_repos: ghRecord.total_repos,
         latest_commit_message: ghRecord.latest_commit_message,
         latest_commit_link: ghRecord.latest_commit_link,

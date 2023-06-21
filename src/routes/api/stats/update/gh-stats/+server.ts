@@ -6,7 +6,7 @@ import { statsCol } from "$lib/mongo";
 import { json } from "@sveltejs/kit";
 
 type ghStat = {
-    total_aditions: number,
+    total_additions: number,
     total_repos: number,
     latest_commit_message: string,
     latest_commit_link: string,
@@ -102,7 +102,7 @@ export const GET: RequestHandler = (async () => {
         return json(result);
     } else {
         const result = {
-            total_commits: record.total_aditions,
+            total_additions: record.total_additions,
             total_repos: record.total_repos,
             latest_commit_message: record.latest_commit_message,
             latest_commit_link: record.latest_commit_link,
@@ -119,7 +119,7 @@ async function fetchResult(fetch: (input: RequestInfo | URL, init?: RequestInit 
     const [additions, latest_commit] = await Promise.all([fetchAdditions(fetch, repos.public_repos), fetchLatestCommit(fetch)])
 
     return {
-        total_aditions: additions,
+        total_additions: additions,
         total_repos: repos.total_repos,
         latest_commit_message: latest_commit.items[0].commit.message,
         latest_commit_link: latest_commit.items[0].html_url,
