@@ -10,3 +10,11 @@ body {
 	--cursor-color: #2563eb;
 	--cursor-width: 0.2ch;
 }
+
+.inline-url {
+	@apply text-blue-500 hover:underline dark:text-blue-400;
+}
+
+.secondary-inline-url {
+	@apply underline hover:text-blue-600 dark:hover:text-blue-400;
+}
