@@ -38,8 +38,8 @@ export const GET: RequestHandler = (async () => {
 
     const date = new Date(record.timestamp.getTime());
 
-    // If the cache is older than a minute
-    if (date.setMinutes(date.getMinutes() + 1) < new Date().getTime()) {
+    // If the cache is older than 12 hrs
+    if (date.setMinutes(date.getMinutes() + 12*60) < new Date().getTime()) {
         const result = await fetchResult(fetch);
 
         statsCol.updateOne({
