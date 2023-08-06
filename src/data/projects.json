@@ -4,7 +4,7 @@
         "lang": "Python",
         "icon": "/assets/projects/dot_score.png",
         "short": "Discord Bot",
-        "desc": "Dot Score is a Discord utility bot built with <a rel='noopener' class='secondary-inline-url' href='https://disnake.dev/' target='_blank'>Disnake</a> for my study group. Dot Score logs your progress and keeps you on track on homework."
+        "desc": "Dot Score is a Discord utility bot built with Disnake for my study group. Dot Score logs your progress and keeps you on track on homework."
     },
     {
         "name": "Diamond Nuggets",
@@ -12,7 +12,7 @@
         "lang": "Java",
         "icon": "/assets/projects/diamond_nuggets.png",
         "short": "Minecraft Mod",
-        "desc": "My most popular creation with over 200K downloads. A <a rel='noopener' class='secondary-inline-url' href='https://minecraft.net/' target='_blank'>Minecraft</a> mod that adds Diamond Nuggets. Useful as currency on multiplayer communities."
+        "desc": "My most popular creation with over 200K downloads. A Minecraft mod that adds Diamond Nuggets. Useful as currency on multiplayer communities."
     },
     {
         "name": "Personal Website",
@@ -20,7 +20,7 @@
         "lang": "HTML, CSS, JavaScript",
         "icon": "/assets/CodeIconBlue.svg",
         "short": "Website",
-        "desc": "You are here right now! My personal website showcases my skills, works, and information about me. Built with <a rel='noopener' class='secondary-inline-url' href='https://svelte.dev/' target='_blank'>Svelte</a> and styled with <a rel='noopener' class='secondary-inline-url' href='https://tailwindcss.com/' target='_blank'>TailwindCSS</a>.",
+        "desc": "You are here right now! My personal website showcases my skills, works, and information about me. Built with TailwindCSS.",
         "gh": "https://github.com/SamDev-7/website"
     },
     {
@@ -28,7 +28,7 @@
         "lang": "Java",
         "icon": "/assets/projects/furnideco.png",
         "short": "Minecraft Mod (On Hold)",
-        "desc": "I am collaborating with <a rel='noopener' href='https://github.com/arexon/furnideco' class='secondary-inline-url'>@arexon</a> to bring Furnideco, his furniture addon for Minecraft Bedrock, to Minecraft Java. ",
+        "desc": "I am collaborating with @arexon to bring Furnideco, his furniture addon for Minecraft Bedrock, to Minecraft Java.",
         "link": "https://arexon.dev/project/furnideco",
         "gh": "https://github.com/arexon/furnideco-fabric"
     },
@@ -37,7 +37,7 @@
         "lang": "JavaScript",
         "icon": "/assets/projects/minesweeper.png",
         "short": "Sprig Game",
-        "desc": "Featured on the <a rel='noopener' class='secondary-inline-url' href='https://hackclub.com' target='_blank'>Hack Club</a><a rel='noopener' class='secondary-inline-url' href='https://hackclub.com/newsletter/' target='_blank'> newsletter</a>! This is a simple minesweeper game made using <a rel='noopener' class='secondary-inline-url' href='https://sprig.hackclub.com/' target='_blank'>Sprig</a>. 9 by 9 grid with 10 mines.",
+        "desc": "Featured on the Hack Club newsletter! This is a simple minesweeper game made using Sprig. 9 by 9 grid with 10 mines.",
         "link": "https://editor.sprig.hackclub.com/?file=https://raw.githubusercontent.com/hackclub/sprig/main/games/minesweeper.js",
         "gh": "https://github.com/hackclub/sprig/blob/main/games/minesweeper.js"
     },
@@ -46,7 +46,7 @@
         "lang": "Java",
         "icon": "/assets/projects/two_player_snake.png",
         "short": "Swing Game",
-        "desc": "The classic snake game, but with two players. Made with <a rel='noopener' class='secondary-inline-url' href='https://docs.oracle.com/javase/8/docs/api/javax/swing/package-summary.html' target='_blank'>Swing</a>. The player with the longest snake wins.",
+        "desc": "The classic snake game, but with two players. Made with Swing. The player with the longest snake wins.",
         "gh": "https://github.com/SamDev-7/two-player-snake"
     },
     {
@@ -54,7 +54,7 @@
         "lang": "Python, JavaScript",
         "icon": "https://api.iconify.design/mdi:recycle.svg?color=%2316a34a",
         "short": "Web App",
-        "desc": "Built under 48 hours for the <a rel='noopener' href='https://ecohacks.devpost.com/' class='secondary-inline-url'>Eco Hacks 2022</a> hackathon. A quiz/game to test your knowledge in recycling.",
+        "desc": "Built under 48 hours for the Eco Hacks 2022 hackathon. A quiz/game to test your knowledge in recycling.",
         "gh": "https://github.com/SamDev-7/the-garbage-game"
     },
     {
@@ -62,7 +62,7 @@
         "lang": "Python",
         "icon": "/assets/projects/neat_target.png",
         "short": "NEAT Project",
-        "desc": "My experimentation with the <a rel='noopener' class='secondary-inline-url' href='https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies' target='_blank'>NEAT</a> algorithm to create a neural network that can play a simple game. Drive the missile to the flag.",
+        "desc": "My experimentation with the NEAT algorithm to create a neural network that can play a simple game. Drive the missile to the flag.",
         "gh": "https://github.com/SamDev-7/neat-target"
     },
     {
@@ -70,7 +70,7 @@
         "lang": "JavaScript",
         "icon": "/assets/projects/connect_four.png",
         "short": "Sprig Game",
-        "desc": "My first game made with <a rel='noopener' class='secondary-inline-url' href='https://sprig.hackclub.com/' target='_blank'>Sprig</a>. A simple connect four game made using Sprig. Played with two players.",
+        "desc": "My first game made with Sprig. A simple connect four game made using Sprig. Played with two players.",
         "link": "https://editor.sprig.hackclub.com/?file=https://raw.githubusercontent.com/hackclub/sprig/main/games/connect_four.js",
         "gh": "https://github.com/hackclub/sprig/blob/main/games/connect_four.js"
     }

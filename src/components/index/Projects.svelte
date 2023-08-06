@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scrollToAnchor } from '$lib/scroll';
 	import projects from '../../data/projects.json';
+	import ProjectCard from './projects/ProjectCard.svelte';
 </script>
 
 <div id="projects" class="scroll-m-16 flex justify-center">
@@ -273,32 +274,7 @@
 			<!-- Project List-->
 			<div class="grid md:grid-cols-2 xl:grid-cols-3 sm:gap-12 -sm:divide-y-2">
 				{#each projects as project, index}
-					<a
-						class="p-6 sm:border-2 border-slate-300 sm:rounded-xl sm:motion-reduce:hover:border-slate-400 sm:motion-reduce:hover:bg-slate-100 sm:motion-safe:hover:scale-110 sm:motion-safe:transition-transform
-						{index % 2 === 0 ? 'sm:motion-safe:hover:rotate-1' : 'sm:motion-safe:hover:-rotate-1'}"
-						href={project.link ? project.link : project.gh ? project.gh : ''}
-						target="_blank"
-						rel="noopener"
-					>
-						<div class="space-y-4">
-							<div class="flex">
-								<div>
-									<p class="inline text-xl font-medium">{project.name}</p>
-									<p class="text-slate-700">{project.lang}</p>
-								</div>
-								<div class="ml-auto text-slate-800">
-									<img
-										src={project.icon.startsWith('http')
-											? project.icon
-											: `https://samliu.dev/${project.icon}`}
-										alt="Icon for {project.name}"
-										class="h-12"
-									/>
-								</div>
-							</div>
-							<p>{@html project.desc}</p>
-						</div>
-					</a>
+					<ProjectCard {index} {project} />
 				{/each}
 			</div>
 		</div>
