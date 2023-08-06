@@ -204,10 +204,10 @@
 								<p class="text-lg">
 									Sprig is a tool developed by Hack Club for anyone to create tile-based games with
 									JavaScript. It's designed to be easy to use and learn so people can quickly get
-									started. High/middle school students who submit a game to the gallary can get a
+									started. High/middle school students who submit a game to the gallery can get a
 									free console to run their games! I have been involved with Sprig early after
 									release. I have contributed to the codebase and currently is a reviewer for game
-									submissions to the gallary. I have written and hosted workshops relating to Sprig
+									submissions to the gallery. I have written and hosted workshops relating to Sprig
 									to spread my knowledge.
 								</p>
 							</div>
