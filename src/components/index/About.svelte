@@ -13,13 +13,17 @@
 	});
 </script>
 
-<div id="about" class="scroll-m-16">
-	<div class="grid py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12">
+<div id="about" class="scroll-m-16 flex justify-center items-center">
+	<div
+		class="grid max-w-[1536px] py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12"
+	>
 		<!-- About Text -->
-		<div class="space-y-12 xl:col-span-3 mx-6 sm:mr-12 xl:mr-24 3xl:mr-48">
+		<div class="space-y-12 xl:col-span-3 mx-6 sm:mr-12 xl:mr-24 2xl:mr-48">
 			<div>
-				<h4 class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl">
-					About me
+				<h4
+					class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl lg:text-6xl"
+				>
+					About
 				</h4>
 			</div>
 			<div class="space-y-[1em] text-justify tracking-wide leading-relaxed indent-10 text-lg">
@@ -51,7 +55,7 @@
 						/>
 						<span class="relative inline-flex w-4 h-4 bg-green-500 rounded-full" />
 					</span>
-					<p class="text-2xl font-medium text-center -2xs:text-base">Live Statistics</p>
+					<p class="text-2xl font-medium text-center -2xs:text-base lg:text-3xl">Live Statistics</p>
 				</div>
 				<p class="text-sm text-center text-slate-600 nojs:hidden">
 					Refreshes every minute.<br />Hover over a field for more detail.

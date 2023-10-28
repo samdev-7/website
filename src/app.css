@@ -4,6 +4,9 @@
 
 body {
 	@apply font-poppins tracking-wide motion-safe:scroll-smooth motion-reduce:transition-none;
+	--scrollbar-width: calc(100vw - 100%);
+	--max-carousel-width: calc(min(1536px, 100vw - var(--scrollbar-width)) - 8rem);
+	--half-max-carousel-width: calc(var(--max-carousel-width) / 2);
 }
 
 .typewriter-cursor {
