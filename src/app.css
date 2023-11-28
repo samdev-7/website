@@ -21,3 +21,12 @@ body {
 .secondary-inline-url {
 	@apply underline hover:text-blue-600 dark:hover:text-blue-400;
 }
+
+.scrollbar-hidden::-webkit-scrollbar {
+	display: none;
+}
+
+.scrollbar-hidden {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
