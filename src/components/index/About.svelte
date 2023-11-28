@@ -15,7 +15,7 @@
 
 <div id="about" class="scroll-m-16 flex justify-center items-center">
 	<div
-		class="grid max-w-[1536px] py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12"
+		class="grid max-w-[1536px] py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12 gap-x-12"
 	>
 		<!-- About Text -->
 		<div class="space-y-12 xl:col-span-3 mx-6 sm:mr-12 xl:mr-24 2xl:mr-48">
@@ -48,10 +48,10 @@
 		</div>
 
 		<!-- Stats -->
-		<div class="flex items-center xl:col-span-2">
-			<div
-				class="space-y-8 p-4 py-8 sm:border-2 border-t-2 border-b-2 border-slate-300 sm:p-12 sm:rounded-xl"
-			>
+		<div
+			class="flex items-center justify-center xl:col-span-2 border-t-2 border-b-2 sm:border-none"
+		>
+			<div class="space-y-8 p-4 py-8 sm:border-2 border-slate-300 xl:p-12 sm:p-8 sm:rounded-xl">
 				<div class="flex flex-col items-center mx-auto space-y-2">
 					<div class="flex flex-row items-center mx-auto space-x-4">
 						<span class="relative flex w-4 h-4">
