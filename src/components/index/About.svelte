@@ -13,7 +13,7 @@
 	});
 </script>
 
-<div id="about" class="scroll-m-16 flex justify-center items-center">
+<div id="about" class="scroll-m-16 flex justify-center items-center xl:px-8">
 	<div
 		class="grid max-w-[1536px] py-16 sm:mx-10 lg:mx-20 xl:grid-cols-5 lg:grid-cols-2 mx-0 -lg:space-y-12 gap-x-12"
 	>
