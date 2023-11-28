@@ -54,9 +54,9 @@
 </script>
 
 <div id="work" class="scroll-m-16">
-	<div class="mx-0 space-y-24 py-16">
+	<div class="py-16 mx-0 space-y-24">
 		<!-- Section -->
-		<div class="text-center space-y-6 lg:space-y-10 mx-4 sm:mx-10 lg:mx-20">
+		<div class="mx-4 space-y-6 text-center lg:space-y-10 sm:mx-10 lg:mx-20">
 			<h4
 				class="text-5xl font-medium tracking-wide text-center text-blue-600 -2xs:text-4xl lg:text-6xl"
 			>
@@ -80,9 +80,9 @@
 			</div>
 		</div>
 
-		<div class="space-y-6 lg:space-y-12 overflow-hidden">
+		<div class="space-y-6 overflow-hidden lg:space-y-12">
 			<div>
-				<h5 class="text-2xl xs:text-3xl text-center font-medium">Featured</h5>
+				<h5 class="text-2xl font-medium text-center xs:text-3xl">Featured</h5>
 			</div>
 
 			<!-- Project List-->
@@ -101,7 +101,7 @@
 						class="snap-center flex-none w-full sm:w-[--max-carousel-width] xl:grid xl:grid-cols-2 bg-[#8EDDFD] p-6 sm:p-12 lg:p-20 py-12 sm:rounded-xl gap-x-12 bg-bottom bg-no-repeat"
 						style="background-image: url(/projects/angelhacks-toronto/clouds.svg);"
 					>
-						<div class="flex flex-col z-10">
+						<div class="z-10 flex flex-col">
 							<div class="space-y-8">
 								<!-- Branding -->
 								<div class="flex flex-row space-x-6">
@@ -152,7 +152,7 @@
 
 							<!-- Links -->
 							<div
-								class="text-lg font-medium mt-auto pt-10 w-full grid grid-flow-col text-center gap-x-8"
+								class="grid w-full grid-flow-col pt-10 mt-auto text-lg font-medium text-center gap-x-8"
 							>
 								<a
 									href="https://angelhacksto.hackclub.com/"
@@ -170,13 +170,13 @@
 						</div>
 
 						<!-- Media -->
-						<div class="grid-cols-2 hidden xl:grid">
+						<div class="hidden grid-cols-2 xl:grid">
 							<img
 								height="225"
 								width="300"
 								src="/projects/angelhacks-toronto/1.webp"
 								alt="Participants coding in the the main room."
-								class="rounded-xl ml-8 overflow-hidden -rotate-1"
+								class="ml-8 overflow-hidden rounded-xl -rotate-1"
 								loading="lazy"
 							/>
 							<div />
@@ -274,7 +274,7 @@
 
 							<!-- Links -->
 							<div
-								class="text-lg font-medium mt-auto pt-10 w-full grid grid-flow-col text-center gap-x-8"
+								class="grid w-full grid-flow-col pt-10 mt-auto text-lg font-medium text-center gap-x-8"
 							>
 								<a
 									href="https://sprig.hackclub.com/"
@@ -292,13 +292,13 @@
 						</div>
 
 						<!-- Media -->
-						<div class="grid-cols-2 hidden xl:grid">
+						<div class="hidden grid-cols-2 xl:grid">
 							<img
 								height="225"
 								width="300"
 								src="/projects/sprig/1.webp"
 								alt="Participants coding in the the main room."
-								class="rounded-xl ml-8 overflow-hidden -rotate-1"
+								class="ml-8 overflow-hidden rounded-xl -rotate-1"
 								loading="lazy"
 							/>
 							<div />
@@ -308,7 +308,7 @@
 								width="300"
 								src="/projects/sprig/2.webp"
 								alt="A whiteboard showing brainstorming and planning for a game."
-								class="-mt-20 -ml-8 rounded-xl overflow-hidden rotate-1"
+								class="-mt-20 -ml-8 overflow-hidden rounded-xl rotate-1"
 								loading="lazy"
 							/>
 							<img
@@ -316,7 +316,7 @@
 								width="300"
 								src="/projects/sprig/3.webp"
 								alt="All participants at the end of the event."
-								class="-mt-20 ml-8 rounded-xl overflow-hidden rotate-1"
+								class="ml-8 -mt-20 overflow-hidden rounded-xl rotate-1"
 								loading="lazy"
 							/>
 						</div>
@@ -383,7 +383,7 @@
 
 		<div class="space-y-6 max-w-[1536px] mx-auto sm:px-10 lg:px-20">
 			<div>
-				<h5 class="text-2xl text-center font-medium">Other Projects</h5>
+				<h5 class="text-2xl font-medium text-center">Other Projects</h5>
 			</div>
 
 			<!-- Project List-->
