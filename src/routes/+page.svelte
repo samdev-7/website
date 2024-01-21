@@ -196,7 +196,7 @@
 	<!-- Introduction -->
 	<div class="px-16 py-12 -lg:px-8 lg:-xl:px-10 text-center text-slate-600 dark:text-slate-200">
 		<h2 class="text-4xl font-medium text-slate-800 dark:text-white">My Scrapbook</h2>
-		<p class="mt-12">The scrapbook is where I document my progress and learning.<br><a  rel="noopener" href="https://scrapbook.hackclub.com/Sam" target="_blank" class="inline-url">Click here to see my full Scrapbook.</a></p>
+		<p class="mt-12">The scrapbook is where I document my progress and learning.<br><a  rel="noopener" href="https://scrapbook.hackclub.com/sam" target="_blank" class="inline-url">Click here to see my full Scrapbook.</a></p>
 		<p class="mt-4">Scrapbook is built by <a rel="noopener" href="https://hackclub.com" target="_blank" class="inline-url">Hack Club</a>. <a rel="noopener" href="https://scrapbook.hackclub.com/" target="_blank" class="secondary-inline-url"><br>See what other Hack Clubbers are doing.</a></p>
 	</div>
 
@@ -220,7 +220,7 @@
 			{/await}
 			</div>
 			<div class="pt-10 text-center">
-				<a rel="noopener" href="https://scrapbook.hackclub.com/Sam" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">Click here to see all my Scrapbook Posts</a>
+				<a rel="noopener" href="https://scrapbook.hackclub.com/sam" target="_blank" class="text-blue-500 dark:text-blue-400 hover:underline">Click here to see all my Scrapbook Posts</a>
 			</div>
 		</div>
 	</div>
