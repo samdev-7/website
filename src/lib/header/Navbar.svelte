@@ -38,7 +38,7 @@
 					clip-rule="evenodd"
 				/>
 			</svg>
-			<h2 class="mx-3 text-xl hover:underline -xs:hidden">Sam Liu</h2>
+			<h2 class="mx-3 text-xl hover:underline -xs:hidden">Sam Liu (Outdated)</h2>
 		</a>
 	</div>
 
