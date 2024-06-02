@@ -1,0 +1,26 @@
+---
+interface Props {
+  num: number;
+  title: string;
+  short: string;
+}
+
+const { num, title, short } = Astro.props;
+---
+
+<div class="border-2 border-gray-300 rounded py-5 px-5 w-full">
+  <div class="space-y-2">
+    <div>
+      <p class="uppercase text-sm">
+        Adventure - {String(num).padStart(2, "0")}
+      </p>
+      <h1 class="text-xl font-medium">{title}</h1>
+    </div>
+    <p
+      class="text-sm overflow-hidden text-ellipsis text-wrap w-full max-h-[5lh]"
+      style="-webkit-line-clamp: 5; -webkit-box-orient: vertical; display: -webkit-box;"
+    >
+      {short}
+    </p>
+  </div>
+</div>

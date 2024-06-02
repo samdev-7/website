@@ -1,5 +1,9 @@
 ---
+import BlogCard from "../components/BlogCard.astro";
+import EmptyCard from "../components/EmptyCard.astro";
+import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
+import WorkCard from "../components/WorkCard.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -15,45 +19,115 @@ import Layout from "../layouts/Layout.astro";
         </p>
       </div>
       <div class="w-full flex justify-center">
-        <div class="border-b-2 my-20 w-48 border-gray-200"></div>
+        <div class="border-b-2 my-20 w-56 border-gray-200"></div>
       </div>
-      <div class="leading-8">
-        <p>
-          Hey! I'm Sam, a high-schooler in Ontario, Canada who is still figuring
-          out what to do with the journey ahead.
-        </p>
-        <p>
-          I taught myself how to code by building projects. From robots to
-          games, the learning never ends.
-        </p>
-        <br />
-        <p>
-          When I'm not busy with school work, you can find me tinkering with
-          tech and exploring new hobbies.
-        </p>
-        <p>
-          I've been learning so much messing around with 3D printing &
-          machining, graphic & UI design, the web, electronics & hardware,
-          robotics, ML, and the list goes on... This website exists because I
-          wanted to document my journey.
-        </p>
-        <br />
-        <p>
-          You may know me as a First Robotics kid, a Hack Clubber, a friend, or
-          that random person at school.
-        </p>
-        <p>If we haven't met yet, I'd love to chat!</p>
-        <br />
-        <p>
-          Welcome to this quiet corner amidst the chaotic world we're in where I
-          share my thoughts and creations.
-        </p>
-        <p>
-          Bear in mind that this website is still a work in progress, but feel
-          free to look around!
-        </p>
+      <section>
+        <div class="leading-8">
+          <p>
+            Hey! I'm Sam, a high-schooler in Ontario, Canada who is still
+            figuring out what to do with the journey ahead.
+          </p>
+          <p>
+            I taught myself how to code by building projects. From robots to
+            games, the learning never ends.
+          </p>
+          <br />
+          <p>
+            When I'm not busy with school work, you can find me tinkering with
+            tech and exploring new hobbies.
+          </p>
+          <p>
+            I've been learning so much messing around with 3D printing &
+            machining, graphic & UI design, the web, electronics & hardware,
+            robotics, ML, and the list goes on... This website exists because I
+            wanted to document my journey.
+          </p>
+          <br />
+          <p>
+            You may know me as a First Robotics kid, a Hack Clubber, a friend,
+            or that random person at school.
+          </p>
+          <p>If we haven't met yet, I'd love to chat!</p>
+          <br />
+          <p>
+            Welcome to this quiet corner amidst the chaotic world we're in where
+            I share my thoughts and creations.
+          </p>
+          <p>
+            Bear in mind that this website is still a work in progress, but feel
+            free to look around!
+          </p>
+        </div>
+      </section>
+      <div class="w-full flex justify-center">
+        <div class="border-b-2 my-20 w-56 border-gray-200"></div>
       </div>
+      <section class="space-y-4">
+        <div class="flex items-baseline">
+          <h2 class="text-3xl font-medium grow">My Work</h2>
+          <div class="flex space-x-2 items-center">
+            <p>See more</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex space-x-4">
+          <WorkCard
+            name="Apocalypse"
+            desc="I helped organize Toronto's largest high-school hackathon where 150 teens spent 44 hours in Shopify's Toronto Office."
+          />
+          <WorkCard
+            name="Echo"
+            desc="A Discord bot that transcribes voice calls in real-time. The lightweight, local transcription model can run on a Raspberry Pi."
+          />
+          <WorkCard
+            name="Diamond Nuggets"
+            desc="Diamond nuggets improves currency in Minecraft servers. Originally only for me to learn Java, it now has gotten 500K downloads."
+          />
+        </div>
+      </section>
+      <section class="space-y-4 py-20">
+        <div class="flex items-baseline">
+          <h2 class="text-3xl font-medium grow">My Blog</h2>
+          <div class="flex space-x-2 items-center">
+            <p>See more</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex space-x-4">
+          <BlogCard
+            num={0}
+            title="Let's start something"
+            short="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum debitis eveniet, nemo quaerat itaque eligendi libero temporibus iusto, eaque cupiditate, similique minima voluptatibus. Aliquam ex velit est corrupti reiciendis veniam nam recusandae."
+          />
+          <EmptyCard />
+          <EmptyCard />
+        </div>
+      </section>
     </div>
   </main>
-  <section></section>
+  <Footer />
 </Layout>
