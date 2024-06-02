@@ -1,16 +1,59 @@
 ---
-
+import Navbar from "../components/Navbar.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Sam Liu</title>
-  </head>
-  <body>
-    <h1>My website needs a bit of refurbishing, it'll be back soon!</h1>
-  </body>
-</html>
+<Layout title="Sam Liu">
+  <Navbar />
+  <main class="flex justify-center text-gray-800">
+    <div class="grow px-12 max-w-[60rem]">
+      <div class="pt-40">
+        <p class="text-2xl">Hey there! <span>👋</span></p>
+        <h1 class="text-5xl font-medium pt-1 text-black">I'm Sam Liu</h1>
+        <p class="pt-4 text-lg">
+          I build things. Welcome to my corner on the interwebs!
+        </p>
+      </div>
+      <div class="w-full flex justify-center">
+        <div class="border-b-2 my-20 w-48 border-gray-200"></div>
+      </div>
+      <div class="leading-8">
+        <p>
+          Hey! I'm Sam, a high-schooler in Ontario, Canada who is still figuring
+          out what to do with the journey ahead.
+        </p>
+        <p>
+          I taught myself how to code by building projects. From robots to
+          games, the learning never ends.
+        </p>
+        <br />
+        <p>
+          When I'm not busy with school work, you can find me tinkering with
+          tech and exploring new hobbies.
+        </p>
+        <p>
+          I've been learning so much messing around with 3D printing &
+          machining, graphic & UI design, the web, electronics & hardware,
+          robotics, ML, and the list goes on... This website exists because I
+          wanted to document my journey.
+        </p>
+        <br />
+        <p>
+          You may know me as a First Robotics kid, a Hack Clubber, a friend, or
+          that random person at school.
+        </p>
+        <p>If we haven't met yet, I'd love to chat!</p>
+        <br />
+        <p>
+          Welcome to this quiet corner amidst the chaotic world we're in where I
+          share my thoughts and creations.
+        </p>
+        <p>
+          Bear in mind that this website is still a work in progress, but feel
+          free to look around!
+        </p>
+      </div>
+    </div>
+  </main>
+  <section></section>
+</Layout>
