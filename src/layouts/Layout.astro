@@ -4,8 +4,8 @@ interface Props {
 }
 
 const { title } = Astro.props;
-const description = "desc TBD";
-const banner = "/banner.png";
+const description = "I build things. This is my corner on the interwebs.";
+// const banner = "/banner.png";
 
 const { url } = Astro.request;
 let slug = new URL(url).pathname;
@@ -24,7 +24,7 @@ if (slug == "/") slug = "";
     <meta property="og:url" content=`https://samliu.dev/${slug}` />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={banner} />
+    <!-- <meta property="og:image" content={banner} /> -->
 
     <meta name="twitter:description" content={description} />
 
@@ -32,7 +32,7 @@ if (slug == "/") slug = "";
     <meta property="twitter:url" content=`https://samliu.dev/${slug}` />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={banner} />
+    <!-- <meta property="twitter:image" content={banner} /> -->
 
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
@@ -49,7 +49,6 @@ if (slug == "/") slug = "";
   </head>
   <body>
     <slot />
-    <!-- <SpeedInsights /> -->
   </body>
 
   <style is:global>
