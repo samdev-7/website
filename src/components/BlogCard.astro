@@ -8,7 +8,10 @@ interface Props {
 const { num, title, short } = Astro.props;
 ---
 
-<div class="border-2 border-gray-300 rounded py-5 px-5 w-full">
+<a
+  href="#"
+  class="border-2 border-gray-300 rounded py-5 px-5 w-full motion-safe:hover:-translate-y-1 motion-safe:hover:shadow motion-safe:transition"
+>
   <div class="space-y-2">
     <div>
       <p class="uppercase text-sm">
@@ -23,4 +26,4 @@ const { num, title, short } = Astro.props;
       {short}
     </p>
   </div>
-</div>
+</a>
