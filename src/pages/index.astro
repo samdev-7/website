@@ -97,18 +97,23 @@ import Layout from "../layouts/Layout.astro";
             </svg>
           </div>
         </div>
-        <div class="flex space-x-4">
+        <div class="flex gap-x-4">
           <WorkCard
             name="Apocalypse"
             desc="I helped organize Toronto's largest high-school hackathon where 150 teens spent 44 hours in Shopify's Toronto Office."
+            href="https://apocalypse.hackclub.com"
           />
           <WorkCard
+            class="hidden sm:block"
             name="Echo"
             desc="A Discord bot that transcribes voice calls in real-time. The lightweight, local transcription model can run on a Raspberry Pi."
+            href="https://github.com/SamDev-7/echo"
           />
           <WorkCard
+            class="hidden md:block"
             name="Diamond Nuggets"
             desc="Diamond nuggets improves currency in Minecraft servers. Originally only for me to learn Java, it now has gotten 500K downloads."
+            href="https://www.curseforge.com/minecraft/mc-mods/diamond-nuggets"
           />
         </div>
       </section>
@@ -135,11 +140,11 @@ import Layout from "../layouts/Layout.astro";
         <div class="flex space-x-4">
           <BlogCard
             num={0}
-            title="Let's start something"
-            short="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum debitis eveniet, nemo quaerat itaque eligendi libero temporibus iusto, eaque cupiditate, similique minima voluptatibus. Aliquam ex velit est corrupti reiciendis veniam nam recusandae."
+            title="Coming soon..."
+            short="I'm still building this! Stay tuned for the first post."
           />
-          <EmptyCard />
-          <EmptyCard />
+          <EmptyCard class="hidden sm:block" />
+          <EmptyCard class="hidden md:block" />
         </div>
       </section>
     </div>
