@@ -1,0 +1,31 @@
+---
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Sam Liu">
+  <div class="flex flex-col min-h-screen">
+    <Navbar />
+    <main
+      class="flex justify-center items-center grow text-center text-gray-800"
+    >
+      <div class="grow px-10 sm:px-16 md:px-20 max-w-[60rem]">
+        <p>Well... That's awkward.</p>
+        <h1
+          class="text-2xl sm:text-4xl md:text-5xl font-medium pt-2 text-black"
+        >
+          404 - Page Not Found
+        </h1>
+        <p class="pt-8">
+          Let's <a
+            href="/"
+            class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-50"
+            >head home</a
+          >.
+        </p>
+      </div>
+    </main>
+    <Footer />
+  </div>
+</Layout>
