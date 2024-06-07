@@ -1,9 +1,13 @@
 <nav class="flex justify-center">
-  <div class="h-14 flex px-20 items-center max-w-[80rem] grow pt-2">
+  <div
+    class="h-14 flex px-6 sm:px-16 md:px-20 items-center max-w-[80rem] grow pt-2"
+  >
     <div>
       <a href="/" class="text-2xl font-medium">Sam Liu</a>
     </div>
-    <div class="grow flex justify-end">
+
+    <!-- Desktop Nav Items -->
+    <div class="hidden sm:flex grow justify-end">
       <ul class="flex space-x-8 text-lg">
         <li><a href="/" class="hover:underline">Home</a></li>
         <li><a href="/work" class="hover:underline">Work</a></li>
@@ -11,5 +15,108 @@
         <li><a href="/contact" class="hover:underline">Contact</a></li>
       </ul>
     </div>
+
+    <!-- Mobile Nav Control -->
+    <div class="sm:hidden grow justify-end flex items-baseline">
+      <button
+        id="nav-btn"
+        type="button"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open navigation bar menu</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-8 -mb-0.5"
+          aria-hidden="false"
+          id="nav-expand-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-8 -mb-0.5 hidden"
+          aria-hidden="true"
+          id="nav-close-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Items -->
+  <div
+    class="absolute top-14 sm:hidden w-full px-6 py-2 hidden border-b-2 border-b-gray-200"
+    aria-hidden="true"
+    id="nav-mob-content"
+  >
+    <ul class="flex flex-col w-full divide-y-2 divide-gray-200">
+      <li><a href="/" class="block pb-1">Home</a></li>
+      <li><a href="/work" class="block py-1">Work</a></li>
+      <li><a href="/blog" class="block py-1">Blog</a></li>
+      <li><a href="/contact" class="block py-1">Contact</a></li>
+    </ul>
   </div>
 </nav>
+
+<script>
+  let mobileNavOpen = false;
+
+  const navBtn = document.getElementById("nav-btn");
+  const navExpandIcon = document.getElementById("nav-expand-icon");
+  const navCloseIcon = document.getElementById("nav-close-icon");
+  const navMobContent = document.getElementById("nav-mob-content");
+
+  function toggleMobileNav() {
+    mobileNavOpen = !mobileNavOpen;
+
+    if (!(navBtn && navExpandIcon && navCloseIcon && navMobContent)) {
+      return;
+    }
+
+    if (mobileNavOpen) {
+      navBtn.setAttribute("aria-expanded", "true");
+      navExpandIcon.classList.add("hidden");
+      navExpandIcon.setAttribute("aria-hidden", "true");
+      navCloseIcon.classList.remove("hidden");
+      navExpandIcon.setAttribute("aria-hidden", "false");
+      navMobContent.classList.remove("hidden");
+      navMobContent.setAttribute("aria-hidden", "false");
+    } else {
+      navBtn.setAttribute("aria-expanded", "false");
+      navExpandIcon.classList.remove("hidden");
+      navExpandIcon.setAttribute("aria-hidden", "false");
+      navCloseIcon.classList.add("hidden");
+      navExpandIcon.setAttribute("aria-hidden", "true");
+      navMobContent.classList.add("hidden");
+      navMobContent.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  if (navBtn) navBtn.onclick = toggleMobileNav;
+  document.addEventListener("click", (e) => {
+    if (mobileNavOpen) {
+      if (
+        e.target instanceof Element &&
+        !e.target.closest("#nav-btn") &&
+        !e.target.closest("#nav-mob-content")
+      )
+        toggleMobileNav();
+    }
+  });
+</script>
