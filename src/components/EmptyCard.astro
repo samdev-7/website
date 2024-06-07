@@ -1,1 +1,9 @@
-<div class="py-5 px-5 w-full"></div>
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class=`${className} py-5 px-5 w-full`></div>

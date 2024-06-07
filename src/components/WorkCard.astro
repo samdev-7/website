@@ -2,14 +2,17 @@
 interface Props {
   name: string;
   desc: string;
+  class?: string;
+  href?: string;
 }
 
-const { name, desc } = Astro.props;
+const { name, desc, class: className, href } = Astro.props;
 ---
 
 <a
-  href="#"
-  class="border-2 border-gray-300 rounded py-4 px-5 w-full motion-safe:hover:-translate-y-1 motion-safe:hover:shadow motion-safe:transition"
+  href={href ? href : "#"}
+  target={href ? "_blank" : "_self"}
+  class=`${className} border-2 border-gray-300 rounded py-4 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow motion-safe:transition' : ''}`
 >
   <div class="space-y-2">
     <h1 class="text-xl font-medium">{name}</h1>
