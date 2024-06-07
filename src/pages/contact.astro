@@ -1,5 +1,74 @@
 ---
-import Soon from "../layouts/Soon.astro";
+import SimpleContent from "../layouts/SimpleContent.astro";
 ---
 
-<Soon title="Sam Liu - Contact" />
+<SimpleContent
+  title="Sam Liu - Contact"
+  description="Have something interesting to share? Just want to say hi? Let's chat!"
+>
+  <h1 slot="heading" class="text-5xl font-medium pt-1 text-black">Contact</h1>
+  <div slot="content">
+    <p>Have something interesting to share? Just want to say hi?</p>
+    <br />
+    <p class="font-medium">
+      Send me an email! <a
+        href="mailto:hello@samliu.dev"
+        target="_blank"
+        rel="noreferrer noopener"
+        class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-50"
+        >hello@samliu.dev</a
+      >.
+    </p>
+    <br />
+    <p>
+      Are you a teen? Message me on the <a
+        href="https://hackclub.com/slack"
+        target="_blank"
+        class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-50"
+        >Hack Club Slack</a
+      >:
+      <button
+        id="contact-slack"
+        class="font-ibm-mono text-base px-1 rounded bg-gray-200">@samliu</button
+      > (click to copy)
+    </p>
+    <br />
+    <p>Other socials:</p>
+    <ul class="list-disc list-inside">
+      <li>
+        GitHub:
+        <a
+          href="https://github.com/samdev-7"
+          target="_blank"
+          rel="noreferrer noopener"
+          class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-50"
+          >SamDev-7</a
+        >
+      </li>
+      <li>
+        Youtube:
+        <a
+          href="https://www.youtube.com/channel/UC1aFCoWxCpKbAFFG9sDlLBg"
+          target="_blank"
+          rel="noreferrer noopener"
+          class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-50"
+          >@SamDev-7</a
+        > (I rarely upload)
+      </li>
+      <li>LinkedIn: Ask me!</li>
+    </ul>
+  </div>
+</SimpleContent>
+
+<script>
+  const contactSlack = document.getElementById("contact-slack");
+  if (contactSlack) {
+    contactSlack.addEventListener("click", () => {
+      navigator.clipboard.writeText("@samliu");
+      contactSlack.textContent = "Copied!";
+      setTimeout(() => {
+        contactSlack.textContent = "@samliu";
+      }, 2000);
+    });
+  }
+</script>
