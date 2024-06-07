@@ -10,7 +10,7 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="Sam Liu">
   <Navbar />
   <main class="flex justify-center text-gray-800">
-    <div class="grow px-12 max-w-[60rem]">
+    <div class="grow px-10 sm:px-16 md:px-20 max-w-[60rem]">
       <div class="pt-40">
         <p class="text-2xl">Hey there! <span>👋</span></p>
         <h1 class="text-5xl font-medium pt-1 text-black">I'm Sam Liu</h1>
@@ -80,22 +80,22 @@ import Layout from "../layouts/Layout.astro";
       <section class="space-y-4">
         <div class="flex items-baseline">
           <h2 class="text-3xl font-medium grow">My Work</h2>
-          <div class="flex space-x-2 items-center">
-            <p>See more</p>
+          <a class="flex space-x-2 items-center group" href="/work">
+            <p class="group-hover:underline">See more</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-5"
+              class="size-5 motion-safe:transition-all motion-safe:group-hover:translate-x-1"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
             </svg>
-          </div>
+          </a>
         </div>
         <div class="flex gap-x-4">
           <WorkCard
@@ -120,22 +120,22 @@ import Layout from "../layouts/Layout.astro";
       <section class="space-y-4 py-20">
         <div class="flex items-baseline">
           <h2 class="text-3xl font-medium grow">My Blog</h2>
-          <div class="flex space-x-2 items-center">
-            <p>See more</p>
+          <a class="flex space-x-2 items-center group" href="/blog">
+            <p class="group-hover:underline">See more</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-5"
+              class="size-5 motion-safe:transition-all motion-safe:group-hover:translate-x-1"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
             </svg>
-          </div>
+          </a>
         </div>
         <div class="flex space-x-4">
           <BlogCard
