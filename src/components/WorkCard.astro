@@ -12,7 +12,7 @@ const { name, desc, class: className, href } = Astro.props;
 <a
   href={href ? href : "#"}
   target={href ? "_blank" : "_self"}
-  class=`${className} border-2 border-gray-300 rounded py-4 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow motion-safe:transition' : ''}`
+  class=`${className} border shadow  border-gray-200 rounded py-4 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-md motion-safe:transition' : ''}`
 >
   <div class="space-y-2">
     <h3 class="text-xl font-medium">{name}</h3>

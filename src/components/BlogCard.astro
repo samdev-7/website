@@ -12,7 +12,7 @@ const { num, title, short, class: className, href } = Astro.props;
 
 <a
   href="#"
-  class=`${className} border-2 border-gray-300 rounded py-5 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow motion-safe:transition' : ''}`
+  class=`${className} border shadow border-gray-200 rounded py-5 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-md motion-safe:transition' : ''}`
 >
   <div class="space-y-2">
     <div>
