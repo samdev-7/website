@@ -1,0 +1,20 @@
+---
+import SimpleContent from "./SimpleContent.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<SimpleContent {title} {description}>
+  <slot name="heading" slot="heading" />
+  <div slot="content">
+    <div class="w-full flex justify-center">
+      <div class="border-b-2 mb-12 w-48 border-gray-200"></div>
+    </div>
+    <slot name="content" />
+  </div>
+</SimpleContent>

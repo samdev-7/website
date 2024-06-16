@@ -1,0 +1,158 @@
+---
+import DividedContent from "./DividedContent.astro";
+
+import type { MarkdownLayoutProps } from "astro";
+
+type Props = MarkdownLayoutProps<{
+  name: string;
+  short: string;
+  images: {
+    url: string;
+    alt?: string;
+  }[];
+
+  links?: {
+    name: string;
+    url: string;
+  }[];
+
+  hackathon?: {
+    name: string;
+    proj?: string;
+    prize?: string;
+  };
+
+  ogImg?: string;
+  ogDesc?: string;
+}>;
+
+const { frontmatter } = Astro.props;
+---
+
+<DividedContent
+  title=`Sam Liu - ${frontmatter.name}`
+  description=`${frontmatter.ogDesc || 'A project by Sam Liu.'}`
+>
+  <div slot="heading" class="pt-1 leading-8 text-lg">
+    <a class="flex space-x-1.5 items-center group" href="/work">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-5 motion-safe:transition-all motion-safe:group-hover:-translate-x-0.5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+      </svg>
+      <p class="group-hover:underline">Back to all work</p>
+    </a>
+    <h1 class="text-black text-5xl font-medium pt-8">{frontmatter.name}</h1>
+    <h2 class="pt-4">{frontmatter.short}</h2>
+    <div class="pt-8 text-base space-y-2">
+      <ul class="flex items-center">
+        {
+          frontmatter.hackathon && (
+            <a href={frontmatter.hackathon.proj || "#"}>
+              <li
+                class={`${frontmatter.hackathon.prize ? "bg-amber-100" : "bg-gray-100"} ${frontmatter.hackathon.proj ? "motion-safe:hover:scale-105 motion-safe:transition" : ""} w-fit px-4 rounded-full flex space-x-1.5 items-center mr-3 py-0.5`}
+              >
+                {frontmatter.hackathon.prize && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="size-4 text-amber-500"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 1c-1.828 0-3.623.149-5.371.435a.75.75 0 0 0-.629.74v.387c-.827.157-1.642.345-2.445.564a.75.75 0 0 0-.552.698 5 5 0 0 0 4.503 5.152 6 6 0 0 0 2.946 1.822A6.451 6.451 0 0 1 7.768 13H7.5A1.5 1.5 0 0 0 6 14.5V17h-.75C4.56 17 4 17.56 4 18.25c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75c0-.69-.56-1.25-1.25-1.25H14v-2.5a1.5 1.5 0 0 0-1.5-1.5h-.268a6.453 6.453 0 0 1-.684-2.202 6 6 0 0 0 2.946-1.822 5 5 0 0 0 4.503-5.152.75.75 0 0 0-.552-.698A31.804 31.804 0 0 0 16 2.562v-.387a.75.75 0 0 0-.629-.74A33.227 33.227 0 0 0 10 1ZM2.525 4.422C3.012 4.3 3.504 4.19 4 4.09V5c0 .74.134 1.448.38 2.103a3.503 3.503 0 0 1-1.855-2.68Zm14.95 0a3.503 3.503 0 0 1-1.854 2.68C15.866 6.449 16 5.74 16 5v-.91c.496.099.988.21 1.475.332Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                )}
+                {!frontmatter.hackathon.prize && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="size-4"
+                  >
+                    <path d="M5.25 12a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H6a.75.75 0 0 1-.75-.75V12ZM6 13.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V14a.75.75 0 0 0-.75-.75H6ZM7.25 12a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H8a.75.75 0 0 1-.75-.75V12ZM8 13.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V14a.75.75 0 0 0-.75-.75H8ZM9.25 10a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H10a.75.75 0 0 1-.75-.75V10ZM10 11.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V12a.75.75 0 0 0-.75-.75H10ZM9.25 14a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H10a.75.75 0 0 1-.75-.75V14ZM12 9.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V10a.75.75 0 0 0-.75-.75H12ZM11.25 12a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H12a.75.75 0 0 1-.75-.75V12ZM12 13.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V14a.75.75 0 0 0-.75-.75H12ZM13.25 10a.75.75 0 0 1 .75-.75h.01a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75H14a.75.75 0 0 1-.75-.75V10ZM14 11.25a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 0 0 .75-.75V12a.75.75 0 0 0-.75-.75H14Z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                )}
+                <p>
+                  {frontmatter.hackathon.prize
+                    ? `${frontmatter.hackathon.name} ${frontmatter.hackathon.prize}`
+                    : frontmatter.hackathon.name}
+                </p>
+              </li>
+            </a>
+          )
+        }
+        {
+          frontmatter.links &&
+            frontmatter.links.map((link, i) => (
+              <>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex space-x-1 items-center group"
+                >
+                  <p class="underline decoration-gray-400 motion-safe:group-hover:decoration-gray-800 motion-safe:transition motion-safe:duration-75">
+                    {link.name}
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="size-4 -mb-0.5 text-gray-700 motion-safe:group-hover:text-gray-900 motion-safe:transition motion-safe:duration-75"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
+                      clip-rule="evenodd"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                {i !== (frontmatter.links?.length || 1) - 1 && (
+                  <p class="mx-2 select-none">•</p>
+                )}
+              </>
+            ))
+        }
+      </ul>
+    </div>
+  </div>
+  <div slot="content" class="leading-8 space-y-4 content">
+    <slot />
+  </div>
+</DividedContent>
+
+<style>
+  .content :global(a) {
+    @apply underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-75;
+  }
+
+  .content :global(strong) {
+    @apply font-semibold;
+  }
+
+  .content :global(.tooltip) {
+    @apply underline decoration-dotted cursor-help decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-75;
+  }
+</style>
