@@ -56,7 +56,6 @@ const images = Object.entries(
       (frontmatter.images || []).find((i) => path.endsWith(`/${slug}/${i.url}`))
         ?.alt || "",
   }));
-console.log(images);
 ---
 
 <DividedContent
