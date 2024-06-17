@@ -23,7 +23,7 @@ links:
   - name: "View code"
     url: "https://github.com/hackclub/apocalypse"
 
-ogDesc: "I helped organize Toronto's largest high-school hackathon, where 150 teens spent 44 hours building projects at Shopify's Toronto Office."
+ogDesc: "Canada's largest high-school hackathon, where 150 teens spent 44 hours building projects at Shopify's Toronto Office."
 ---
 
 I helped organize Apocalypse, a zombie-apocalypse themed coding event where 150 high-school students built their wildest ideas.  
