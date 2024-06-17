@@ -5,6 +5,8 @@ import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import WorkCard from "../components/WorkCard.astro";
 import Layout from "../layouts/Layout.astro";
+
+const workDocs = await Astro.glob("./work/*.md");
 ---
 
 <Layout title="Sam Liu">
@@ -96,21 +98,21 @@ import Layout from "../layouts/Layout.astro";
         </div>
         <div class="flex gap-x-4">
           <WorkCard
-            name="Apocalypse"
-            desc="I helped organize Toronto's largest high-school hackathon where 150 teens spent 44 hours in Shopify's Toronto Office."
-            href="https://apocalypse.hackclub.com"
+            name={workDocs[0].frontmatter.name}
+            desc={workDocs[0].frontmatter.desc}
+            href={workDocs[0].url}
           />
           <WorkCard
             class="hidden sm:block"
-            name="Echo"
-            desc="A Discord bot that transcribes voice calls in real-time. The lightweight, local transcription model can run on a Raspberry Pi."
-            href="https://github.com/SamDev-7/echo"
+            name={workDocs[1].frontmatter.name}
+            desc={workDocs[1].frontmatter.desc}
+            href={workDocs[1].url}
           />
           <WorkCard
             class="hidden md:block"
-            name="Diamond Nuggets"
-            desc="Diamond nuggets improves currency in Minecraft servers. Originally only for me to learn Java, it now has gotten 500K downloads."
-            href="https://www.curseforge.com/minecraft/mc-mods/diamond-nuggets"
+            name={workDocs[2].frontmatter.name}
+            desc={workDocs[2].frontmatter.desc}
+            href={workDocs[2].url}
           />
         </div>
       </section>
