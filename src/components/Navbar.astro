@@ -60,7 +60,6 @@
   <!-- Mobile Nav Items -->
   <div
     class="absolute top-16 sm:hidden w-full px-6 py-2 hidden border-y border-gray-200 bg-white shadow"
-    aria-hidden="true"
     id="nav-mob-content"
   >
     <ul class="flex flex-col w-full divide-y divide-gray-200">
@@ -94,7 +93,6 @@
       navCloseIcon.classList.remove("hidden");
       navExpandIcon.setAttribute("aria-hidden", "false");
       navMobContent.classList.remove("hidden");
-      navMobContent.setAttribute("aria-hidden", "false");
     } else {
       navBtn.setAttribute("aria-expanded", "false");
       navExpandIcon.classList.remove("hidden");
@@ -102,7 +100,6 @@
       navCloseIcon.classList.add("hidden");
       navExpandIcon.setAttribute("aria-hidden", "true");
       navMobContent.classList.add("hidden");
-      navMobContent.setAttribute("aria-hidden", "true");
     }
   }
 

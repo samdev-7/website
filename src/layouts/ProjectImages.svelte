@@ -100,6 +100,7 @@
   <button
     class="absolute group left-0 top-0 bottom-0 flex items-center w-[30%]"
     on:click={clickPrev}
+    title="Previous image"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +123,7 @@
   <button
     class="absolute group right-0 top-0 bottom-0 flex items-center w-[30%] justify-end"
     on:click={clickNext}
+    title="Next image"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -153,6 +155,7 @@
             ? 'bg-white'
             : 'bg-white/50'}"
           on:click={() => clickTo(card)}
+          title="Go to image {card + 1}"
         ></button>
       {/each}
     </div>

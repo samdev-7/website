@@ -84,11 +84,11 @@ console.log(images);
     <h1 class="text-black text-5xl font-medium pt-8">{frontmatter.name}</h1>
     <h2 class="pt-4">{frontmatter.short}</h2>
     <div class="pt-8 text-base space-y-2">
-      <ul class="flex items-center">
+      <div class="flex items-center">
         {
           frontmatter.hackathon && (
             <a href={frontmatter.hackathon.proj || "#"}>
-              <li
+              <div
                 class={`${frontmatter.hackathon.prize ? "bg-amber-100" : "bg-gray-100"} ${frontmatter.hackathon.proj ? "motion-safe:hover:scale-105 motion-safe:transition" : ""} w-fit px-4 rounded-full flex space-x-1.5 items-center mr-3 py-0.5`}
               >
                 {frontmatter.hackathon.prize && (
@@ -125,7 +125,7 @@ console.log(images);
                     ? `${frontmatter.hackathon.name} ${frontmatter.hackathon.prize}`
                     : frontmatter.hackathon.name}
                 </p>
-              </li>
+              </div>
             </a>
           )
         }
@@ -166,7 +166,7 @@ console.log(images);
               </>
             ))
         }
-      </ul>
+      </div>
     </div>
   </div>
   <div slot="content" class="leading-8 space-y-4 content">
