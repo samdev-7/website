@@ -2,6 +2,7 @@
 layout: ../../layouts/Project.astro
 name: "Diamond Nuggets"
 short: "Minecraft mod"
+desc: "A simple Minecraft mod that adds diamond nuggets as a form of currency for multiplayer communities. Because why not?"
 
 images:
   - url: "0.png"
@@ -11,7 +12,6 @@ links:
   - name: "View on CurseForge"
     url: "https://www.curseforge.com/minecraft/mc-mods/diamond-nuggets"
 
-ogDesc: "A simple Minecraft mod that adds diamond nuggets as a form of currency."
 ---
 
 [Minecraft](https://minecraft.net) has iron and gold nuggets, but where are the diamond nuggets?

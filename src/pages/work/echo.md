@@ -2,6 +2,7 @@
 layout: ../../layouts/Project.astro
 name: "Echo"
 short: "Discord application"
+desc: "Discord application providing real-time captions for Discord voice calls using a local speech recognition model."
 
 images:
   - url: "0.png"
@@ -16,7 +17,6 @@ links:
   - name: "View code (web UI)"
     url: "https://github.com/samdev-7/EchoWeb"
 
-ogDesc: "Providing real-time captions for Discord voice calls using a local speech recognition model."
 ---
 
 Accessibility is crucial to ensure inclusively.

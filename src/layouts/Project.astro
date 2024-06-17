@@ -10,6 +10,8 @@ import ProjectImages from "./ProjectImages.svelte";
 type Props = MarkdownLayoutProps<{
   name: string;
   short: string;
+  desc?: string;
+
   images?: {
     url: string;
     alt: string;
@@ -27,7 +29,6 @@ type Props = MarkdownLayoutProps<{
   };
 
   ogImg?: string;
-  ogDesc?: string;
 }>;
 
 const { frontmatter } = Astro.props;
@@ -60,7 +61,7 @@ const images = Object.entries(
 
 <DividedContent
   title=`Sam Liu - ${frontmatter.name}`
-  description=`${frontmatter.ogDesc || 'A project by Sam Liu.'}`
+  description=`${frontmatter.desc || 'A project by Sam Liu.'}`
 >
   <div slot="heading" class="pt-1 leading-8 text-lg">
     <a class="flex space-x-1.5 items-center group" href="/work">

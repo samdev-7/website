@@ -1,6 +1,8 @@
 ---
 import SimpleContent from "../layouts/SimpleContent.astro";
 import WorkCard from "../components/WorkCard.astro";
+
+const workDocs = await Astro.glob("./work/*.md");
 ---
 
 <SimpleContent
@@ -22,13 +24,15 @@ import WorkCard from "../components/WorkCard.astro";
       </p>
     </div>
     <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 pt-16">
-      <WorkCard
-        name="Project 1"
-        desc="Description djfsdjfowje wfjweoifjoiwef wef wejfoiwhefoi weoifweojf joiwefjoiwejf wefoiwejfoiwej 13409234809"
-      />
-      <WorkCard name="Project 2" desc="Description 2" />
-      <WorkCard name="Project 3" desc="Description 3" />
-      <WorkCard name="Project 4" desc="Description 4" />
+      {
+        workDocs.map((doc) => (
+          <WorkCard
+            name={doc.frontmatter.name}
+            desc={doc.frontmatter.desc}
+            href={doc.url}
+          />
+        ))
+      }
     </div>
   </div>
 </SimpleContent>
