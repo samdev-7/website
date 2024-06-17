@@ -51,16 +51,3 @@ const workDocs = await Astro.glob("./work/*.md");
     </p>
   </div>
 </SimpleContent>
-
-<script>
-  const contactSlack = document.getElementById("contact-slack");
-  if (contactSlack) {
-    contactSlack.addEventListener("click", () => {
-      navigator.clipboard.writeText("@samliu");
-      contactSlack.textContent = "Copied!";
-      setTimeout(() => {
-        contactSlack.textContent = "@samliu";
-      }, 2000);
-    });
-  }
-</script>
