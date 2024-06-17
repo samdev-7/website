@@ -1,14 +1,18 @@
 ---
 import DividedContent from "./DividedContent.astro";
 
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 import type { MarkdownLayoutProps } from "astro";
+import ProjectImages from "./ProjectImages.svelte";
 
 type Props = MarkdownLayoutProps<{
   name: string;
   short: string;
   images: {
     url: string;
-    alt?: string;
+    alt: string;
   }[];
 
   links?: {
@@ -27,6 +31,33 @@ type Props = MarkdownLayoutProps<{
 }>;
 
 const { frontmatter } = Astro.props;
+
+const slug = frontmatter.file
+  .split("/")
+  .slice(-1)[0]
+  .replace(".mdx", "")
+  .replace(".md", "");
+
+const images = Object.entries(
+  import.meta.glob<{
+    default: ImageMetadata;
+  }>(`../assets/work/**/*.{png,jpg,jpeg,webp,gif}`)
+)
+  .filter(([path]) =>
+    frontmatter.images.some(
+      (img) =>
+        !img.url.startsWith("https://") && path.endsWith(`/${slug}/${img.url}`)
+    )
+  )
+  .map(([path, img]) => ({
+    path,
+    image: img,
+    alt:
+      frontmatter.images.find((i) => path.endsWith(`/${slug}/${i.url}`))?.alt ||
+      "",
+  }));
+
+console.log(images);
 ---
 
 <DividedContent
@@ -139,6 +170,21 @@ const { frontmatter } = Astro.props;
     </div>
   </div>
   <div slot="content" class="leading-8 space-y-4 content">
+    <ProjectImages numCards={images.length} client:load class="mb-4">
+      {
+        images.map((image, i) => (
+          <div style="flex: 0 0 100%;" class="aspect-video snap-center">
+            <Image
+              src={image.image()}
+              alt={image.alt}
+              class="h-min"
+              loading={i == 0 ? "eager" : "lazy"}
+              decoding={i == 0 ? "auto" : "async"}
+            />
+          </div>
+        ))
+      }
+    </ProjectImages>
     <slot />
   </div>
 </DividedContent>
