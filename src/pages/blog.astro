@@ -1,5 +1,63 @@
 ---
-import Soon from "../layouts/Soon.astro";
+import SimpleContent from "../layouts/SimpleContent.astro";
+
+// const workDocs = await Astro.glob("./work/*.md");
 ---
 
-<Soon title="Sam Liu - Blog" />
+<SimpleContent
+  title="Sam Liu - Blog"
+  description="Here's what I've been up to."
+>
+  <div slot="heading" class="pt-1">
+    <h1 class="text-black text-5xl font-medium">Blog</h1>
+  </div>
+  <div slot="content">
+    <div class="leading-8">
+      <p>
+        You can find me tinkering with tech and exploring new hobbies in my free
+        time.
+      </p>
+      <p>
+        This interest has led me to places I never expected to go, knowledge I
+        never thought would be useful, and lasting friendships that I never
+        expected. So, here's an attempt to document and share my journey.
+      </p>
+      <br />
+      <p>Blogging is still new to me, so take my words with a grain of salt.</p>
+      <p>
+        <a
+          href="/contact"
+          class="underline decoration-gray-400 motion-safe:hover:decoration-gray-800 motion-safe:transition motion-safe:duration-75"
+          >My inbox</a
+        >, however, is always open for a chat.
+      </p>
+    </div>
+    <!-- <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 pt-16">
+      {
+        workDocs.map((doc) => (
+          <WorkCard
+            name={doc.frontmatter.name}
+            desc={doc.frontmatter.desc}
+            href={doc.url}
+          />
+        ))
+      }
+  </div> -->
+    <p class="text-sm text-gray-800 text-center pt-14">
+      Coming soon! I'm still working to write more posts!
+    </p>
+  </div>
+
+  <script>
+    const contactSlack = document.getElementById("contact-slack");
+    if (contactSlack) {
+      contactSlack.addEventListener("click", () => {
+        navigator.clipboard.writeText("@samliu");
+        contactSlack.textContent = "Copied!";
+        setTimeout(() => {
+          contactSlack.textContent = "@samliu";
+        }, 2000);
+      });
+    }
+  </script>
+</SimpleContent>
