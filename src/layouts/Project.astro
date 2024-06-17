@@ -10,7 +10,7 @@ import ProjectImages from "./ProjectImages.svelte";
 type Props = MarkdownLayoutProps<{
   name: string;
   short: string;
-  images: {
+  images?: {
     url: string;
     alt: string;
   }[];
@@ -44,7 +44,7 @@ const images = Object.entries(
   }>(`../assets/work/**/*.{png,jpg,jpeg,webp,gif}`)
 )
   .filter(([path]) =>
-    frontmatter.images.some(
+    (frontmatter.images || []).some(
       (img) =>
         !img.url.startsWith("https://") && path.endsWith(`/${slug}/${img.url}`)
     )
@@ -53,10 +53,9 @@ const images = Object.entries(
     path,
     image: img,
     alt:
-      frontmatter.images.find((i) => path.endsWith(`/${slug}/${i.url}`))?.alt ||
-      "",
+      (frontmatter.images || []).find((i) => path.endsWith(`/${slug}/${i.url}`))
+        ?.alt || "",
   }));
-
 console.log(images);
 ---
 
@@ -170,21 +169,23 @@ console.log(images);
     </div>
   </div>
   <div slot="content" class="leading-8 space-y-4 content">
-    <ProjectImages numCards={images.length} client:load class="mb-8">
-      {
-        images.map((image, i) => (
-          <div style="flex: 0 0 100%;" class="aspect-video snap-center">
-            <Image
-              src={image.image()}
-              alt={image.alt}
-              class="h-min"
-              loading={i == 0 ? "eager" : "lazy"}
-              decoding={i == 0 ? "auto" : "async"}
-            />
-          </div>
-        ))
-      }
-    </ProjectImages>
+    {
+      images.length > 0 && (
+        <ProjectImages numCards={images.length} client:load class="mb-8">
+          {images.map((image, i) => (
+            <div style="flex: 0 0 100%;" class="aspect-video snap-center">
+              <Image
+                src={image.image()}
+                alt={image.alt}
+                class="h-min"
+                loading={i == 0 ? "eager" : "lazy"}
+                decoding={i == 0 ? "auto" : "async"}
+              />
+            </div>
+          ))}
+        </ProjectImages>
+      )
+    }
     <slot />
   </div>
 </DividedContent>
