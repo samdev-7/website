@@ -32,6 +32,6 @@ It was 44 hours of coding, workshops, and crazy activities at Shopify's Toronto 
 
 This was a ambitious and unique event, and I'm so proud to be part of its creation.  
 
-As of [writing](tooltip "June 2024"), Apocalypse is the **largest high-school hackathon in Canada**, running overnight for 44 hours from May 17, with 150 participants, [40 projects](https://apocalypse.hackclub.com/ships) shipped, and [CA$48,000 in funding](https://hcb.hackclub.com/apocalypse) from [Hack Club](https://hackclub.com/). Thank you to Hack Club, [Shopify](https://shopify.com), the organizing team, and our participants for making this event what it is.
+As of [writing](tooltip "June 2024"), Apocalypse is the **largest high-school hackathon in Canada**, running overnight for 44 hours from May 17, with 150 participants, [40 projects](https://apocalypse.hackclub.com/ships) shipped, and [CA$48,000 in funding](https://hcb.hackclub.com/apocalypse) from [Hack Club](https://hackclub.com/). Thank you to Hack Club, [Shopify](https://shopify.com), our organizing team, and our participants for making this event what it is.
 
 I was responsible for the tech for the event. Specifically, I focused on the development of the website, organization and tracking of our budget, and the submission & voting systems for projects. Be on the lookout for a write-up on these!
