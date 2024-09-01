@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "website",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "": "file:",
     "@astrojs/check": "^0.7.0",
     "@astrojs/svelte": "^5.5.0",
     "@astrojs/tailwind": "^5.1.0",
