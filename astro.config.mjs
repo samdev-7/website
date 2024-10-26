@@ -6,6 +6,9 @@ import inspectUrls from "@samdev-7/rehype-url-inspector";
 
 // https://astro.build/config
 export default defineConfig({
+  prefetch: {
+    prefetchAll: true,
+  },
   integrations: [tailwind(), svelte()],
   markdown: {
     rehypePlugins: [
