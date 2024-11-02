@@ -6,34 +6,33 @@ desc: "Canada's largest high-school hackathon, where 150 teens built wild projec
 
 images:
   - url: "0.png"
-    alt: "Outside Shopify, with the Apocalypse sign."
+    alt: "Apocalypse sign outside Shopify"
   - url: "1.png"
-    alt: "Before the event started, with the slideshow."
+    alt: "Pre-event slideshow"
   - url: "2.png"
-    alt: "Participants chatting."
+    alt: "Participants chatting"
   - url: "3.png"
-    alt: "Lots of snacks."
+    alt: "Lots of snacks"
   - url: "4.png"
-    alt: "The main page of the Apocalypse website."
+    alt: "Apocalypse website"
   - url: "5.png"
-    alt: "The event info page of the Apocalypse website which contains the event schedule."
+    alt: "The event info page of the Apocalypse website"
 
 links:
   - name: "Visit site"
     url: "https://apocalypse.hackclub.com"
-  - name: "View code"
+  - name: "View site code"
     url: "https://github.com/hackclub/apocalypse"
-
 ---
 
-I helped organize Apocalypse, a zombie-apocalypse themed coding event where 150 high-school students built their wildest ideas.  
+**150 teens, 44 hours, and 40 ships** — Apocalypse is the **largest high-school hackathon in Canada,** and I'm proud to be part of the team that made it happen.
 
-It was 44 hours of coding, workshops, and crazy activities at Shopify's Toronto office. We had lots of hardware, a custom card game, a custom PCB badge, and most impressively, an economy that evolved into [something we did not expect](tooltip "In a good way").
+We gathered 150 high school students from across Canada & beyond at Shopify's Toronto office and tasked them to build whatever they wanted to survive a zombie apocalypse, within 44 continuous hours.
 
-This was a ambitious and unique event, and I'm so proud to be part of its creation.  
+It was a [chaotic](tooltip "in a good way") weekend filled with loads of hardware, custom swag—including a custom card game and [PCB badge](https://github.com/LimesKey/NameTagPCB)—and our own economy of bottle caps that evolved into [something we didn't expect](tooltip "also in a good way"). You should check out the [wild projects](https://apocalypse.hackclub.com/ships) that were shipped, they're really cool.
 
-As of [writing](tooltip "June 2024"), Apocalypse is the **largest high-school hackathon in Canada**, running overnight for 44 hours from May 17, with 150 participants, [40 projects](https://apocalypse.hackclub.com/ships) shipped, and [CA$48,000 in funding](https://hcb.hackclub.com/apocalypse) from [Hack Club](https://hackclub.com/). Thank you to Hack Club, [Shopify](https://shopify.com), our organizing team, and our participants for making this event what it is.
+Apocalypse was an ambitious, one-of-a-kind event. [Watch the recap](https://www.youtube.com/watch?v=QvCoISXfcE8).
 
-I was responsible for the tech for the event. Specifically, I was the website developer and made sure project submission & voting systems worked, but I also organized and tracked of our budget. Be on the lookout for a write-up on these! I'm really proud of the [event schedule page](https://apocalypse.hackclub.com/event).
+Much thanks to [Hack Club](https://hackclub.com/), [Shopify](https://shopify.com), the amazing organizing team I was able to work with, and our participants for making this event remarkable.
 
-P.S. I'm now leading Ragnohacks, the first high school in-person hackathon in Ottawa. The team is still working on the site, but you can sign up for updates [here](https://ragnohacks.ca).
+P.S. I want to bring these events to more places. I'm now leading Counterspell Ottawa, the first high school in-person hackathon in Ottawa. Check out our site at <https://counterspell.hackclub.com/ottawa>.
