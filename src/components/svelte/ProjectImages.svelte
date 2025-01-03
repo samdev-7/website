@@ -1,19 +1,15 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let className = "";
-  export { className as class };
-
   let container: HTMLDivElement;
-  let scroll = 0;
-  let clientWidth = 800;
-  export let numCards = 1;
+  let scroll = $state(0);
+  let clientWidth = $state(800);
 
-  let totalWidth = clientWidth * numCards;
-  $: totalWidth = clientWidth * numCards;
+  let { children, className, numCards } = $props();
 
-  let currentCard = 0;
-  $: currentCard = Math.round(scroll / clientWidth);
+  let totalWidth = $derived(clientWidth * numCards);
+
+  let currentCard = $derived(Math.round(scroll / clientWidth));
 
   let timeout: NodeJS.Timeout;
 
@@ -91,17 +87,18 @@
 <div class="relative overflow-hidden rounded-md {className}">
   <div
     class="embla overflow-x-scroll no-scrollbar overflow-y-hidden flex aspect-video bg-gray-100 items-center snap-x snap-mandatory"
-    on:scroll={onScroll}
+    onscroll={onScroll}
     bind:clientWidth
     bind:this={container}
   >
-    <slot />
+    {@render children()}
   </div>
   {#if numCards > 1}
     <button
       class="absolute group left-0 top-0 bottom-0 flex items-center w-[30%]"
-      on:click={clickPrev}
+      onclick={clickPrev}
       title="Previous image"
+      aria-label="Previous image"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -123,8 +120,9 @@
     </button>
     <button
       class="absolute group right-0 top-0 bottom-0 flex items-center w-[30%] justify-end"
-      on:click={clickNext}
+      onclick={clickNext}
       title="Next image"
+      aria-label="Next image"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -155,8 +153,9 @@
             currentCard
               ? 'bg-white'
               : 'bg-white/50'}"
-            on:click={() => clickTo(card)}
+            onclick={() => clickTo(card)}
             title="Go to image {card + 1}"
+            aria-label="Go to image {card + 1}"
           ></button>
         {/each}
       </div>
