@@ -7,7 +7,9 @@ import { Equation } from "react-notion-x/build/third-party/equation";
 import "../../utils/notion.css";
 // import "react-notion-x/src/styles.css";
 import "katex/dist/katex.min.css";
-// import "prismjs/themes/prism-tomorrow.css";
+// import "prismjs/themes/prism.css";
+import "../../utils/prism.css";
+import "prismjs/components/prism-java.js";
 
 export default function NotionPage({
   recordMap,

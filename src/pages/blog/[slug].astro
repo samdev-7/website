@@ -28,5 +28,5 @@ const recordMap = await notionX.getPage(page.id);
 ---
 
 <NotionLayout {page}>
-  <NotionPage {recordMap} />
+  <NotionPage client:load {recordMap} />
 </NotionLayout>

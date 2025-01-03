@@ -890,11 +890,10 @@ svg.notion-page-icon {
   padding: 1em;
   margin: 4px 0;
   max-width: 50rem;
-  border-radius: 3px;
   tab-size: 2;
   display: block;
   overflow: auto;
-  @apply bg-gray-100 font-ibm-mono w-[calc(100vw-5rem)] sm:w-[calc(100vw-8rem)] md:w-[calc(100vw-10rem)];
+  @apply bg-gray-100 font-ibm-mono w-[calc(100vw-5rem)] sm:w-[calc(100vw-8rem)] md:w-[calc(100vw-10rem)] rounded-md;
 }
 
 .notion-code-copy {
