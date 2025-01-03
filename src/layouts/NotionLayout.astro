@@ -1,0 +1,56 @@
+---
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import { getBackgroundColor, getForegroundColor } from "../utils/notionColors";
+import type { BlogPage } from "../utils/notionTypes";
+import DividedContent from "./DividedContent.astro";
+
+interface Props {
+  page: BlogPage;
+}
+
+const { page } = Astro.props;
+console.log(page);
+---
+
+<DividedContent
+  title=`${page.title} — Sam Liu's Blog`
+  description={page.summary}
+>
+  <div slot="heading" class="pt-1 leading-8 text-lg">
+    <a class="flex space-x-1.5 items-center group" href="/blog">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-5 motion-safe:transition-all motion-safe:group-hover:-translate-x-0.5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+      </svg>
+      <p class="group-hover:underline">See all posts</p>
+    </a>
+    <h1 class="text-black text-5xl font-medium pt-8">{page.title}</h1>
+    <h2 class="pt-4">{page.summary}</h2>
+    <div class="pt-8 text-base space-y-2">
+      <div class="flex items-center">
+        {
+          page.tags.map((tag, i) => (
+            <a
+              class="motion-safe:hover:scale-105 motion-safe:transition w-fit px-4 rounded-full flex space-x-1.5 items-center mr-3 py-0.5"
+              style={`background-color: ${getBackgroundColor(page.tag_colors[i])}; color: ${getForegroundColor(page.tag_colors[i])}`}
+              href={`/blog?tags=${tag}`}
+            >
+              <p>{tag}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <slot slot="content" />
+</DividedContent>

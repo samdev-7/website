@@ -1,15 +1,21 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 
-import svelte from "@astrojs/svelte";
 import inspectUrls from "@samdev-7/rehype-url-inspector";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: {
     prefetchAll: true,
   },
-  integrations: [tailwind(), svelte()],
+  integrations: [
+    tailwind(),
+    react({
+      include: ["**/react/*"],
+    }),
+  ],
   markdown: {
     rehypePlugins: [
       [

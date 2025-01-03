@@ -1,0 +1,32 @@
+---
+import NotionPage from "../../components/react/NotionPage";
+import NotionLayout from "../../layouts/NotionLayout.astro";
+import { findPost } from "../../utils/server/notion";
+import { NotionAPI } from "notion-client";
+
+const { slug } = Astro.params;
+
+export const prerender = false;
+
+if (!slug) {
+  return Astro.rewrite("/404");
+}
+
+if (!slug.match(/^[a-z0-9-]+$/)) {
+  return Astro.rewrite("/404");
+}
+
+const page = await findPost(slug);
+
+if (!page) {
+  return Astro.rewrite("/404");
+}
+
+const notionX = new NotionAPI();
+
+const recordMap = await notionX.getPage(page.id);
+---
+
+<NotionLayout {page}>
+  <NotionPage {recordMap} />
+</NotionLayout>
