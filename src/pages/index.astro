@@ -5,8 +5,13 @@ import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import WorkCard from "../components/WorkCard.astro";
 import Layout from "../layouts/Layout.astro";
+import { toSimpleDate } from "../utils/dates";
+import { listPost } from "../utils/server/notion";
 
 const workDocs = await Astro.glob("./work/*.md");
+const blogPages = await listPost(3);
+
+export const prerender = false;
 ---
 
 <Layout title="Sam Liu">
@@ -127,14 +132,19 @@ const workDocs = await Astro.glob("./work/*.md");
             </svg>
           </a>
         </div>
-        <div class="flex space-x-4">
-          <BlogCard
-            num={0}
-            title="Coming soon..."
-            short="I'm still building this! Stay tuned for the first post."
-          />
-          <EmptyCard class="hidden sm:block" />
-          <EmptyCard class="hidden md:block" />
+        <div class="flex flex-col space-y-4">
+          {
+            blogPages.map((page) => (
+              <BlogCard
+                title={page.title}
+                summary={page.summary}
+                date={toSimpleDate(new Date(page.created_time))}
+                href={`blog/${page.slug}`}
+                tags={page.tags}
+                tag_colors={page.tag_colors}
+              />
+            ))
+          }
         </div>
       </section>
     </div>

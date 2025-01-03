@@ -1,31 +1,53 @@
 ---
+import { getBackgroundColor, getForegroundColor } from "../utils/notionColors";
+
 interface Props {
-  num: number;
   title: string;
-  short: string;
+  summary: string;
+  date?: string;
+  tags?: string[];
+  tag_colors?: string[];
   class?: string;
   href?: string;
 }
 
-const { num, title, short, class: className, href } = Astro.props;
+const {
+  title,
+  summary,
+  date,
+  tags = [],
+  tag_colors = [],
+  class: className,
+  href,
+} = Astro.props;
 ---
 
 <a
-  href="#"
+  href={href ? href : "#"}
   class=`${className} border shadow border-gray-200 rounded py-5 px-5 w-full ${href ? 'motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-md motion-safe:transition' : ''}`
 >
   <div class="space-y-2">
-    <div>
-      <p class="uppercase text-sm">
-        Adventure - {String(num).padStart(2, "0")}
-      </p>
-      <h3 class="text-xl font-medium">{title}</h3>
+    <div class="flex space-x-4 items-center">
+      <h3 class="grow text-xl font-medium">{title}</h3>
+      {date && <p class="text-gray-500 text-sm">{date}</p>}
+      <div class="hidden sm:flex space-x-1.5 text-sm">
+        {
+          tags.map((tag, i) => (
+            <p
+              class="rounded-full px-3 py-0.5"
+              style={`background-color: ${getBackgroundColor(tag_colors[i])}; color: ${getForegroundColor(tag_colors[i])}`}
+            >
+              {tag}
+            </p>
+          ))
+        }
+      </div>
     </div>
     <p
       class="text-sm overflow-hidden text-ellipsis text-wrap w-full max-h-[5lh]"
       style="-webkit-line-clamp: 5; -webkit-box-orient: vertical; display: -webkit-box;"
     >
-      {short}
+      {summary}
     </p>
   </div>
 </a>

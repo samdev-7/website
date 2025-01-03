@@ -40,7 +40,6 @@ const ProjectImages: React.FC<ProjectImagesProps> = ({
   }, [numCards]);
 
   useEffect(() => {
-    console.log(clientWidth);
     const newCard = Math.round(scroll / clientWidth);
     setCurrentCard(newCard);
   }, [scroll, clientWidth]);
@@ -63,8 +62,6 @@ const ProjectImages: React.FC<ProjectImagesProps> = ({
       return;
     }
     setClientWidth((prevWidth) => {
-      console.log(prevWidth);
-
       if (containerRef && containerRef.current)
         containerRef.current.scrollTo({
           left: card * prevWidth,

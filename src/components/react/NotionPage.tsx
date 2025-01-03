@@ -14,8 +14,6 @@ export default function NotionPage({
 }: {
   recordMap: ExtendedRecordMap;
 }) {
-  console.log("Test");
-
   return (
     <NotionRenderer
       recordMap={recordMap}
