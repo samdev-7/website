@@ -29,7 +29,7 @@ const {
   <div class="space-y-2">
     <div class="flex space-x-4 items-center">
       <h3 class="grow text-xl font-medium">{title}</h3>
-      {date && <p class="text-gray-500 text-sm">{date}</p>}
+      {date && <p class="text-gray-500 text-sm sm:block hidden">{date}</p>}
       <div class="hidden sm:flex space-x-1.5 text-sm">
         {
           tags.map((tag, i) => (

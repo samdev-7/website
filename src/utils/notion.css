@@ -841,6 +841,7 @@ svg.notion-page-icon {
   min-width: 100%;
   align-self: center;
   display: flex;
+  width: 0px;
   flex-direction: column;
 }
 
@@ -886,16 +887,14 @@ svg.notion-page-icon {
 }
 
 .notion-code {
-  position: relative;
-  width: 100%;
   padding: 1em;
   margin: 4px 0;
+  max-width: 50rem;
   border-radius: 3px;
   tab-size: 2;
   display: block;
-  box-sizing: border-box;
   overflow: auto;
-  @apply bg-gray-100 font-mono;
+  @apply bg-gray-100 font-ibm-mono w-[calc(100vw-5rem)] sm:w-[calc(100vw-8rem)] md:w-[calc(100vw-10rem)];
 }
 
 .notion-code-copy {
