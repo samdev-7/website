@@ -5,18 +5,22 @@ import inspectUrls from "@samdev-7/rehype-url-inspector";
 
 import react from "@astrojs/react";
 
+import vercel from "@astrojs/vercel";
+
 // https://astro.build/config
 export default defineConfig({
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "hover",
   },
+
   integrations: [
     tailwind(),
     react({
       include: ["**/react/*"],
     }),
   ],
+
   markdown: {
     rehypePlugins: [
       [
@@ -40,4 +44,6 @@ export default defineConfig({
       ],
     ],
   },
+
+  adapter: vercel(),
 });
