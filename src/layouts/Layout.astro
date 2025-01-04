@@ -2,15 +2,22 @@
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
+  ogSiteName?: string;
 }
 
-const { title, description } = Astro.props;
-// const description = "I build things. This is my quiet corner on the internet.";
-// const banner = "/banner.png";
+const {
+  title,
+  description = "I build things. This is my quiet corner on the internet.",
+  ogImage,
+  ogType = "website",
+  ogSiteName = "Sam Liu",
+} = Astro.props;
 
 const { url } = Astro.request;
 let slug = new URL(url).pathname;
-if (slug == "/") slug = "";
+if (slug.startsWith("/")) slug = slug.slice(1);
 ---
 
 <!doctype html>
@@ -19,13 +26,10 @@ if (slug == "/") slug = "";
     <meta charset="UTF-8" />
 
     <title>{title}</title>
-    <meta
-      name="description"
-      content={description ||
-        "I build things. This is my quiet corner on the internet."}
-    />
+    <meta name="description" content={description} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={ogSiteName} />
     <meta property="og:url" content=`https://samliu.dev/${slug}` />
     <meta property="og:title" content={title} />
     <meta
@@ -33,19 +37,13 @@ if (slug == "/") slug = "";
       content={description ||
         "I build things. This is my quiet corner on the internet."}
     />
-    <!-- <meta property="og:image" content={banner} /> -->
-
-    <meta name="twitter:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content=`https://samliu.dev/${slug}` />
     <meta property="twitter:title" content={title} />
-    <meta
-      property="twitter:description"
-      content={description ||
-        "I build things. This is my quiet corner on the internet."}
-    />
-    <!-- <meta property="twitter:image" content={banner} /> -->
+    <meta property="twitter:description" content={description} />
+    {ogImage && <meta property="twitter:image" content={ogImage} />}
 
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />

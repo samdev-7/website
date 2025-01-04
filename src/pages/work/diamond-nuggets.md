@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/Project.astro
+layout: ../../layouts/ProjectLayout.astro
 name: "Diamond Nuggets"
 short: "Minecraft mod"
 desc: "A Minecraft mod that adds diamond nuggets as a form of currency for multiplayer communities. Because why not?"

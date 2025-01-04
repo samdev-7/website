@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/Project.astro
+layout: ../../layouts/ProjectLayout.astro
 name: "Apocalypse"
 short: "High-school hackathon"
 desc: "Canada's largest high-school hackathon, where 150 teens built wild projects at Shopify's Toronto Office for 44 hours."

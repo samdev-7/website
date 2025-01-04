@@ -12,8 +12,11 @@ const { page } = Astro.props;
 ---
 
 <DividedContent
-  title=`${page.title} - Sam Liu's Blog`
+  title=`${page.title}`
   description={page.summary}
+  ogSiteName="Sam Liu's Blog"
+  ogType="article"
+  ogImage={`/api/og/blog/${page.slug}`}
 >
   <div slot="heading" class="pt-1 leading-8 text-lg">
     <a class="flex space-x-1.5 items-center group" href="/blog">

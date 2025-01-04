@@ -4,12 +4,15 @@ import SimpleContent from "./SimpleContent.astro";
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
+  ogSiteName?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage, ogType, ogSiteName } = Astro.props;
 ---
 
-<SimpleContent {title} {description}>
+<SimpleContent {title} {description} {ogImage} {ogType} {ogSiteName}>
   <slot name="heading" slot="heading" />
   <div slot="content">
     <div class="w-full flex justify-center">

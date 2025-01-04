@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/Project.astro
+layout: ../../layouts/ProjectLayout.astro
 name: "Echo"
 short: "Discord application"
 desc: "Discord application providing real-time captions for Discord voice calls using a local speech recognition model."
