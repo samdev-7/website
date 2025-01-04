@@ -10,9 +10,10 @@ export const GET: APIRoute = async ({ params, request }) => {
   if (!slug) {
     return new Response(
       JSON.stringify({
-        status: 400,
-        body: "Invalid request",
-      })
+        ok: false,
+        message: "Invalid request",
+      }),
+      { status: 400 }
     );
   }
 
@@ -21,9 +22,10 @@ export const GET: APIRoute = async ({ params, request }) => {
   if (!result) {
     return new Response(
       JSON.stringify({
-        status: 404,
-        body: "Post not found",
-      })
+        ok: false,
+        message: "Post not found",
+      }),
+      { status: 404 }
     );
   }
 
