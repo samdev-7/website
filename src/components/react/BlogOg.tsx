@@ -1,5 +1,4 @@
 import { ImageResponse } from "@vercel/og";
-import font from "../../assets/fonts/og/ibmplexsans-regular.ttf";
 import type { BlogPage } from "../../utils/notionTypes";
 import { getForegroundColor } from "../../utils/notionColors";
 import { toSimpleDate } from "../../utils/dates";
