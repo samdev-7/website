@@ -1,11 +1,10 @@
 import { ImageResponse } from "@vercel/og";
 import font from "../../assets/fonts/og/ibmplexsans-regular.ttf";
+import type { BlogPage } from "../../utils/notionTypes";
+import { getForegroundColor } from "../../utils/notionColors";
+import { toSimpleDate } from "../../utils/dates";
 
-export default async function handler({
-  tag_colors,
-}: {
-  tag_colors: string[];
-}) {
+export default async function handler({ page }: { page: BlogPage }) {
   const ibmRegFont = await (
     await fetch(
       "https://cloud-8yuaa4uwv-hack-club-bot.vercel.app/1ibmplexsans-regular.ttf"
@@ -16,8 +15,6 @@ export default async function handler({
       "https://cloud-8yuaa4uwv-hack-club-bot.vercel.app/0ibmplexsans-medium.ttf"
     )
   ).arrayBuffer();
-
-  console.log(font);
 
   return new ImageResponse(
     (
@@ -32,20 +29,18 @@ export default async function handler({
             <p tw="text-2xl">Blog</p>
           </div>
           <p tw="grow text-xl flex justify-end grow mr-12 text-gray-500">
-            2024-12-31
+            {toSimpleDate(new Date(page.created_time))}
           </p>
         </div>
         <div tw="flex flex-col grow mx-12 justify-center mb-12">
-          <p tw="text-4xl m-0 font-medium">More posts are coming soon!</p>
-          <p tw="text-2xl">
-            Going down a rabbit hole with FIRST robotics programming
-          </p>
+          <p tw="text-4xl m-0 font-medium">{page.title}</p>
+          <p tw="text-2xl">{page.summary}</p>
         </div>
         <div tw="flex h-4">
-          {tag_colors.map((color) => (
+          {page.tag_colors.map((color) => (
             <div
-              tw="h-4 grow opacity-70"
-              style={{ backgroundColor: color }}
+              tw="h-4 grow"
+              style={{ backgroundColor: getForegroundColor(color) }}
             ></div>
           ))}
         </div>
