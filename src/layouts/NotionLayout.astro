@@ -1,6 +1,5 @@
 ---
-import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.astro";
+import { toReadable } from "../utils/dates";
 import { getBackgroundColor, getForegroundColor } from "../utils/notionColors";
 import type { BlogPage } from "../utils/notionTypes";
 import DividedContent from "./DividedContent.astro";
@@ -13,7 +12,7 @@ const { page } = Astro.props;
 ---
 
 <DividedContent
-  title=`${page.title} — Sam Liu's Blog`
+  title=`${page.title} - Sam Liu's Blog`
   description={page.summary}
 >
   <div slot="heading" class="pt-1 leading-8 text-lg">
@@ -35,6 +34,9 @@ const { page } = Astro.props;
     </a>
     <h1 class="text-black text-5xl font-medium pt-8">{page.title}</h1>
     <h2 class="pt-4">{page.summary}</h2>
+    <p class="text-sm text-gray-600">
+      {toReadable(new Date(page.created_time))}
+    </p>
     <div class="pt-8 text-base space-y-2">
       <div class="flex items-center">
         {

@@ -5,6 +5,8 @@ import { toSimpleDate } from "../utils/dates";
 import { listPost } from "../utils/server/notion";
 
 const blogPages = await listPost();
+
+export const prerender = false;
 ---
 
 <SimpleContent
