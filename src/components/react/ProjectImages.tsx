@@ -24,7 +24,7 @@ const ProjectImages: React.FC<ProjectImagesProps> = ({
     }
     timeoutRef.current = setInterval(() => {
       scrollNext();
-    }, 2000);
+    }, 10000);
   };
 
   useEffect(() => {
