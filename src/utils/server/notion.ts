@@ -68,15 +68,12 @@ export async function listPost(limit: number = 100): Promise<BlogPage[]> {
   });
 
   let result: BlogPage[] = [];
-  console.log(blogDb);
 
   await Promise.all(
     blogDb.results.map(async (rawPage) => {
       if (rawPage.object !== "page") {
         return;
       }
-
-      console.log(rawPage);
 
       const page = rawPage as unknown as BlogDbPage;
 
