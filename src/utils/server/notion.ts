@@ -34,7 +34,7 @@ export async function findPost(slug: string): Promise<BlogPage | undefined> {
   const page = blogDb.results[0] as unknown as BlogDbPage;
 
   return {
-    id: page.id,
+    id: page.properties.id.rich_text[0].plain_text,
     slug: page.properties.Slug.rich_text[0].plain_text,
     created_time: page.created_time,
     last_edited_time: page.last_edited_time,
@@ -68,6 +68,7 @@ export async function listPost(limit: number = 100): Promise<BlogPage[]> {
   });
 
   let result: BlogPage[] = [];
+  console.log(blogDb);
 
   await Promise.all(
     blogDb.results.map(async (rawPage) => {
@@ -75,10 +76,12 @@ export async function listPost(limit: number = 100): Promise<BlogPage[]> {
         return;
       }
 
+      console.log(rawPage);
+
       const page = rawPage as unknown as BlogDbPage;
 
       result.push({
-        id: page.id,
+        id: page.properties.id.rich_text[0].plain_text,
         slug: page.properties.Slug.rich_text[0].plain_text,
         created_time: page.created_time,
         last_edited_time: page.last_edited_time,

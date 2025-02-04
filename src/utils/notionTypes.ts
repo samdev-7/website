@@ -24,6 +24,11 @@ export type BlogDbPage = {
         plain_text: string;
       }>;
     };
+    id: {
+      rich_text: Array<{
+        plain_text: string;
+      }>;
+    };
   };
 };
 
