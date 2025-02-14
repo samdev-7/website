@@ -1,7 +1,5 @@
 export type BlogDbPage = {
   id: string;
-  created_time: string;
-  last_edited_time: string;
   properties: {
     Slug: {
       rich_text: Array<{
@@ -28,6 +26,16 @@ export type BlogDbPage = {
       rich_text: Array<{
         plain_text: string;
       }>;
+    };
+    "Created time": {
+      date: {
+        start: string;
+      };
+    };
+    "Last edited time": {
+      date: {
+        start: string;
+      };
     };
   };
 };

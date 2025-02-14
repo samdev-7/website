@@ -36,8 +36,8 @@ export async function findPost(slug: string): Promise<BlogPage | undefined> {
   return {
     id: page.properties.id.rich_text[0].plain_text,
     slug: page.properties.Slug.rich_text[0].plain_text,
-    created_time: page.created_time,
-    last_edited_time: page.last_edited_time,
+    created_time: page.properties["Created time"].date.start,
+    last_edited_time: page.properties["Last edited time"].date.start,
     tags: page.properties.Tags.multi_select.map((tag) => tag.name),
     tag_colors: page.properties.Tags.multi_select.map((tag) => tag.color),
     title: page.properties.Page.title[0].plain_text,
@@ -77,11 +77,13 @@ export async function listPost(limit: number = 100): Promise<BlogPage[]> {
 
       const page = rawPage as unknown as BlogDbPage;
 
+      console.log(page.properties["Created time"].date.start);
+
       result.push({
         id: page.properties.id.rich_text[0].plain_text,
         slug: page.properties.Slug.rich_text[0].plain_text,
-        created_time: page.created_time,
-        last_edited_time: page.last_edited_time,
+        created_time: page.properties["Created time"].date.start,
+        last_edited_time: page.properties["Last edited time"].date.start,
         tags: page.properties.Tags.multi_select.map((tag) => tag.name),
         tag_colors: page.properties.Tags.multi_select.map((tag) => tag.color),
         title: page.properties.Page.title[0].plain_text,
