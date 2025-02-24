@@ -1,17 +1,17 @@
 ---
-import BlogCard from "../components/BlogCard.astro";
+import BlogCard from "../components/react/BlogCard";
 import EmptyCard from "../components/EmptyCard.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import WorkCard from "../components/WorkCard.astro";
 import Layout from "../layouts/Layout.astro";
-import { toSimpleDate } from "../utils/dates";
 import { listPost } from "../utils/server/notion";
+import ClientBlogList from "../components/react/ClientBlogList";
+import BlogCardSkeleton from "../components/react/BlogCardSkeleton";
 
 const workDocs = await Astro.glob("./work/*.md");
-const blogPages = await listPost(3);
 
-export const prerender = false;
+export const prerender = true;
 ---
 
 <Layout title="Sam Liu">
@@ -148,19 +148,14 @@ export const prerender = false;
             </svg>
           </a>
         </div>
-        <div class="flex flex-col space-y-4">
-          {
-            blogPages.map((page) => (
-              <BlogCard
-                title={page.title}
-                summary={page.summary}
-                date={toSimpleDate(new Date(page.created_time))}
-                href={`blog/${page.slug}`}
-                tags={page.tags}
-                tag_colors={page.tag_colors}
-              />
-            ))
-          }
+        <div>
+          <ClientBlogList client:only="react">
+            <div slot="fallback" class="flex flex-col space-y-4">
+              <BlogCardSkeleton />
+              <BlogCardSkeleton />
+              <BlogCardSkeleton />
+            </div>
+          </ClientBlogList>
         </div>
       </section>
     </div>
