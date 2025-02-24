@@ -25,8 +25,27 @@ if (!page) {
 const notionX = new NotionAPI();
 
 const recordMap = await notionX.getPage(page.id);
+
+const isAi = page.tags.includes("AI");
 ---
 
 <NotionLayout {page}>
   <NotionPage client:load {recordMap} />
+  {
+    !isAi && (
+      <a
+        href="https://notbyai.fyi"
+        target="_blank"
+        title="Written by human, not by AI"
+        class="block mt-8"
+      >
+        <img
+          src="/written-not-by-ai-en.svg"
+          width="131px"
+          height="42px"
+          alt="Written by human, not by AI"
+        />
+      </a>
+    )
+  }
 </NotionLayout>
