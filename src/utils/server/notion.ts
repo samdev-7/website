@@ -77,8 +77,6 @@ export async function listPost(limit: number = 100): Promise<BlogPage[]> {
 
       const page = rawPage as unknown as BlogDbPage;
 
-      console.log(page.properties["Created time"].date.start);
-
       result.push({
         id: page.properties.id.rich_text[0].plain_text,
         slug: page.properties.Slug.rich_text[0].plain_text,
