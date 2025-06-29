@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "IBMPlexMono", monospace;
+
+  --color-fg: #4a3911;
+  --color-bg: #fefbef;
+}
+
+:root {
+  @apply font-mono bg-bg text-fg;
+}
+
+a {
+  @apply underline;
+}
