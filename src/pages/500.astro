@@ -1,0 +1,21 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+
+import Navbar from "../components/Navbar.astro";
+---
+
+<RootLayout>
+  <Navbar />
+  <div class="absolute inset-0 mx-12 flex justify-center -z-10">
+    <div
+      class="max-w-2xl w-full text-3xl flex justify-center items-center relative"
+    >
+      <p class="text-center">
+        500 ⚠️<br />
+        something went wrong<br />
+        <br />
+        return <a href="/">home</a>
+      </p>
+    </div>
+  </div>
+</RootLayout>
