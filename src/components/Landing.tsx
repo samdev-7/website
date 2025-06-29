@@ -163,8 +163,22 @@ export default function Landing() {
     linksHeight,
   ]);
 
+  function skipToContent() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   return (
     <div className="h-[500rem]">
+      {contentOpacity < 1 && (
+        <button
+          className="text-sm fixed bottom-8 right-8 underline cursor-pointer z-10"
+          tabIndex={1}
+          style={{ opacity: 1 - contentOpacity }}
+          onClick={skipToContent}
+        >
+          skip to content
+        </button>
+      )}
       <div className="fixed inset-0 h-screen flex items-center flex-col mx-12 text-3xl text-fg">
         <div className="h-full max-w-2xl w-full py-12 flex flex-col items-center justify-center relative text-center">
           <p
@@ -218,14 +232,6 @@ export default function Landing() {
           )}
         </div>
       </div>
-      {contentOpacity < 1 && (
-        <button
-          className="text-sm fixed bottom-8 right-8 underline"
-          style={{ opacity: 1 - contentOpacity }}
-        >
-          skip to content
-        </button>
-      )}
       {contentOpacity > 0 && (
         <a
           href="/"
