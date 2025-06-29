@@ -1,15 +1,34 @@
+---
+const path = Astro.url.pathname;
+const pathParts = path.split("/").filter((part) => part.length > 0);
+console.log("Path parts:", pathParts);
+---
+
 <div class="flex mx-12 my-8 text-xl">
-  <a href="/">samliu.dev</a>
+  <p>
+    <a href="/">samliu.dev</a>/{
+      pathParts.map((path, i) => (
+        <>
+          {i == 0 ? "" : "/"}
+          {i == pathParts.length - 1 ? (
+            path
+          ) : (
+            <a href={"/" + pathParts.slice(0, i + 1).join("/")}>{path}</a>
+          )}
+        </>
+      ))
+    }
+  </p>
   <div class="grow"></div>
   <div class="flex">
     <p>
-    <a href="/about">/about</a>
-    -
-    <a href="/work">/work</a>
-    -
-    <a href="/blog">/blog</a>
-    -
-    <a href="/contact">/contact</a>
+      <a href="/about">/about</a>
+      -
+      <a href="/work">/work</a>
+      -
+      <a href="/blog">/blog</a>
+      -
+      <a href="/contact">/contact</a>
     </p>
   </div>
 </div>

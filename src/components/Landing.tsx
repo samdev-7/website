@@ -233,13 +233,12 @@ export default function Landing() {
         </div>
       </div>
       {contentOpacity > 0 && (
-        <a
-          href="/"
+        <p
           className="text-xl fixed top-8 left-12"
           style={{ opacity: contentOpacity }}
         >
           samliu.dev
-        </a>
+        </p>
       )}
     </div>
   );
