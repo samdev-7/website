@@ -168,7 +168,7 @@ export default function Landing() {
   }
 
   return (
-    <div className="h-[400rem]">
+    <div className="h-[300rem]">
       {contentOpacity < 1 && (
         <button
           className="text-sm fixed bottom-8 right-8 underline cursor-pointer z-10"
