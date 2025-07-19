@@ -182,7 +182,7 @@ export default function Landing() {
       <div className="fixed inset-0 h-screen flex items-center flex-col mx-12 text-3xl text-fg">
         <div className="h-full max-w-2xl w-full py-12 flex flex-col items-center justify-center relative text-center">
           <p
-            className="absolute"
+            className="absolute left-0 right-0"
             ref={textGreet}
             style={{
               opacity: greetOpacity,
@@ -192,7 +192,7 @@ export default function Landing() {
             hey there! 👋
           </p>
           <p
-            className="absolute"
+            className="absolute left-0 right-0"
             style={{
               opacity: nameOpacity,
               transform: `translateY(${nameTranslateY}px)`,
@@ -202,7 +202,7 @@ export default function Landing() {
             i'm sam
           </p>
           <p
-            className="absolute"
+            className="absolute left-0 right-0"
             style={{
               opacity: descOpacity,
               transform: `translateY(${descTranslateY}px)`,
@@ -212,7 +212,7 @@ export default function Landing() {
             i’m building things to help teens learn to code @ <a href="https://hackclub.com" target="_blank">hack club</a>
           </p>
           <p
-            className="absolute"
+            className="absolute left-0 right-0"
             style={{
               opacity: linksOpacity,
               transform: `translateY(${linksTranslateY}px)`,
