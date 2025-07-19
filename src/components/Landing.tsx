@@ -171,7 +171,7 @@ export default function Landing() {
     <div className="h-[200rem]">
       {contentOpacity < 1 && (
         <button
-          className="text-sm fixed bottom-8 right-8 underline cursor-pointer z-10"
+          className="text-xs md:text-sm fixed bottom-4 md:bottom-8 right-4 md:right-8 underline cursor-pointer z-10"
           tabIndex={1}
           style={{ opacity: 1 - contentOpacity }}
           onClick={skipToContent}
@@ -179,7 +179,7 @@ export default function Landing() {
           skip to content
         </button>
       )}
-      <div className="fixed inset-0 h-screen flex items-center flex-col mx-12 text-3xl text-fg">
+      <div className="fixed inset-0 h-screen flex items-center flex-col mx-8 sm:mx-12 text-lg sm:text-2xl md:text-3xl text-fg">
         <div className="h-full max-w-2xl w-full py-12 flex flex-col items-center justify-center relative text-center">
           <p
             className="absolute left-0 right-0"
@@ -228,7 +228,7 @@ export default function Landing() {
           </p>
           {contentOpacity < 1 && (
             <p
-              className="absolute text-xl bottom-12"
+              className="absolute text-base sm:text-lg md:text-xl bottom-6 md:bottom-12"
               style={{ opacity: 1 - contentOpacity }}
             >
               scroll<br></br>↓
@@ -238,7 +238,7 @@ export default function Landing() {
       </div>
       {contentOpacity > 0 && (
         <p
-          className="text-xl fixed top-8 left-12"
+          className="text-xl fixed top-4 md:top-8 left-6 md:left-12"
           style={{ opacity: contentOpacity }}
         >
           samliu.dev
