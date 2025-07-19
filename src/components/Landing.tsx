@@ -179,7 +179,7 @@ export default function Landing() {
           skip to content
         </button>
       )}
-      <div className="fixed inset-0 h-screen flex items-center flex-col mx-8 sm:mx-12 text-lg sm:text-2xl md:text-3xl text-fg">
+      <div className="fixed inset-0 h-screen flex items-center flex-col mx-6 md:mx-12 text-lg sm:text-2xl md:text-3xl text-fg">
         <div className="h-full max-w-2xl w-full py-12 flex flex-col items-center justify-center relative text-center">
           <p
             className="absolute left-0 right-0"
@@ -238,7 +238,7 @@ export default function Landing() {
       </div>
       {contentOpacity > 0 && (
         <p
-          className="text-xl fixed top-4 md:top-8 left-6 md:left-12"
+          className="text-base md:text-xl fixed top-5 md:top-8 left-6 md:left-12"
           style={{ opacity: contentOpacity }}
         >
           samliu.dev

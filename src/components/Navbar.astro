@@ -4,7 +4,7 @@ const pathParts = path.split("/").filter((part) => part.length > 0);
 console.log("Path parts:", pathParts);
 ---
 
-<div class="flex mx-12 my-8 text-xl">
+<div class="flex mx-6 md:mx-12 my-5 md:my-8 text-base md:text-xl">
   <p>
     <a href="/">samliu.dev</a>/{
       pathParts.map((path, i) => (
@@ -20,7 +20,9 @@ console.log("Path parts:", pathParts);
     }
   </p>
   <div class="grow"></div>
-  <div class="flex">
+
+  <!-- DESKTOP -->
+  <div class="hidden md:flex">
     <p>
       <a href="/about">/about</a>
       -
@@ -31,4 +33,85 @@ console.log("Path parts:", pathParts);
       <a href="/contact">/contact</a>
     </p>
   </div>
+
+  <!-- MOBILE -->
+  <button
+    id="burger-btn"
+    class="md:hidden flex flex-col justify-center items-center w-6 h-6 space-y-1"
+    aria-label="Toggle menu"
+  >
+    <span class="w-5 h-0.5 bg-current transition-all duration-300 ease-in-out"
+    ></span>
+    <span class="w-5 h-0.5 bg-current transition-all duration-300 ease-in-out"
+    ></span>
+    <span class="w-5 h-0.5 bg-current transition-all duration-300 ease-in-out"
+    ></span>
+  </button>
 </div>
+
+<!-- MOBILE -->
+<div
+  id="mobile-menu"
+  class="md:hidden fixed top-0 right-0 h-full w-64 bg-bg text-fg shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 motion-reduce:transition-none"
+>
+  <div class="p-6">
+    <button
+      id="close-btn"
+      class="absolute top-3 right-6 text-4xl text-fg"
+      aria-label="Close menu"
+    >
+      ×
+    </button>
+    <nav class="mt-8 space-y-4">
+      <a href="/about" class="block text-xl text-fg hover:underline">/about</a>
+      <a href="/work" class="block text-xl text-fg hover:underline">/work</a>
+      <a href="/blog" class="block text-xl text-fg hover:underline">/blog</a>
+      <a href="/contact" class="block text-xl text-fg hover:underline"
+        >/contact</a
+      >
+    </nav>
+  </div>
+</div>
+
+<!-- MOBILE -->
+<div
+  id="backdrop"
+  class="md:hidden fixed inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out z-40 motion-reduce:transition-none"
+>
+</div>
+
+<script>
+  const burgerBtn = document.getElementById("burger-btn");
+  const closeBtn = document.getElementById("close-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const backdrop = document.getElementById("backdrop");
+
+  function openMenu() {
+    mobileMenu?.classList.remove("translate-x-full");
+    backdrop?.classList.remove("opacity-0", "pointer-events-none");
+    backdrop?.classList.add("opacity-90");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.add("translate-x-full");
+    backdrop?.classList.add("opacity-0", "pointer-events-none");
+    backdrop?.classList.remove("opacity-90");
+    document.body.style.overflow = "";
+  }
+
+  burgerBtn?.addEventListener("click", openMenu);
+  closeBtn?.addEventListener("click", closeMenu);
+  backdrop?.addEventListener("click", closeMenu);
+
+  const mobileLinks = document.querySelectorAll("#mobile-menu a");
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeMenu();
+    }
+  });
+</script>
