@@ -187,6 +187,7 @@ export default function Landing() {
             style={{
               opacity: greetOpacity,
               transform: `translateY(${greetTranslateY}px)`,
+              pointerEvents: greetOpacity === 0 ? 'none' : 'auto',
             }}
           >
             hey there! 👋
@@ -196,6 +197,7 @@ export default function Landing() {
             style={{
               opacity: nameOpacity,
               transform: `translateY(${nameTranslateY}px)`,
+              pointerEvents: nameOpacity === 0 ? 'none' : 'auto',
             }}
             ref={textName}
           >
@@ -206,6 +208,7 @@ export default function Landing() {
             style={{
               opacity: descOpacity,
               transform: `translateY(${descTranslateY}px)`,
+              pointerEvents: descOpacity === 0 ? 'none' : 'auto',
             }}
             ref={textDesc}
           >
@@ -216,6 +219,7 @@ export default function Landing() {
             style={{
               opacity: linksOpacity,
               transform: `translateY(${linksTranslateY}px)`,
+              pointerEvents: linksOpacity === 0 ? 'none' : 'auto',
             }}
             ref={textLinks}
           >
