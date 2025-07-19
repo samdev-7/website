@@ -168,7 +168,7 @@ export default function Landing() {
   }
 
   return (
-    <div className="h-[300rem]">
+    <div className="h-[200rem]">
       {contentOpacity < 1 && (
         <button
           className="text-sm fixed bottom-8 right-8 underline cursor-pointer z-10"
@@ -209,7 +209,7 @@ export default function Landing() {
             }}
             ref={textDesc}
           >
-            i’m currently building things and experiences @ ---------
+            i’m building things to help teens learn to code @ <a href="https://hackclub.com" target="_blank">hack club</a>
           </p>
           <p
             className="absolute"
