@@ -172,7 +172,7 @@ export default function Landing() {
       {contentOpacity < 1 && (
         <button
           className="text-xs md:text-sm fixed bottom-4 md:bottom-8 right-4 md:right-8 underline cursor-pointer z-10"
-          tabIndex={1}
+          tabIndex={0}
           style={{ opacity: 1 - contentOpacity }}
           onClick={skipToContent}
         >
