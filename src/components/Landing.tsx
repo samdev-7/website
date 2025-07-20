@@ -168,7 +168,7 @@ export default function Landing() {
   }
 
   return (
-    <div className="h-[200rem]">
+    <div className="h-[150rem]">
       {contentOpacity < 1 && (
         <button
           className="text-xs md:text-sm fixed bottom-4 md:bottom-8 right-4 md:right-8 underline cursor-pointer z-10"
@@ -228,7 +228,7 @@ export default function Landing() {
           </p>
           {contentOpacity < 1 && (
             <p
-              className="absolute text-base sm:text-lg md:text-xl bottom-6 md:bottom-12"
+              className="fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12"
               style={{ opacity: 1 - contentOpacity }}
             >
               scroll<br></br>↓
@@ -246,7 +246,7 @@ export default function Landing() {
       )}
       {contentOpacity > 0 && (
         <p
-          className="text-xs md:text-sm fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2"
+          className="text-xs md:text-sm fixed bottom-4 md:bottom-8 transform text-center left-6 right-6"
           style={{ opacity: contentOpacity }}
         >
           © 2025 sam liu, <a href="https://github.com/samdev-7/website">open sourced</a> ♥︎
