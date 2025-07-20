@@ -2,20 +2,22 @@
 import RootLayout from "../layouts/RootLayout.astro";
 
 import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.tsx";
 ---
 
 <RootLayout>
-  <Navbar />
-  <div class="absolute inset-0 mx-12 flex justify-center -z-10">
-    <div
-      class="max-w-2xl w-full text-3xl flex justify-center items-center relative"
-    >
-      <p class="text-center">
-        404 ⚠️<br />
-        this page does not exist<br />
-        <br />
-        return <a href="/">home</a>
-      </p>
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+    <div class="flex-grow flex justify-center items-center mx-12">
+      <div class="max-w-2xl w-full text-3xl text-center">
+        <p>
+          404 ⚠️<br />
+          this page does not exist<br />
+          <br />
+          return <a href="/">home</a>
+        </p>
+      </div>
     </div>
+    <Footer />
   </div>
 </RootLayout>

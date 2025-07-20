@@ -244,6 +244,14 @@ export default function Landing() {
           samliu.dev
         </p>
       )}
+      {contentOpacity > 0 && (
+        <p
+          className="text-xs md:text-sm fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2"
+          style={{ opacity: contentOpacity }}
+        >
+          © 2025 sam liu, <a href="https://github.com/samdev-7/website">open sourced</a> ♥︎
+        </p>
+      )}
     </div>
   );
 }
