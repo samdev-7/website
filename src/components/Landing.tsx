@@ -34,7 +34,7 @@ export default function Landing() {
   useEffect(() => {
     const calculateScrollPercent = () => {
       setScrollPercent(
-        window.pageYOffset / (document.body.scrollHeight - window.innerHeight)
+        window.pageYOffset / (document.body.scrollHeight - window.innerHeight),
       );
     };
 
@@ -97,7 +97,7 @@ export default function Landing() {
       greetHeight,
       nameHeight,
       descHeight,
-      linksHeight
+      linksHeight,
     );
 
     const keyframes = [
@@ -142,12 +142,12 @@ export default function Landing() {
         const translateY = lerp(
           translateYBounds[0],
           translateYBounds[1],
-          animationPercent
+          animationPercent,
         );
         const opacity = lerp(
           opacityBounds[0],
           opacityBounds[1],
-          animationPercent
+          animationPercent,
         );
 
         setTranslateY(translateY);
@@ -187,7 +187,7 @@ export default function Landing() {
             style={{
               opacity: greetOpacity,
               transform: `translateY(${greetTranslateY}px)`,
-              pointerEvents: greetOpacity === 0 ? 'none' : 'auto',
+              pointerEvents: greetOpacity === 0 ? "none" : "auto",
             }}
           >
             hey there! 👋
@@ -197,7 +197,7 @@ export default function Landing() {
             style={{
               opacity: nameOpacity,
               transform: `translateY(${nameTranslateY}px)`,
-              pointerEvents: nameOpacity === 0 ? 'none' : 'auto',
+              pointerEvents: nameOpacity === 0 ? "none" : "auto",
             }}
             ref={textName}
           >
@@ -208,18 +208,21 @@ export default function Landing() {
             style={{
               opacity: descOpacity,
               transform: `translateY(${descTranslateY}px)`,
-              pointerEvents: descOpacity === 0 ? 'none' : 'auto',
+              pointerEvents: descOpacity === 0 ? "none" : "auto",
             }}
             ref={textDesc}
           >
-            i’m building things to help teens learn to code @ <a href="https://hackclub.com" target="_blank">hack club</a>
+            i build things that get teens to make technical projects @{" "}
+            <a href="https://hackclub.com" target="_blank">
+              hack club
+            </a>
           </p>
           <p
             className="absolute left-0 right-0"
             style={{
               opacity: linksOpacity,
               transform: `translateY(${linksTranslateY}px)`,
-              pointerEvents: linksOpacity === 0 ? 'none' : 'auto',
+              pointerEvents: linksOpacity === 0 ? "none" : "auto",
             }}
             ref={textLinks}
           >
@@ -249,7 +252,8 @@ export default function Landing() {
           className="text-xs md:text-sm fixed bottom-4 md:bottom-8 transform text-center left-6 right-6"
           style={{ opacity: contentOpacity }}
         >
-          © 2025 sam liu, <a href="https://github.com/samdev-7/website">open sourced</a> ♥︎
+          © 2025 sam liu,{" "}
+          <a href="https://github.com/samdev-7/website">open sourced</a> ♥︎
         </p>
       )}
     </div>
