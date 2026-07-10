@@ -8,7 +8,7 @@
 }
 
 :root {
-  @apply font-mono bg-bg text-fg;
+  @apply font-mono bg-bg text-fg overscroll-none;
 }
 
 a {

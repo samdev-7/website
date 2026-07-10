@@ -32,19 +32,49 @@ export default function Landing() {
   }, []);
 
   useEffect(() => {
-    const calculateScrollPercent = () => {
-      setScrollPercent(
-        window.pageYOffset / (document.body.scrollHeight - window.innerHeight),
-      );
+    const getMaxScroll = () => document.body.scrollHeight - window.innerHeight;
+
+    // Settle to the exact top/bottom when scrolling comes to rest inside
+    // these flat zones (nothing animates before topSnap or after bottomSnap).
+    const topSnap = 0.03;
+    const bottomSnap = 0.97;
+
+    let rafId: number | null = null;
+    let snapTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    const update = () => {
+      rafId = null;
+      setScrollPercent(window.pageYOffset / getMaxScroll());
     };
 
-    window.addEventListener("resize", calculateScrollPercent);
-    window.addEventListener("scroll", calculateScrollPercent);
-    calculateScrollPercent();
+    const maybeSnap = () => {
+      const max = getMaxScroll();
+      const percent = window.pageYOffset / max;
+      if (percent > 0 && percent < topSnap) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (percent > bottomSnap && percent < 1) {
+        window.scrollTo({ top: max, behavior: "smooth" });
+      }
+    };
+
+    // Coalesce scroll events into one state update per frame to avoid the
+    // main-thread repaint lag that shows up as ghosting in Safari. The snap
+    // is debounced so it only fires once scrolling (incl. momentum) settles.
+    const onScroll = () => {
+      if (rafId === null) rafId = requestAnimationFrame(update);
+      if (snapTimeout !== null) clearTimeout(snapTimeout);
+      snapTimeout = setTimeout(maybeSnap, 120);
+    };
+
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
 
     return () => {
-      window.removeEventListener("resize", calculateScrollPercent);
-      window.removeEventListener("scroll", calculateScrollPercent);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      if (snapTimeout !== null) clearTimeout(snapTimeout);
     };
   }, []);
 
@@ -164,7 +194,7 @@ export default function Landing() {
   ]);
 
   function skipToContent() {
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   }
 
   return (
@@ -186,7 +216,8 @@ export default function Landing() {
             ref={textGreet}
             style={{
               opacity: greetOpacity,
-              transform: `translateY(${greetTranslateY}px)`,
+              transform: `translate3d(0, ${greetTranslateY}px, 0)`,
+              willChange: "transform, opacity",
               pointerEvents: greetOpacity === 0 ? "none" : "auto",
             }}
           >
@@ -196,7 +227,8 @@ export default function Landing() {
             className="absolute left-0 right-0"
             style={{
               opacity: nameOpacity,
-              transform: `translateY(${nameTranslateY}px)`,
+              transform: `translate3d(0, ${nameTranslateY}px, 0)`,
+              willChange: "transform, opacity",
               pointerEvents: nameOpacity === 0 ? "none" : "auto",
             }}
             ref={textName}
@@ -207,7 +239,8 @@ export default function Landing() {
             className="absolute left-0 right-0"
             style={{
               opacity: descOpacity,
-              transform: `translateY(${descTranslateY}px)`,
+              transform: `translate3d(0, ${descTranslateY}px, 0)`,
+              willChange: "transform, opacity",
               pointerEvents: descOpacity === 0 ? "none" : "auto",
             }}
             ref={textDesc}
@@ -221,7 +254,8 @@ export default function Landing() {
             className="absolute left-0 right-0"
             style={{
               opacity: linksOpacity,
-              transform: `translateY(${linksTranslateY}px)`,
+              transform: `translate3d(0, ${linksTranslateY}px, 0)`,
+              willChange: "transform, opacity",
               pointerEvents: linksOpacity === 0 ? "none" : "auto",
             }}
             ref={textLinks}
@@ -230,12 +264,14 @@ export default function Landing() {
             <a href="blog">blog</a> | <a href="contact">contact</a>
           </p>
           {contentOpacity < 1 && (
-            <p
-              className="fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12"
+            <button
+              className="fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12 cursor-pointer"
+              tabIndex={0}
               style={{ opacity: 1 - contentOpacity }}
+              onClick={skipToContent}
             >
               scroll<br></br>↓
-            </p>
+            </button>
           )}
         </div>
       </div>
