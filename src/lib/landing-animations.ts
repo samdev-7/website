@@ -5,6 +5,13 @@ type Keyframe = {
   opacity?: [number, number];
 };
 
+// sec1: rising of greeting, appearance of name
+// sec2: disappearance of greeting, rising of name, appearance of description
+// sec3: rising of name and description, appearance of links
+export const sec1 = [0.01, 0.1];
+export const sec2 = [0.3, 0.5];
+export const sec3 = [0.7, 0.95];
+
 export function genKeyframes(
   defaultTextHeight: number,
   greetHeight: number,
@@ -12,12 +19,6 @@ export function genKeyframes(
   descHeight: number,
   linksHeight: number
 ) {
-  const sec1 = [0.01, 0.1]; // rising of greeting, appearance of name
-
-  const sec2 = [0.3, 0.5]; // disappearance of greeting, rising of name, appearance of description
-
-  const sec3 = [0.7, 0.95]; // rising of name and description, appearance of links
-
   const greetKeyframes: Keyframe[] = [
     {
       from: -1,

@@ -1,9 +1,11 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
+import { sec2, sec3 } from "../lib/landing-animations";
 
-import Landing from "../components/Landing.js";
+import Landing from "../components/Landing.svelte";
 ---
 
-<RootLayout>
+<!-- fade the dot background in across section 2 → end of section 3 -->
+<RootLayout fadeStart={sec2[0]} fadeEnd={sec3[1]}>
   <Landing client:load />
 </RootLayout>
