@@ -185,8 +185,7 @@
           ? 'none'
           : 'auto'};"
       >
-        <a href="about">about</a> | <a href="work">work</a> |
-        <a href="blog">blog</a> | <a href="contact">contact</a>
+        <a href="about">about</a> | <a href="contact">contact</a>
       </p>
       {#if contentOpacity < 1}
         <button
