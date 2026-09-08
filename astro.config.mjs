@@ -11,5 +11,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
+  redirects: {
+    '/about': '/#about',
+    '/contact': '/#contact'
+  },
+
   integrations: [svelte()]
 });

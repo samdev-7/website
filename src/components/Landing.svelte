@@ -1,10 +1,27 @@
 <script>
-  import { genKeyframes } from "../lib/landing-animations";
+  import {
+    DEEP_LINK_AFTER,
+    HINT_FADE_VH,
+    LANDING_ID,
+    genKeyframes,
+  } from "../lib/landing-animations";
+  import {
+    focusTransiently,
+    interceptHashLinks,
+    isKeyboardClick,
+    lerp,
+    onScroll,
+    releaseProgress,
+    scrollProgress,
+  } from "../lib/scroll";
 
   const defaultTextHeightRem = 2.25;
 
   let scrollPercent = $state(0);
+  let hintOpacity = $state(1);
 
+  let runway = $state(/** @type {HTMLDivElement} */ (undefined));
+  let intro = $state(/** @type {HTMLDivElement} */ (undefined));
   let textGreet = $state(/** @type {HTMLParagraphElement} */ (undefined));
   let textName = $state(/** @type {HTMLParagraphElement} */ (undefined));
   let textDesc = $state(/** @type {HTMLParagraphElement} */ (undefined));
@@ -16,11 +33,6 @@
   let descHeight = $state(0);
   let linksHeight = $state(0);
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
-
-  // Find the keyframe covering the current scroll position and lerp within it.
   function evalAt(keyframes, percent) {
     let translateY = 0;
     let opacity = 1;
@@ -34,6 +46,9 @@
     }
     return { translateY, opacity };
   }
+
+  const lineStyle = ({ translateY, opacity }) =>
+    `opacity: ${opacity}; transform: translate3d(0, ${translateY}px, 0); will-change: transform, opacity; pointer-events: ${opacity === 0 ? "none" : "auto"};`;
 
   const kf = $derived(
     genKeyframes(
@@ -49,59 +64,61 @@
   const nameAnim = $derived(evalAt(kf.nameKeyframes, scrollPercent));
   const desc = $derived(evalAt(kf.descKeyframes, scrollPercent));
   const links = $derived(evalAt(kf.linksKeyframes, scrollPercent));
-  const contentOpacity = $derived(
-    evalAt(kf.contentKeyframes, scrollPercent).opacity,
+
+  const hintTarget = $derived(
+    scrollPercent > DEEP_LINK_AFTER ? "#about" : "#content",
   );
 
-  // Reset to the top on load so the animation always starts from the greeting.
+  const mounted = $derived(!!runway);
+
+  const hintAttrs = $derived({ href: hintTarget, onclick: onHintClick });
+
+  const lineTabIndex = (line) =>
+    mounted && line.opacity === 0 ? -1 : undefined;
+
+  function onHintClick(event) {
+    if (scrollPercent > DEEP_LINK_AFTER) return;
+    event.preventDefault();
+    if (isKeyboardClick(event)) focusTransiently(intro);
+    runway.scrollIntoView({ block: "end" });
+  }
+
   $effect(() => {
+    if (!runway) return;
+
+    const target = location.hash
+      ? document.getElementById(location.hash.slice(1))
+      : null;
+
+    if (!target && window.pageYOffset >= runway.offsetHeight) return;
+
     window.scrollTo({ top: 0, behavior: "instant" });
-  });
+    if (!target) return;
 
-  // Scroll tracking (rAF-throttled) + magnetic snap to the exact top/bottom
-  // once scrolling settles inside the flat zones.
-  $effect(() => {
-    const getMaxScroll = () => document.body.scrollHeight - window.innerHeight;
-    const topSnap = 0.03;
-    const bottomSnap = 0.97;
-
-    let rafId = null;
-    let snapTimeout = null;
-
-    const update = () => {
-      rafId = null;
-      scrollPercent = window.pageYOffset / getMaxScroll();
-    };
-
-    const maybeSnap = () => {
-      const max = getMaxScroll();
-      const percent = window.pageYOffset / max;
-      if (percent > 0 && percent < topSnap) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else if (percent > bottomSnap && percent < 1) {
-        window.scrollTo({ top: max, behavior: "smooth" });
-      }
-    };
-
-    const onScroll = () => {
-      if (rafId === null) rafId = requestAnimationFrame(update);
-      if (snapTimeout !== null) clearTimeout(snapTimeout);
-      snapTimeout = setTimeout(maybeSnap, 120);
-    };
-
-    window.addEventListener("resize", onScroll);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
+    let inner = null;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() =>
+        target.scrollIntoView({ block: "start" }),
+      );
+    });
 
     return () => {
-      window.removeEventListener("resize", onScroll);
-      window.removeEventListener("scroll", onScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      if (snapTimeout !== null) clearTimeout(snapTimeout);
+      cancelAnimationFrame(outer);
+      if (inner !== null) cancelAnimationFrame(inner);
     };
   });
 
-  // Measure the rendered text heights (they drive the keyframe geometry).
+  $effect(() => interceptHashLinks());
+
+  $effect(() => {
+    if (!runway) return;
+    const el = runway;
+    return onScroll(() => {
+      scrollPercent = scrollProgress(el);
+      hintOpacity = 1 - releaseProgress(el, HINT_FADE_VH);
+    });
+  });
+
   $effect(() => {
     const calculateHeights = () => {
       const defaultHeight =
@@ -124,95 +141,67 @@
 
     return () => window.removeEventListener("resize", calculateHeights);
   });
-
-  function skipToContent() {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  }
 </script>
 
-<div class="h-[150rem]">
-  {#if contentOpacity < 1}
-    <button
-      class="text-xs md:text-sm fixed bottom-4 md:bottom-8 right-4 md:right-8 underline cursor-pointer z-10"
-      style="opacity: {1 - contentOpacity}"
-      onclick={skipToContent}
+<div id={LANDING_ID} bind:this={runway} class="h-dvh motion-safe:h-[150rem]">
+  {#if hintOpacity > 0}
+    <a
+      {...hintAttrs}
+      class="landing-skip text-xs md:text-sm fixed bottom-4 md:bottom-8 right-4 md:right-8 z-10 opacity-0 pointer-events-none focus:opacity-100 focus:pointer-events-auto"
     >
       skip to content
-    </button>
+    </a>
   {/if}
   <div
-    class="fixed inset-0 h-screen flex items-center flex-col mx-6 md:mx-12 text-lg sm:text-2xl md:text-3xl text-fg"
+    class="sticky top-0 h-dvh flex items-center flex-col mx-6 md:mx-12 text-lg sm:text-2xl md:text-3xl text-fg"
   >
     <div
+      bind:this={intro}
       class="h-full max-w-2xl w-full py-12 flex flex-col items-center justify-center relative text-center"
     >
       <p
-        class="absolute left-0 right-0"
+        class="landing-line landing-greet absolute left-0 right-0"
         bind:this={textGreet}
-        style="opacity: {greet.opacity}; transform: translate3d(0, {greet.translateY}px, 0); will-change: transform, opacity; pointer-events: {greet.opacity ===
-        0
-          ? 'none'
-          : 'auto'};"
+        style={lineStyle(greet)}
       >
         hey there! 👋
       </p>
       <p
-        class="absolute left-0 right-0"
+        class="landing-line absolute left-0 right-0"
         bind:this={textName}
-        style="opacity: {nameAnim.opacity}; transform: translate3d(0, {nameAnim.translateY}px, 0); will-change: transform, opacity; pointer-events: {nameAnim.opacity ===
-        0
-          ? 'none'
-          : 'auto'};"
+        style={lineStyle(nameAnim)}
       >
         i'm sam
       </p>
       <p
-        class="absolute left-0 right-0"
+        class="landing-line absolute left-0 right-0"
         bind:this={textDesc}
-        style="opacity: {desc.opacity}; transform: translate3d(0, {desc.translateY}px, 0); will-change: transform, opacity; pointer-events: {desc.opacity ===
-        0
-          ? 'none'
-          : 'auto'};"
+        style={lineStyle(desc)}
       >
         i build things that get teens to make technical projects @
-        <a href="https://hackclub.com" target="_blank">hack club</a>
+        <a
+          href="https://hackclub.com"
+          target="_blank"
+          tabindex={lineTabIndex(desc)}>hack club</a
+        >
       </p>
       <p
-        class="absolute left-0 right-0"
+        class="landing-line absolute left-0 right-0"
         bind:this={textLinks}
-        style="opacity: {links.opacity}; transform: translate3d(0, {links.translateY}px, 0); will-change: transform, opacity; pointer-events: {links.opacity ===
-        0
-          ? 'none'
-          : 'auto'};"
+        style={lineStyle(links)}
       >
-        <a href="about">about</a> | <a href="contact">contact</a>
+        <a href="#about" tabindex={lineTabIndex(links)}>about</a> |
+        <a href="#contact" tabindex={lineTabIndex(links)}>contact</a>
       </p>
-      {#if contentOpacity < 1}
-        <button
-          class="fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12 cursor-pointer"
-          style="opacity: {1 - contentOpacity}"
-          onclick={skipToContent}
+      {#if hintOpacity > 0}
+        <a
+          {...hintAttrs}
+          class="landing-scroll fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12 no-underline"
+          style="opacity: {hintOpacity}"
         >
           scroll<br />↓
-        </button>
+        </a>
       {/if}
     </div>
   </div>
-  {#if contentOpacity > 0}
-    <p
-      class="text-base md:text-xl fixed top-5 md:top-8 left-6 md:left-12"
-      style="opacity: {contentOpacity}"
-    >
-      samliu.dev
-    </p>
-  {/if}
-  {#if contentOpacity > 0}
-    <p
-      class="text-xs md:text-sm fixed bottom-4 md:bottom-8 transform text-center left-6 right-6"
-      style="opacity: {contentOpacity}"
-    >
-      © 2025 sam liu,
-      <a href="https://github.com/samdev-7/website">open sourced</a> ♥︎
-    </p>
-  {/if}
 </div>

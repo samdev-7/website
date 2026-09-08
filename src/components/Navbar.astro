@@ -1,7 +1,19 @@
 ---
 const path = Astro.url.pathname;
 const pathParts = path.split("/").filter((part) => part.length > 0);
-console.log("Path parts:", pathParts);
+
+const links = [
+  {
+    label: "github",
+    attrs: { href: "https://github.com/samdev-7", target: "_blank" },
+  },
+  { label: "email", attrs: { href: "mailto:sam@samliu.dev" } },
+];
+
+const drawerLinks = links.map((link) => ({
+  ...link,
+  attrs: { ...link.attrs, class: "block text-xl text-fg hover:underline" },
+}));
 ---
 
 <div class="flex mx-6 md:mx-12 my-5 md:my-8 text-base md:text-xl">
@@ -24,13 +36,14 @@ console.log("Path parts:", pathParts);
   <!-- DESKTOP -->
   <div class="hidden md:flex">
     <p>
-      <a href="/about">/about</a>
-      -
-      <!-- <a href="/work">/work</a> -->
-      <!-- - -->
-      <!-- <a href="/blog">/blog</a> -->
-      <!-- - -->
-      <a href="/contact">/contact</a>
+      {
+        links.map((link, i) => (
+          <>
+            {i == 0 ? "" : " · "}
+            <a {...link.attrs}>{link.label}</a>
+          </>
+        ))
+      }
     </p>
   </div>
 
@@ -39,6 +52,8 @@ console.log("Path parts:", pathParts);
     id="burger-btn"
     class="md:hidden flex flex-col justify-center items-center w-6 h-6 space-y-1"
     aria-label="Toggle menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
   >
     <span class="w-5 h-0.5 bg-current transition-all duration-300 ease-in-out"
     ></span>
@@ -63,12 +78,7 @@ console.log("Path parts:", pathParts);
       ×
     </button>
     <nav class="mt-8 space-y-4">
-      <a href="/about" class="block text-xl text-fg hover:underline">/about</a>
-      <!-- <a href="/work" class="block text-xl text-fg hover:underline">/work</a> -->
-      <!-- <a href="/blog" class="block text-xl text-fg hover:underline">/blog</a> -->
-      <a href="/contact" class="block text-xl text-fg hover:underline"
-        >/contact</a
-      >
+      {drawerLinks.map((link) => <a {...link.attrs}>{link.label}</a>)}
     </nav>
   </div>
 </div>
@@ -90,6 +100,7 @@ console.log("Path parts:", pathParts);
     mobileMenu?.classList.remove("translate-x-full");
     backdrop?.classList.remove("opacity-0", "pointer-events-none");
     backdrop?.classList.add("opacity-90");
+    burgerBtn?.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
 
@@ -97,6 +108,7 @@ console.log("Path parts:", pathParts);
     mobileMenu?.classList.add("translate-x-full");
     backdrop?.classList.add("opacity-0", "pointer-events-none");
     backdrop?.classList.remove("opacity-90");
+    burgerBtn?.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
 

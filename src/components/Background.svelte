@@ -1,43 +1,36 @@
 <script>
-  // Reusable dot-grid background with a cursor spotlight (engineering-paper
-  // look). Locked to the settings dialed in on the pattern tester.
-  //
-  // Props:
-  //   fadeStart / fadeEnd — optional scroll-percent bounds. When set, the whole
-  //   effect fades in linearly across [fadeStart, fadeEnd] as the page scrolls
-  //   (used by the landing). Omit both to keep it fully visible everywhere.
-  let { fadeStart = null, fadeEnd = null } = $props();
+  import { clamp, onScroll, scrollProgress } from "../lib/scroll";
+
+  // fadeTarget is the id of an element whose scroll progress drives the fade;
+  // the effect ramps in linearly across [fadeStart, fadeEnd] of that progress.
+  // Omit it to stay fully visible.
+  let { fadeTarget = null, fadeStart = 0, fadeEnd = 1 } = $props();
 
   const FG = "74, 57, 17"; // fg (#4a3911) as an rgb triple
-  const OPACITY = 0.14; // base dot opacity
-  const SIZE = 28; // 1.75rem grid — one text line per row
+  const OPACITY = 0.14;
+  const SIZE = 28;
   const SPOT_RADIUS = 150;
-  const SPOT_STRENGTH = 0.5; // extra darkness of dots under the cursor
+  const SPOT_STRENGTH = 0.5;
 
   let mouse = $state(/** @type {{x:number, y:number} | null} */ (null));
-  let intensity = $state(fadeStart === null ? 1 : 0);
+  let intensity = $state(fadeTarget === null ? 1 : 0);
 
-  // Scroll-driven fade (only when bounds are provided).
   $effect(() => {
-    if (fadeStart === null || fadeEnd === null) return;
-    const calc = () => {
-      const max = document.body.scrollHeight - window.innerHeight;
-      const percent = max > 0 ? window.pageYOffset / max : 0;
-      intensity = Math.min(
-        1,
-        Math.max(0, (percent - fadeStart) / (fadeEnd - fadeStart)),
+    if (fadeTarget === null) return;
+
+    const el = document.getElementById(fadeTarget);
+    if (!el || fadeEnd <= fadeStart) {
+      intensity = 1;
+      return;
+    }
+
+    return onScroll(() => {
+      intensity = clamp(
+        (scrollProgress(el) - fadeStart) / (fadeEnd - fadeStart),
       );
-    };
-    calc();
-    window.addEventListener("scroll", calc, { passive: true });
-    window.addEventListener("resize", calc);
-    return () => {
-      window.removeEventListener("scroll", calc);
-      window.removeEventListener("resize", calc);
-    };
+    });
   });
 
-  // Track the cursor (rAF-throttled) to drive the spotlight mask position.
   $effect(() => {
     let rafId = null;
     let last = { x: 0, y: 0 };
@@ -74,14 +67,12 @@
   );
 </script>
 
-<!-- base dot layer -->
 <div
   class="pointer-events-none fixed inset-0 -z-10"
   style={patternStyle}
   aria-hidden="true"
 ></div>
 
-<!-- cursor spotlight: darker dots revealed near the mouse -->
 <div
   class="pointer-events-none fixed inset-0 -z-10"
   style={spotStyle}

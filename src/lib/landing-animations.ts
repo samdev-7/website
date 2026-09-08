@@ -5,6 +5,15 @@ type Keyframe = {
   opacity?: [number, number];
 };
 
+// scroll runway for landing animation measurement
+export const LANDING_ID = "landing";
+
+// fade out-hint at this pojnt after landing
+export const HINT_FADE_VH = 0.3;
+
+// switch hint target from landing to rest of page after this point
+export const DEEP_LINK_AFTER = 0.5;
+
 // sec1: rising of greeting, appearance of name
 // sec2: disappearance of greeting, rising of name, appearance of description
 // sec3: rising of name and description, appearance of links
@@ -17,7 +26,7 @@ export function genKeyframes(
   greetHeight: number,
   nameHeight: number,
   descHeight: number,
-  linksHeight: number
+  linksHeight: number,
 ) {
   const greetKeyframes: Keyframe[] = [
     {
@@ -348,29 +357,10 @@ export function genKeyframes(
     },
   ];
 
-  const contentKeyframes: Keyframe[] = [
-    {
-      from: -1,
-      to: sec3[0],
-      opacity: [0, 0],
-    },
-    {
-      from: sec3[0],
-      to: sec3[1],
-      opacity: [0, 1],
-    },
-    {
-      from: sec3[1],
-      to: 2,
-      opacity: [1, 1],
-    },
-  ];
-
   return {
     greetKeyframes,
     nameKeyframes,
     descKeyframes,
     linksKeyframes,
-    contentKeyframes,
   };
 }

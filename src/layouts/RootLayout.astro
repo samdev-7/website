@@ -2,8 +2,7 @@
 import "../styles/global.css";
 import Background from "../components/Background.svelte";
 
-// Optional scroll-fade bounds for the dot background (used by the landing).
-const { fadeStart, fadeEnd } = Astro.props;
+const { fadeTarget, fadeStart, fadeEnd } = Astro.props;
 ---
 
 <!doctype html>
@@ -28,7 +27,12 @@ const { fadeStart, fadeEnd } = Astro.props;
     />
   </head>
   <body>
-    <Background client:load fadeStart={fadeStart} fadeEnd={fadeEnd} />
+    <Background
+      client:load
+      fadeTarget={fadeTarget}
+      fadeStart={fadeStart}
+      fadeEnd={fadeEnd}
+    />
     <slot />
   </body>
 </html>

@@ -7,10 +7,24 @@
   --color-bg: #fefbef;
 }
 
-:root {
-  @apply font-mono bg-bg text-fg overscroll-none;
-}
+@layer base {
+  :root {
+    @apply font-mono bg-bg text-fg overscroll-none;
+  }
 
-a {
-  @apply underline;
+  /* lets anchors and scrollIntoView({ behavior: "auto" }) glide by default. */
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: smooth;
+    }
+  }
+
+  a {
+    @apply underline;
+  }
+
+  /* jump targets are focused programmatically never tab-reachable */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
 }
