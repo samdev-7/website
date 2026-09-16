@@ -1,0 +1,41 @@
+---
+interface Props {
+  href: string;
+  img?: string;
+  video?: boolean;
+}
+
+const { href, img, video } = Astro.props;
+
+const youtube = href.match(/(?:youtu\.be\/|[?&]v=)([\w-]{11})/)?.[1];
+const src =
+  img ?? (youtube ? `https://img.youtube.com/vi/${youtube}/hqdefault.jpg` : null);
+const isVideo = video ?? !!youtube;
+---
+
+<span class="group relative">
+  <a href={href} target="_blank"><slot /></a>
+  {
+    src && (
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 hidden w-64 -translate-x-1/2 border border-fg bg-bg p-1 opacity-0 transition-opacity duration-150 ease-linear group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none md:block"
+      >
+        <span class="relative block">
+          <img
+            src={src}
+            alt=""
+            loading="lazy"
+            class:list={["block w-full", isVideo && "aspect-video object-cover"]}
+          />
+          {isVideo && (
+            <svg viewBox="0 0 48 48" class="absolute inset-0 m-auto w-9" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" class="fill-accent" />
+              <path d="M19 15l15 9-15 9z" class="fill-bg" />
+            </svg>
+          )}
+        </span>
+      </span>
+    )
+  }
+</span>
