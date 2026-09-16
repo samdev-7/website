@@ -5,16 +5,29 @@ import tailwindcss from '@tailwindcss/vite';
 
 import svelte from '@astrojs/svelte';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://samliu.dev',
+
   vite: {
     plugins: [tailwindcss()]
   },
 
-  redirects: {
-    '/about': '/#about',
-    '/contact': '/#contact'
+  markdown: {
+    smartypants: false,
+    shikiConfig: { theme: 'github-light' }
   },
 
-  integrations: [svelte()]
+  redirects: {
+    '/about': '/#about',
+    '/contact': '/#contact',
+    '/blog': '/notes/'
+  },
+
+  integrations: [
+    svelte(),
+    sitemap({ filter: (page) => !/\/(404|500|blog)\/?$/.test(page) })
+  ]
 });

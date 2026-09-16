@@ -76,6 +76,16 @@
   const lineTabIndex = (line) =>
     mounted && line.opacity === 0 ? -1 : undefined;
 
+  let seen = false;
+
+  function markSeen() {
+    if (seen) return;
+    seen = true;
+    try {
+      sessionStorage.setItem("landing-seen", "1");
+    } catch {}
+  }
+
   function onHintClick(event) {
     if (scrollPercent > DEEP_LINK_AFTER) return;
     event.preventDefault();
@@ -116,6 +126,7 @@
     return onScroll(() => {
       scrollPercent = scrollProgress(el);
       hintOpacity = 1 - releaseProgress(el, HINT_FADE_VH);
+      if (scrollPercent >= 1) markSeen();
     });
   });
 
@@ -173,7 +184,7 @@
       >
         i'm sam
       </p>
-      <p
+      <h1
         class="landing-line absolute left-0 right-0"
         bind:this={textDesc}
         style={lineStyle(desc)}
@@ -184,14 +195,15 @@
           target="_blank"
           tabindex={lineTabIndex(desc)}>hack club</a
         >
-      </p>
+      </h1>
       <p
         class="landing-line absolute left-0 right-0"
         bind:this={textLinks}
         style={lineStyle(links)}
       >
         <a href="#about" tabindex={lineTabIndex(links)}>about</a> |
-        <a href="#contact" tabindex={lineTabIndex(links)}>contact</a>
+        <a href="#contact" tabindex={lineTabIndex(links)}>contact</a> |
+        <a href="/notes" tabindex={lineTabIndex(links)}>notes</a>
       </p>
       {#if hintOpacity > 0}
         <a

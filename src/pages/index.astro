@@ -32,6 +32,28 @@ import Footer from "../components/Footer.astro";
       }
     </style>
   </noscript>
+  <script is:inline>
+    try {
+      if (sessionStorage.getItem("landing-seen"))
+        document.documentElement.dataset.landingSeen = "";
+    } catch {}
+  </script>
+  <style is:inline>
+    /* already seen this session: render the animation's end state directly */
+    [data-landing-seen] #landing {
+      height: 100dvh !important;
+    }
+    [data-landing-seen] #landing .landing-line {
+      position: static !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+      margin-block: 1.125rem;
+    }
+    [data-landing-seen] #landing .landing-greet {
+      display: none !important;
+    }
+  </style>
   <Landing client:load />
   <main id="content" class="min-h-screen flex flex-col">
     <div class="mx-6 md:mx-12 flex justify-center flex-grow">

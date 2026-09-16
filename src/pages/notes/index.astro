@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+
+import NotesLayout from "../../layouts/NotesLayout.astro";
+import { formatDate } from "../../lib/date";
+
+const notes = (await getCollection("notes", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<NotesLayout
+  title="sam liu's notes"
+  description="welcome to my unorganized collection of thoughts and stuff"
+>
+  <main>
+    <h1>notes &amp; blog</h1>
+    <p>welcome to my unorganized collection of thoughts and stuff™</p>
+    {
+      notes.length === 0 ? (
+        <p>nothing here yet</p>
+      ) : (
+        <Fragment>
+          <label class="search">
+            <span class="visually-hidden">search notes</span>
+            <input
+              type="search"
+              id="note-search"
+              placeholder="search"
+              autocomplete="off"
+            />
+          </label>
+          <ul class="blog-posts" id="note-list">
+            {notes.map((note) => (
+              <li
+                data-search={`${formatDate(note.data.date)} ${note.data.title}`.toLowerCase()}
+              >
+                <span>
+                  <time datetime={note.data.date.toISOString()}>
+                    {formatDate(note.data.date)}
+                  </time>
+                </span>
+                <a href={`/notes/${note.id}/`}>{note.data.title}</a>
+              </li>
+            ))}
+          </ul>
+          <p id="note-empty" aria-live="polite" hidden>
+            nothing matches that
+          </p>
+        </Fragment>
+      )
+    }
+  </main>
+</NotesLayout>
+
+<script is:inline>
+  (() => {
+    const input = document.getElementById("note-search");
+    const list = document.getElementById("note-list");
+    const empty = document.getElementById("note-empty");
+    if (!input || !list) return;
+
+    const items = [...list.querySelectorAll("li")];
+
+    const fuzzy = (query, text) => {
+      let i = 0;
+      for (const char of text) {
+        if (char === query[i]) i++;
+        if (i === query.length) return true;
+      }
+      return false;
+    };
+
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      let shown = 0;
+
+      for (const item of items) {
+        const hit = !query || fuzzy(query, item.dataset.search);
+        item.hidden = !hit;
+        if (hit) shown += 1;
+      }
+
+      empty.hidden = shown > 0;
+    });
+  })();
+</script>

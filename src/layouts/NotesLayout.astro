@@ -1,0 +1,107 @@
+---
+import "../styles/bear.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  slug?: string;
+  date?: Date;
+}
+
+const { title, description, slug, date } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const year = new Date().getFullYear();
+
+const crumbs = [
+  { label: "samliu.dev", href: "/" },
+  { label: "notes", href: slug ? "/notes/" : undefined },
+  ...(slug ? [{ label: slug, href: undefined }] : []),
+];
+
+const links = [
+  { label: "github", href: "https://github.com/samdev-7", external: true },
+  { label: "email", href: "mailto:sam@samliu.dev", external: true },
+  { label: "rss", href: "/notes/rss.xml" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content={slug ? "article" : "website"} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:site_name" content="sam liu" />
+    {date && <meta property="article:published_time" content={date.toISOString()} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#fefbef" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="sam liu's notes"
+      href="/notes/rss.xml"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="bar">
+      <span class="crumbs">
+        {
+          crumbs.map((crumb, i) => (
+            <Fragment>
+              {i > 0 && <span class="sep">/</span>}
+              {crumb.href ? (
+                <a href={crumb.href}>{crumb.label}</a>
+              ) : (
+                <span>{crumb.label}</span>
+              )}
+            </Fragment>
+          ))
+        }
+      </span>
+      <span class="out">
+        {
+          links.map((link, i) => (
+            <Fragment>
+              {i > 0 && <span class="sep">·</span>}
+              <a href={link.href} target={link.external ? "_blank" : undefined}>{link.label}</a>
+            </Fragment>
+          ))
+        }
+      </span>
+    </nav>
+    <slot />
+    <footer>
+      <p>
+        styling inspired by <a href="https://bearblog.dev">bear ʕ•ᴥ•ʔ</a>
+      </p>
+      <p>
+        © {year} sam liu · wip ·
+        <a href="https://github.com/samdev-7/website">this site is open source</a>
+      </p>
+    </footer>
+  </body>
+</html>

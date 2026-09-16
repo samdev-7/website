@@ -2,7 +2,25 @@
 import "../styles/global.css";
 import Background from "../components/Background.svelte";
 
-const { fadeTarget, fadeStart, fadeEnd } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  fadeTarget?: string;
+  fadeStart?: number;
+  fadeEnd?: number;
+}
+
+const {
+  title = "sam liu",
+  description = "welcome to my corner of the internet!",
+  noindex = false,
+  fadeTarget,
+  fadeStart,
+  fadeEnd,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -12,13 +30,30 @@ const { fadeTarget, fadeStart, fadeEnd } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>Sam Liu</title>
-    <meta name="description" content="Welcome to my corner of the internet!" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="sam liu" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#fefbef" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="sam liu's notes"
+      href="/notes/rss.xml"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,7 +65,7 @@ const { fadeTarget, fadeStart, fadeEnd } = Astro.props;
   </head>
   <body>
     <Background
-      client:load
+      client:idle
       fadeTarget={fadeTarget}
       fadeStart={fadeStart}
       fadeEnd={fadeEnd}

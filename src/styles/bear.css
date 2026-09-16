@@ -1,0 +1,209 @@
+/* Bear layout styles, adapted from hugo-bearblog (MIT, janraasch).
+   Loaded only by NotesLayout so browser defaults survive Tailwind. */
+@import "./palette.css";
+
+:root {
+  --width: 720px;
+  --font-main: "IBMPlexMono", ui-monospace, Menlo, monospace;
+  --font-secondary: "IBMPlexMono", ui-monospace, Menlo, monospace;
+  --font-scale: 1em;
+  --background-color: var(--brand-bg);
+  --heading-color: var(--brand-fg);
+  --text-color: var(--brand-fg);
+  --link-color: var(--brand-accent);
+  --visited-color: var(--brand-accent);
+  --blockquote-color: var(--brand-fg);
+  --rule-color: color-mix(in srgb, var(--brand-fg) 25%, transparent);
+  --code-bg: color-mix(in srgb, var(--brand-fg) 8%, transparent);
+  --pad: 20px;
+}
+
+body {
+  font-family: var(--font-secondary);
+  font-size: var(--font-scale);
+  margin: auto;
+  padding: var(--pad);
+  max-width: var(--width);
+  text-align: left;
+  background-color: var(--background-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+  color: var(--text-color);
+  min-height: calc(100vh - var(--pad) * 2);
+  min-height: calc(100dvh - var(--pad) * 2);
+  display: flex;
+  flex-direction: column;
+}
+
+body > main { flex: 1 0 auto; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-main);
+  color: var(--heading-color);
+}
+
+a {
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:visited { color: var(--visited-color); }
+
+a:hover,
+a:focus-visible {
+  text-decoration: none;
+  background: var(--link-color);
+  color: var(--background-color);
+  box-shadow: 0 0 0 2px var(--link-color);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+strong, b { color: var(--heading-color); }
+
+time {
+  font-family: var(--font-main);
+  font-style: normal;
+  font-size: 15px;
+}
+
+main { line-height: 1.6; }
+
+table { width: 100%; }
+hr { border: 0; border-top: 1px dashed; }
+img { max-width: 100%; }
+
+code {
+  font-family: var(--font-main);
+  padding: 2px;
+  border-radius: 3px;
+}
+
+blockquote {
+  border-left: 1px solid #999;
+  color: var(--blockquote-color);
+  padding-left: 20px;
+  font-style: italic;
+}
+
+footer {
+  padding: 25px 0 0;
+  text-align: center;
+  font-size: 0.75em;
+}
+
+.title:hover { text-decoration: none; }
+.title h1 { font-size: 1.5em; }
+.inline { width: auto !important; }
+
+.highlight, .code {
+  border-radius: 3px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  overflow-x: auto;
+}
+
+.highlight pre, .code pre {
+  min-width: 100%;
+  width: max-content;
+}
+
+.search { display: block; margin-top: 2.5rem; }
+
+.search input {
+  font: inherit;
+  font-family: var(--font-main);
+  color: var(--text-color);
+  background: transparent;
+  border: 1px solid var(--rule-color);
+  border-radius: 3px;
+  padding: 0.45rem 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search input::placeholder { color: var(--text-color); opacity: 0.4; }
+
+.search input:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 1px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+ul.blog-posts {
+  list-style-type: none;
+  padding: unset;
+  margin-top: 1.5rem;
+}
+
+ul.blog-posts li {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 0.35rem;
+}
+
+ul.blog-posts li span { flex: 0 0 130px; }
+ul.blog-posts li[hidden] { display: none; }
+
+@media (max-width: 30rem) {
+  ul.blog-posts li { flex-direction: column; gap: 0.1rem; }
+  ul.blog-posts li span { flex: none; }
+}
+
+/* --- markdown gaps the theme leaves open --- */
+
+code { background: var(--code-bg); }
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  background: var(--code-bg);
+  border-radius: 3px;
+}
+
+pre code { background: none; padding: 0; }
+
+table { border-collapse: collapse; }
+
+th, td {
+  border: 1px solid var(--rule-color);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+blockquote { border-left-color: var(--link-color); }
+
+/* --- url breadcrumb header --- */
+
+.bar {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+
+.bar .crumbs,
+.bar .out {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.bar .out { margin-left: auto; gap: 0.4rem; }
+.bar .sep { color: var(--text-color); }
+.bar .crumbs > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+
+/* shiki sets its theme background inline; keep code on the page's own ground */
+pre.astro-code { background: var(--code-bg) !important; }
+
+footer p { margin: 0.4rem 0; }
