@@ -5,6 +5,7 @@
 
   --color-fg: #4a3911;
   --color-bg: #fefbef;
+  --color-accent: #bb0028;
 }
 
 @layer base {
@@ -19,8 +20,20 @@
     }
   }
 
-  a {
-    @apply underline;
+  a:not(.plain) {
+    @apply text-accent font-medium no-underline;
+  }
+
+  a:not(.plain):hover,
+  a:not(.plain):focus-visible {
+    @apply bg-accent text-bg;
+    box-shadow: 0 0 0 2px var(--color-accent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  strong {
+    @apply text-accent font-medium;
   }
 
   /* jump targets are focused programmatically never tab-reachable */

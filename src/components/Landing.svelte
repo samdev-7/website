@@ -196,7 +196,7 @@
       {#if hintOpacity > 0}
         <a
           {...hintAttrs}
-          class="landing-scroll fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12 no-underline"
+          class="landing-scroll plain fixed text-base sm:text-lg md:text-xl bottom-6 md:bottom-12"
           style="opacity: {hintOpacity}"
         >
           scroll<br />↓
