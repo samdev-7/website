@@ -7,6 +7,8 @@ import svelte from '@astrojs/svelte';
 
 import sitemap from '@astrojs/sitemap';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://samliu.dev',
@@ -20,14 +22,17 @@ export default defineConfig({
     shikiConfig: { theme: 'github-light' }
   },
 
+  adapter: vercel(),
+
   redirects: {
     '/about': '/#about',
     '/contact': '/#contact',
-    '/blog': '/notes/'
+    '/blog': '/notes/',
+    '/blog/[...slug]': '/notes/[...slug]'
   },
 
   integrations: [
     svelte(),
-    sitemap({ filter: (page) => !/\/(404|500|blog)\/?$/.test(page) })
+    sitemap({ filter: (page) => !/\/(404|500)\/?$/.test(page) })
   ]
 });
