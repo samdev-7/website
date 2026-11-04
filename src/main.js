@@ -3,6 +3,24 @@ import "./style.css";
 const DATA = import.meta.env.VITE_DATA_URL;
 const SITE = `?o=${location.host}`;
 
+async function fetchLatest(res, signal) {
+  res = await (res ||
+    fetch(`${DATA}/ascii/latest.bin${SITE}`, { cache: "no-cache", signal }));
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const b = new Uint8Array(await res.arrayBuffer()),
+    v = new DataView(b.buffer);
+  if (String.fromCharCode(...b.subarray(0, 4)) !== "ASL1")
+    throw new Error("not an ASL1 frame");
+  const n = b[14];
+  return {
+    cols: v.getUint16(4, true),
+    rows: v.getUint16(6, true),
+    at: v.getUint32(8, true),
+    off: v.getInt16(12, true),
+    stream: new TextDecoder().decode(b.subarray(15, 15 + n)),
+    body: b.subarray(15 + n),
+  };
+}
 const FIRST = await (async () => {
   let res = window.latestFrame,
     limit = 6000;
@@ -12,28 +30,9 @@ const FIRST = await (async () => {
     wait = Math.min(wait * 2, 15000), limit = Math.min(limit * 2, 30000)
   ) {
     try {
-      res = await (res ||
-        fetch(`${DATA}/ascii/latest.bin${SITE}`, {
-          cache: "no-cache",
-          signal: AbortSignal.timeout(limit),
-        }));
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const b = new Uint8Array(await res.arrayBuffer()),
-        v = new DataView(b.buffer);
-      if (String.fromCharCode(...b.subarray(0, 4)) !== "ASL1")
-        throw new Error("not an ASL1 frame");
-      const n = b[14];
-      return {
-        cols: v.getUint16(4, true),
-        rows: v.getUint16(6, true),
-        at: v.getUint32(8, true),
-        off: v.getInt16(12, true),
-        stream: new TextDecoder().decode(b.subarray(15, 15 + n)),
-        body: b.subarray(15 + n),
-      };
+      return await fetchLatest(res, AbortSignal.timeout(limit));
     } catch (e) {
       console.warn(`latest.bin: ${e.message}; retrying in ${wait / 1000} s`);
-      document.getElementById("boot-text").textContent = "reconnecting";
       res = null;
       await new Promise((r) => setTimeout(r, wait));
     }
@@ -2173,6 +2172,32 @@ addEventListener("resize", () => {
     { once: true }
   );
 })();
+
+const POLL_MS = (+location.search.match(/[?&]poll=(\d+)/)?.[1] || 60) * 1000;
+let NEXT = null;
+async function poll() {
+  if (document.hidden) return;
+  try {
+    const f = await fetchLatest(null, AbortSignal.timeout(20000));
+    if (f.at > (NEXT || FIRST).at && f.cols === FC && f.rows === FR) NEXT = f;
+  } catch (e) {
+    console.warn(`latest.bin: ${e.message}`);
+  }
+  if (!NEXT || !scrub.stats.end || scrub.playing || intro) return;
+  Object.assign(FIRST, NEXT);
+  FIRST_STATE = [NEXT.body.slice(0, FC * FR), NEXT.body.slice(FC * FR)];
+  NEXT = null;
+  applyRecord({ kind: 3, t: FIRST.at, off: FIRST.off });
+  refresh(null);
+  findRuns();
+  emphReady = false;
+  redrawAll();
+  kick();
+}
+setInterval(poll, POLL_MS);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) poll();
+});
 
 GLR = /[?&]2d\b/.test(location.search) ? null : glInit();
 if (!GLR) ctx = canvas.getContext("2d");
