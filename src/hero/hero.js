@@ -2670,8 +2670,8 @@ function stepBy(n) {
   seek();
   return true;
 }
-const SCROLL_RATE = 20,
-  SCROLL_BURST = 5;
+const SCROLL_RATE = 30,
+  SCROLL_BURST = 1;
 let budget = SCROLL_BURST,
   budgetAt = 0;
 function scrollBy(px) {
