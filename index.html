@@ -69,11 +69,17 @@
           padding: 0 16px;
           font-size: 13px;
         }
+        #boot {
+          display: none;
+        }
       </style></noscript
     >
     <script type="module" src="/src/main.js"></script>
   </head>
   <body>
+    <p id="boot" aria-hidden="true"
+      ><span id="boot-text">loading</span><span class="dots">...</span></p
+    >
     <canvas
       id="art"
       role="img"

@@ -4,22 +4,32 @@ const DATA = import.meta.env.VITE_DATA_URL;
 const SITE = `?o=${location.host}`;
 
 const FIRST = await (async () => {
-  const res = await (window.latestFrame ||
-    fetch(`${DATA}/ascii/latest.bin${SITE}`, { cache: "no-cache" }));
-  if (!res.ok) throw new Error(`latest.bin: HTTP ${res.status}`);
-  const b = new Uint8Array(await res.arrayBuffer()),
-    v = new DataView(b.buffer);
-  if (String.fromCharCode(...b.subarray(0, 4)) !== "ASL1")
-    throw new Error("latest.bin: not an ASL1 frame");
-  const n = b[14];
-  return {
-    cols: v.getUint16(4, true),
-    rows: v.getUint16(6, true),
-    at: v.getUint32(8, true),
-    off: v.getInt16(12, true),
-    stream: new TextDecoder().decode(b.subarray(15, 15 + n)),
-    body: b.subarray(15 + n),
-  };
+  let res = window.latestFrame;
+  for (let wait = 1000; ; wait = Math.min(wait * 2, 15000)) {
+    try {
+      res = await (res ||
+        fetch(`${DATA}/ascii/latest.bin${SITE}`, { cache: "no-cache" }));
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const b = new Uint8Array(await res.arrayBuffer()),
+        v = new DataView(b.buffer);
+      if (String.fromCharCode(...b.subarray(0, 4)) !== "ASL1")
+        throw new Error("not an ASL1 frame");
+      const n = b[14];
+      return {
+        cols: v.getUint16(4, true),
+        rows: v.getUint16(6, true),
+        at: v.getUint32(8, true),
+        off: v.getInt16(12, true),
+        stream: new TextDecoder().decode(b.subarray(15, 15 + n)),
+        body: b.subarray(15 + n),
+      };
+    } catch (e) {
+      console.warn(`latest.bin: ${e.message}; retrying in ${wait / 1000} s`);
+      document.getElementById("boot-text").textContent = "reconnecting";
+      res = null;
+      await new Promise((r) => setTimeout(r, wait));
+    }
+  }
 })();
 const FONT = new FontFace("IBM Plex Mono", "url(/fonts/plex-mono-400.woff2)");
 const FONT_BOLD = new FontFace(
@@ -2180,6 +2190,7 @@ Promise.all([
   performance.mark("measured");
   calibrate();
   performance.mark("calib");
+  document.getElementById("boot").remove();
   pending = true;
   kick();
 });
