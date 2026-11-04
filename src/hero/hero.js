@@ -2291,6 +2291,7 @@ addEventListener("resize", () => {
 
 const POLL_MS = (+location.search.match(/[?&]poll=(\d+)/)?.[1] || 120) * 1000;
 let NEXT = null;
+const CAPTURE_S = 200;
 async function poll() {
   if (document.hidden || !FIRST) return;
   try {
@@ -2301,9 +2302,14 @@ async function poll() {
   }
   if (!NEXT || !scrub.stats.end || scrub.playing || intro) return;
   const live = !HIST.list || HIST.at === HIST.list.length;
+  const jumped = HIST.list && NEXT.at - FIRST.at > 1.5 * CAPTURE_S;
   if (HIST.list)
     HIST.list.push({ t: FIRST.at, off: FIRST.off, body: FIRST.body });
   Object.assign(FIRST, NEXT);
+  if (jumped)
+    fetchList(FIRST.at)
+      .then(merge)
+      .catch((e) => console.warn(`frames.bin: ${e.message}`));
   FIRST_STATE = [NEXT.body.slice(0, FC * FR), NEXT.body.slice(FC * FR)];
   NEXT = null;
   if (!live) return;
@@ -2371,27 +2377,32 @@ const HIST_NEAR = 10,
 const HIST_BUFFER = 15;
 const HIST_SLOW_MS = 50;
 const HIST = { list: null, at: 0, want: 0, dir: -1, acc: 0, ready: false };
+async function fetchList(to) {
+  const res = await fetch(`${DATA}/ascii/frames.bin${SITE_Q}&to=${to}`, {
+    priority: "low",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const b = new Uint8Array(await res.arrayBuffer()),
+    v = new DataView(b.buffer);
+  if (String.fromCharCode(...b.subarray(0, 4)) !== "AFL1")
+    throw new Error("not an AFL1 list");
+  if (v.getUint16(4, true) !== FC || v.getUint16(6, true) !== FR) return null;
+  const list = [];
+  for (let k = 0, p = 10; k < v.getUint16(8, true); k++, p += 30) {
+    const t = v.getUint32(p, true);
+    if (t < to)
+      list.push({
+        t,
+        off: v.getInt16(p + 4, true),
+        group: String.fromCharCode(...b.subarray(p + 6, p + 30)),
+      });
+  }
+  return list;
+}
 async function loadHistory(streamIn) {
   try {
-    const res = await fetch(`${DATA}/ascii/frames.bin${SITE_Q}`, {
-      priority: "low",
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const b = new Uint8Array(await res.arrayBuffer()),
-      v = new DataView(b.buffer);
-    if (String.fromCharCode(...b.subarray(0, 4)) !== "AFL1")
-      throw new Error("not an AFL1 list");
-    if (v.getUint16(4, true) !== FC || v.getUint16(6, true) !== FR) return;
-    const list = [];
-    for (let k = 0, p = 10; k < v.getUint16(8, true); k++, p += 30) {
-      const t = v.getUint32(p, true);
-      if (t < FIRST.at)
-        list.push({
-          t,
-          off: v.getInt16(p + 4, true),
-          group: String.fromCharCode(...b.subarray(p + 6, p + 30)),
-        });
-    }
+    const list = await fetchList(FIRST.at);
+    if (!list) return;
     HIST.list = list;
     HIST.at = HIST.want = list.length;
     await streamIn;
@@ -2399,6 +2410,18 @@ async function loadHistory(streamIn) {
     preload();
   } catch (e) {
     console.warn(`frames.bin: ${e.message}`);
+  }
+}
+function merge(more) {
+  if (!more || !HIST.list) return;
+  const have = new Set(HIST.list.map((f) => f.t));
+  for (const f of more) {
+    if (have.has(f.t) || f.t >= FIRST.at) continue;
+    let i = HIST.list.length;
+    while (i > 0 && HIST.list[i - 1].t > f.t) i--;
+    HIST.list.splice(i, 0, f);
+    if (i <= HIST.at) HIST.at++;
+    if (i <= HIST.want) HIST.want++;
   }
 }
 const frameUrl = (f) => `${DATA}/ascii/${f.group}.bin${SITE_Q}`;
