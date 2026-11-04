@@ -2481,8 +2481,8 @@ function preload() {
   };
   if (HIST.want === HIST.at) {
     for (let k = 1; k <= HIST_NEAR; k++) load(HIST.at + HIST.dir * k);
-    for (let k = 1; k <= HIST_FAR; k++)
-      warm(HIST.list[HIST.at + HIST.dir * GLIDE_MAX * k]);
+    for (let k = HIST_NEAR + 1; k <= HIST_NEAR + HIST_FAR; k++)
+      warm(HIST.list[HIST.at + HIST.dir * k]);
   } else {
     load(HIST.want, true);
     for (const i of glidePath(HIST.at, HIST.want).slice(0, 16)) load(i);
@@ -2670,8 +2670,8 @@ function stepBy(n) {
   seek();
   return true;
 }
-const SCROLL_RATE = 120,
-  SCROLL_BURST = 24;
+const SCROLL_RATE = 20,
+  SCROLL_BURST = 5;
 let budget = SCROLL_BURST,
   budgetAt = 0;
 function scrollBy(px) {
