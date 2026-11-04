@@ -41,7 +41,7 @@ canvas {
   width: 3ch;
   overflow: hidden;
   vertical-align: bottom;
-  animation: boot-dots 1.4s steps(4, jump-none) infinite;
+  animation: boot-dots 1.4s steps(4, jump-none) 1s infinite;
 }
 @keyframes boot-in {
   to {

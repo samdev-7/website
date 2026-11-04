@@ -1361,7 +1361,8 @@ const DOTS_MS = 350;
 function loadingCells(now) {
   const cells = new Map();
   if (now < LOADING_AFTER || !COLS) return cells;
-  const text = "loading" + ".".repeat(Math.floor(now / DOTS_MS) % 4),
+  const text =
+      "loading" + ".".repeat(Math.floor((now - LOADING_AFTER) / DOTS_MS) % 4),
     y = ROWS >> 1,
     x0 = (COLS - "loading...".length) >> 1;
   [...text].forEach((c, k) => cells.set(y * COLS + x0 + k, CHARS.indexOf(c)));
@@ -1419,6 +1420,39 @@ function drawLoading(now) {
     ctx.fillText(CHARS[g], x * cw + cw / 2, y * ch + glyphBase(ch));
   }
 }
+(function holdHandover() {
+  const H = window.HANDOVER;
+  if (!H) return;
+  H.hold();
+  const { ctx: c, XE, YE, s } = H,
+    g = s.g,
+    y = s.rows >> 1,
+    x0 = (s.cols - "loading...".length) >> 1;
+  const left = XE[x0],
+    top = YE[y],
+    strip = c.getImageData(left, top, XE[x0 + 10] - left, YE[y + 1] - top);
+  let drawn = "";
+  requestAnimationFrame(function step(now) {
+    if (!H.canvas.isConnected) return;
+    const text =
+      now < LOADING_AFTER
+        ? ""
+        : "loading" +
+          ".".repeat(Math.floor((now - LOADING_AFTER) / DOTS_MS) % 4);
+    if (text !== drawn) {
+      drawn = text;
+      c.putImageData(strip, left, top);
+      c.fillStyle = "#000";
+      c.fillRect(left, top, XE[x0 + text.length] - left, YE[y + 1] - top);
+      c.fillStyle = "rgb(220,220,220)";
+      c.font = `${g.fs}px ${FONT_STACK}`;
+      [...text].forEach((ch, k) =>
+        c.fillText(ch, (x0 + k) * g.cw + g.cw / 2, y * g.ch + g.base)
+      );
+    }
+    requestAnimationFrame(step);
+  });
+})();
 
 const INTRO_SPEED = 2;
 const INTRO_DUR = 0.5;

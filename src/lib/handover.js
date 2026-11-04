@@ -65,6 +65,9 @@
     ctx: c,
     XE,
     YE,
+    hold() {
+      clearTimeout(timer);
+    },
     done() {
       clearTimeout(timer);
       cv.remove();
