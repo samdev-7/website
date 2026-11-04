@@ -1064,6 +1064,16 @@ async function loadStream() {
   } catch (e) {
     if (!scrub.cut) console.warn("scrub stream:", e);
   }
+  const last = scrub.recs.at(-1);
+  if (!scrub.cut && last?.kind !== 3) {
+    scrub.recs.push({
+      kind: 3,
+      t: FIRST.at,
+      off: FIRST.off,
+      ms: last ? last.ms : 0,
+    });
+    scrub.total = scrub.recs.length;
+  }
   scrub.ended = true;
   kick();
 }
