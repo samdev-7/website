@@ -1,10 +1,9 @@
 import { SITE } from "../lib/site.mjs";
 import { contentPages } from "../lib/pages.mjs";
 import { titleMetadata } from "../lib/hero-data.mjs";
-import heroJs from "../hero/hero.js?raw";
 
 export function GET() {
-  const { subText } = titleMetadata(heroJs);
+  const { subText } = titleMetadata();
   const pages = contentPages().map(
     (p) => `- [${p.title}](${SITE}/${p.slug}.md): ${p.description}`
   );

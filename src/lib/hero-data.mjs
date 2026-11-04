@@ -1,5 +1,10 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import layoutJs from "../hero/layout.js?raw";
+
+export const LAYOUT = new Function(
+  `${layoutJs}\nreturn { SUBTITLE, HIGHLIGHT, HIGHLIGHT_URL, SMALL_TEXT, TIME_W };`
+)();
 
 const esc = (s) =>
   s
@@ -9,13 +14,8 @@ const esc = (s) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#x27;");
 
-const jsString = (js, name) =>
-  js.match(new RegExp(`const ${name} = '((?:[^'\\\\]|\\\\.)*)'`))[1];
-
-export function titleMetadata(js) {
-  const [sub, hl, url] = ["SUBTITLE", "HIGHLIGHT", "HIGHLIGHT_URL"].map((k) =>
-    jsString(js, k)
-  );
+export function titleMetadata() {
+  const { SUBTITLE: sub, HIGHLIGHT: hl, HIGHLIGHT_URL: url } = LAYOUT;
   const at = sub.indexOf(hl);
   const subHtml =
     at < 0

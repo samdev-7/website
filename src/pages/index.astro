@@ -1,13 +1,14 @@
 ---
 import heroCss from "../hero/hero.css?raw";
 import noscriptCss from "../hero/noscript.css?raw";
+import layoutJs from "../hero/layout.js?raw";
 import heroJs from "../hero/hero.js?raw";
 import { titleMetadata, frames, fontB64 } from "../lib/hero-data.mjs";
-import { heroMenuHtml, person, SITE } from "../lib/site.mjs";
+import { EMAIL, heroMenuHtml, person, PLACE, SITE } from "../lib/site.mjs";
 import Meta from "../components/Meta.astro";
 import handoverJs from "../lib/handover.js?raw";
 
-const { subHtml, subText } = titleMetadata(heroJs);
+const { subHtml, subText } = titleMetadata();
 const jsonLd = {
   "@graph": [
     {
@@ -22,7 +23,7 @@ const jsonLd = {
   ],
 };
 const { first, photoTime, photoIso } = frames();
-const script = heroJs
+const script = (layoutJs + heroJs)
   .replace("__FIRST__", () => first)
   .replace("__FONT__", () => fontB64("IBMPlexMono-Regular-latin.woff2"))
   .replace("__FONT_BOLD__", () => fontB64("IBMPlexMono-Bold-latin.woff2"));
@@ -40,9 +41,9 @@ const script = heroJs
 <script is:inline data-from="page" set:html={handoverJs}></script>
 <main>
 <canvas id="art" role="img" aria-label="Colour ASCII-art view from a window: autumn trees, a street lamp and a low building under a blue sky"></canvas>
-<div id="title" class="fading"><h1><span id="title-name">sam liu</span></h1><p id="title-sub" set:html={subHtml}></p><p id="title-contact"><a href="mailto:sam@samliu.dev" target="_blank" rel="noopener">sam@samliu.dev</a></p></div>
+<div id="title" class="fading"><h1><span id="title-name">sam liu</span></h1><p id="title-sub" set:html={subHtml}></p><p id="title-contact"><a href={`mailto:${EMAIL}`} target="_blank" rel="noopener">{EMAIL}</a></p></div>
 <nav id="nav" class="fading" aria-label="site" set:html={heroMenuHtml()}></nav>
-<p id="info" class="fading"><span class="sr">photo taken in </span><span id="info-place">waterloo, on</span><span class="sr">, at</span>
+<p id="info" class="fading"><span class="sr">photo taken in </span><span id="info-place">{PLACE}</span><span class="sr">, at</span>
 <time id="info-time" datetime={photoIso}>{photoTime}</time></p>
 </main>
 <div id="panel" class="hidden" aria-hidden="true">

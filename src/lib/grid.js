@@ -1,16 +1,11 @@
+const HERO = __HERO__;
 const FC = 160,
   FR = 72,
-  ASPECT = 0.6,
   CELL = 1470 / FC,
-  MIN_COLS = __MIN_COLS__;
+  MIN_COLS = minCols(HERO.navW);
 const TEXT_W = 72;
-const EDGE_SIDE = __EDGE_SIDE__;
-const MIN_TEXT_CELL = __MIN_TEXT_CELL__;
 const PAGES = __PAGES__;
 const navWidth = (pad) => PAGES.reduce((w, p) => w + p.length + 2 * pad, 3);
-const CHARS = Array.from({ length: 95 }, (_, i) =>
-  String.fromCharCode(32 + i)
-).join("");
 const STACK = `'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace`;
 let ASC = 0.8,
   DESC = 0.2;
@@ -33,14 +28,15 @@ function grid() {
     ch = H / rows;
   let cols = Math.min(FC, Math.max(1, Math.round(W / (ch * ASPECT)))),
     cw = W / cols;
-  const small = cols < MIN_COLS && W / MIN_COLS / dpr < MIN_TEXT_CELL;
-  document.documentElement.classList.toggle("too-small", small);
+  let small = cols < MIN_COLS && W / MIN_COLS / dpr < MIN_TEXT_CELL;
   if (cols < MIN_COLS && !small) {
     cols = MIN_COLS;
     cw = W / cols;
     rows = Math.min(FR, Math.max(1, Math.round(H / (cw / ASPECT))));
     ch = H / rows;
   }
+  small ||= !heroBoxes(cols, rows, HERO.navW, HERO.contactW, HERO.info);
+  document.documentElement.classList.toggle("too-small", small);
   const fs = Math.min(ch, ch / (ASC + DESC)),
     base = (ch - fs * (ASC + DESC)) / 2 + fs * ASC;
   const m = document.createElement("canvas").getContext("2d");

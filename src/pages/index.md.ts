@@ -1,9 +1,8 @@
 import { SITE, PAGES } from "../lib/site.mjs";
 import { titleMetadata } from "../lib/hero-data.mjs";
-import heroJs from "../hero/hero.js?raw";
 
 export function GET() {
-  const { subText } = titleMetadata(heroJs);
+  const { subText } = titleMetadata();
   const sub = subText.replace("hack club", "[hack club](https://hackclub.com)");
   const text = `# sam liu
 

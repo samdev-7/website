@@ -3,16 +3,10 @@ import Nav from "../components/Nav.astro";
 import pageCss from "../lib/page.css?raw";
 import gridJs from "../lib/grid.js?raw";
 import pageJs from "../lib/page.js?raw";
-import heroJs from "../hero/hero.js?raw";
+import layoutJs from "../hero/layout.js?raw";
+import { LAYOUT } from "../lib/hero-data.mjs";
 import Meta from "../components/Meta.astro";
-import {
-  heroConst,
-  heroMinCols,
-  heroSmallText,
-  person,
-  PAGES,
-  SITE,
-} from "../lib/site.mjs";
+import { heroWidths, person, PAGES, SITE } from "../lib/site.mjs";
 const navEnd =
   PAGES.at(-1) === (Astro.props.frontmatter?.title ?? Astro.props.title);
 import handoverJs from "../lib/handover.js?raw";
@@ -37,17 +31,12 @@ const jsonLd =
         isPartOf: { "@type": "WebSite", "@id": `${SITE}/#site`, url: SITE },
         about: { "@id": `${SITE}/#person` },
       };
-const gridScript = gridJs
-  .replace("__MIN_COLS__", () => String(heroMinCols(heroJs)))
-  .replace("__EDGE_SIDE__", () => String(heroConst(heroJs, "EDGE_SIDE")))
-  .replace("__MIN_TEXT_CELL__", () =>
-    String(heroConst(heroJs, "MIN_TEXT_CELL"))
-  )
-  .replace("__PAGES__", () => JSON.stringify(PAGES));
-const script = pageJs.replace(
-  "__DENS__",
-  () => heroJs.match(/const DENS = (Float32Array\.of\([^)]*\));/)[1]
-);
+const gridScript =
+  layoutJs +
+  gridJs
+    .replace("__HERO__", () => JSON.stringify(heroWidths(LAYOUT.TIME_W)))
+    .replace("__PAGES__", () => JSON.stringify(PAGES));
+const script = pageJs;
 ---
 <html lang="en" class:list={{ 'nav-end': navEnd }}>
 <head>
@@ -61,7 +50,7 @@ const script = pageJs.replace(
 </head>
 <body>
 <script is:inline data-from="hero" set:html={handoverJs}></script>
-<p class="small-msg" aria-hidden="true">{heroSmallText(heroJs).join('\n')}</p>
+<p class="small-msg" aria-hidden="true">{LAYOUT.SMALL_TEXT.join('\n')}</p>
 <Nav current={title} />
 <main id="content">
   <h1>{title}</h1>

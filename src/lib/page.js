@@ -4,7 +4,6 @@ const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const RED = [0xff, 0x55, 0x55];
 const INTRO_SPEED = 2,
   INTRO_DUR = 0.5;
-const DENS = __DENS__;
 const NONLETTER = [...CHARS]
   .map((c, i) => i)
   .filter((i) => !/[A-Za-z]/.test(CHARS[i]));

@@ -38,7 +38,8 @@ html.too-small .small-msg {
   position: fixed;
   inset: 0;
   margin: 0;
-  white-space: pre;
+  padding: 0 var(--cell);
+  white-space: pre-line;
   text-align: center;
 }
 html.too-small nav,

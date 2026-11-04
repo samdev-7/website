@@ -1,18 +1,15 @@
 export const PAGES = ["about", "work", "writing", "contact"];
 
-export const heroConst = (heroJs, name) =>
-  +heroJs.match(new RegExp(`const ${name} = (\\d+);`))[1];
-const heroEdgeSide = (heroJs) => heroConst(heroJs, "EDGE_SIDE");
-export const heroSmallText = (heroJs) =>
-  JSON.parse(
-    heroJs.match(/const SMALL_TEXT = (\[.*\]);/)[1].replace(/'/g, '"')
-  );
-export function heroMinCols(heroJs) {
-  const title = JSON.parse(heroJs.match(/const TITLE = (\[.*\]);/)[1]);
-  const menu = PAGES.reduce((s, p) => s + p.length + 2, PAGES.length - 1);
-  return (
-    Math.max(...title.map((l) => l.length), menu) + 6 + 2 * heroEdgeSide(heroJs)
-  );
+export const EMAIL = "sam@samliu.dev";
+export const PLACE = "waterloo, on";
+
+export function heroWidths(timeW) {
+  const w = Math.max(timeW, PLACE.length);
+  return {
+    navW: PAGES.reduce((s, p) => s + p.length + 2, PAGES.length - 1),
+    contactW: EMAIL.length,
+    info: [PLACE.padStart(w), " ".repeat(w)],
+  };
 }
 
 export const heroMenuHtml = () =>
