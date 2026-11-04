@@ -994,6 +994,9 @@ async function loadStream() {
       );
     } catch (e) {
       if (e.otherBuild && !scrub.cut) {
+        console.log(
+          "scrub: the stream was from another build; fetching the frame's own"
+        );
         scrub.abort.abort();
         res = abort = null;
         continue;
@@ -2184,7 +2187,7 @@ addEventListener("resize", () => {
   );
 })();
 
-const POLL_MS = (+location.search.match(/[?&]poll=(\d+)/)?.[1] || 60) * 1000;
+const POLL_MS = (+location.search.match(/[?&]poll=(\d+)/)?.[1] || 120) * 1000;
 let NEXT = null;
 async function poll() {
   if (document.hidden) return;
