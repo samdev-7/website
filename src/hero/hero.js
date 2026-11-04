@@ -2314,7 +2314,49 @@ setInterval(poll, POLL_MS);
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) poll();
 });
-function showRecord(r) {
+const STEP_TOL = 16,
+  STEP_SETTLE = 250;
+let settle = null;
+function showRecord(r, step) {
+  clearTimeout(settle);
+  if (step && ctx && !EMPH.t && r.kind === 1) {
+    setTime(r.t, r.off, false);
+    const N = FC * FR,
+      b = r.body;
+    CHANGED.length = 0;
+    for (let j = 0; j < N; j++) {
+      const g = b[j],
+        R = b[N + j],
+        G = b[2 * N + j],
+        B = b[3 * N + j];
+      if (
+        g === FGL[j] &&
+        Math.abs(R - FRGB[j]) <= STEP_TOL &&
+        Math.abs(G - FRGB[N + j]) <= STEP_TOL &&
+        Math.abs(B - FRGB[2 * N + j]) <= STEP_TOL
+      )
+        continue;
+      FGL[j] = g;
+      FRGB[j] = R;
+      FRGB[N + j] = G;
+      FRGB[2 * N + j] = B;
+      const i = WMAP[j];
+      if (i < 0) continue;
+      GL[i] = g;
+      FG[i * 3] = R;
+      FG[i * 3 + 1] = G;
+      FG[i * 3 + 2] = B;
+      CHANGED.push(i);
+    }
+    refresh(CHANGED);
+    findRuns();
+    emphReady = false;
+    kick();
+    settle = setTimeout(() => {
+      if (HIST.at === HIST.want) showRecord(r);
+    }, STEP_SETTLE);
+    return;
+  }
   applyRecord(r);
   refresh(null);
   findRuns();
@@ -2324,18 +2366,11 @@ function showRecord(r) {
 }
 
 const HIST_STEP = 60;
-const HIST_AHEAD = 15;
+const HIST_NEAR = 10,
+  HIST_FAR = 20;
 const HIST_BUFFER = 15;
 const HIST_SLOW_MS = 50;
-const HIST = {
-  list: null,
-  at: 0,
-  want: 0,
-  ahead: HIST_AHEAD,
-  dir: -1,
-  acc: 0,
-  ready: false,
-};
+const HIST = { list: null, at: 0, want: 0, dir: -1, acc: 0, ready: false };
 async function loadHistory(streamIn) {
   try {
     const res = await fetch(`${DATA}/ascii/frames.bin${SITE_Q}`, {
@@ -2366,11 +2401,25 @@ async function loadHistory(streamIn) {
     console.warn(`frames.bin: ${e.message}`);
   }
 }
-async function loadFrame(f) {
+const frameUrl = (f) => `${DATA}/ascii/${f.group}.bin${SITE_Q}`;
+function warm(f) {
+  if (!f || f.body || f.loading || f.warm) return;
+  f.warm = fetch(frameUrl(f), { priority: "low" })
+    .then((r) => r.arrayBuffer())
+    .catch(() => {
+      f.warm = null;
+    });
+}
+async function loadFrame(f, high) {
+  const ac = (f.abort = new AbortController());
   try {
-    const url = `${DATA}/ascii/${f.group}.bin${SITE_Q}`,
+    if (f.warm) await f.warm;
+    const url = frameUrl(f),
       t0 = performance.now();
-    const res = await fetch(url, { priority: "low" });
+    const res = await fetch(url, {
+      priority: high ? "high" : "low",
+      signal: ac.signal,
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const b = new Uint8Array(await res.arrayBuffer()),
       v = new DataView(b.buffer),
@@ -2402,10 +2451,12 @@ async function loadFrame(f) {
     };
     f.body = body;
     f.loading = null;
+    f.abort = null;
     seek();
   } catch (e) {
-    console.warn(`${f.group}: ${e.message}`);
+    if (e.name !== "AbortError") console.warn(`${f.group}: ${e.message}`);
     f.loading = null;
+    f.abort = null;
   }
 }
 function trim() {
@@ -2421,14 +2472,41 @@ function trim() {
 }
 function preload() {
   if (!HIST.ready) return;
-  const load = (i) => {
+  const keep = new Set();
+  const load = (i, high) => {
     const f = HIST.list[i];
-    if (f && !f.body && !f.loading) f.loading = loadFrame(f);
+    if (!f) return;
+    keep.add(i);
+    if (!f.body && !f.loading) f.loading = loadFrame(f, high);
   };
-  for (let k = 1; k <= HIST.ahead; k++) load(HIST.at + HIST.dir * k);
-  if (HIST.want !== HIST.at)
-    for (let k = -3; k <= 5; k++) load(HIST.want + HIST.dir * k);
+  if (HIST.want === HIST.at) {
+    for (let k = 1; k <= HIST_NEAR; k++) load(HIST.at + HIST.dir * k);
+    for (let k = 1; k <= HIST_FAR; k++)
+      warm(HIST.list[HIST.at + HIST.dir * GLIDE_MAX * k]);
+  } else {
+    load(HIST.want, true);
+    for (const i of glidePath(HIST.at, HIST.want).slice(0, 16)) load(i);
+    for (let k = 1; k <= 8; k++) load(HIST.want + HIST.dir * k);
+    HIST.list.forEach((f, i) => {
+      if (f.abort && !keep.has(i)) f.abort.abort();
+    });
+  }
   trim();
+}
+function glidePath(at, want) {
+  const out = [];
+  while (at !== want) {
+    const left = want - at;
+    at +=
+      Math.sign(left) *
+      Math.min(
+        Math.abs(left),
+        GLIDE_MAX,
+        Math.max(1, Math.ceil(Math.abs(left) / GLIDE_EASE))
+      );
+    out.push(at);
+  }
+  return out;
 }
 const GLIDE_FPS = 30,
   GLIDE_EASE = 4,
@@ -2478,7 +2556,8 @@ function glide(now) {
   showRecord(
     f
       ? { kind: 1, t: f.t, off: f.off, body: f.body }
-      : { kind: 3, t: FIRST.at, off: FIRST.off }
+      : { kind: 3, t: FIRST.at, off: FIRST.off },
+    true
   );
   if (stallFrom && now - stallFrom > HIST_SLOW_MS)
     console.log(
@@ -2591,12 +2670,28 @@ function stepBy(n) {
   seek();
   return true;
 }
+const SCROLL_RATE = 120,
+  SCROLL_BURST = 24;
+let budget = SCROLL_BURST,
+  budgetAt = 0;
 function scrollBy(px) {
   if (!histReady()) return;
+  const now = performance.now();
+  budget = Math.min(
+    SCROLL_BURST,
+    budget + ((now - budgetAt) / 1000) * SCROLL_RATE
+  );
+  budgetAt = now;
   HIST.acc += px;
-  const steps = Math.trunc(HIST.acc / HIST_STEP);
+  let steps = Math.trunc(HIST.acc / HIST_STEP);
   if (!steps) return;
   HIST.acc -= steps * HIST_STEP;
+  if (Math.abs(steps) > budget) {
+    steps = Math.sign(steps) * Math.floor(budget);
+    HIST.acc = 0;
+  }
+  if (!steps) return;
+  budget -= Math.abs(steps);
   if (!stepBy(-steps)) HIST.acc = 0;
 }
 const SWEEP_WAIT = 300,
