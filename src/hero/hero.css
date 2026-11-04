@@ -65,7 +65,8 @@ canvas {
   user-select: text;
   font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
 }
-#info {
+#info,
+#hint {
   position: fixed;
   margin: 0;
   white-space: pre;
@@ -75,8 +76,24 @@ canvas {
   font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   color: #dcdcdc;
 }
-#info .dot {
+#info .arrow {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+#info .arrow:hover,
+#info .arrow:active,
+#info .arrow:focus-visible {
   color: #ff5555;
+  outline: none;
 }
 .sr {
   position: absolute;
@@ -129,8 +146,15 @@ canvas {
 }
 #title.fading,
 #info.fading,
-#nav.fading {
+#nav.fading,
+#hint.fading {
   opacity: 0;
+}
+#hint[hidden] {
+  display: none;
+}
+body.small #hint {
+  display: none;
 }
 body.small #title,
 body.small #info,

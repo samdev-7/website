@@ -60,7 +60,8 @@ const script = (layoutJs + heroJs)
 <nav id="nav" class="fading" aria-label="site" set:html={heroMenuHtml()}></nav>
 <p id="info" class="fading"><span class="sr">photo taken in </span><span id="info-place">{PLACE}</span><span class="sr">, at</span>
 <time id="info-time"></time>
-<span id="info-day"><span id="info-live" hidden>live<span class="dot" aria-hidden="true">&bull;</span></span><span id="info-gap"></span><span class="sr">, on </span><span id="info-date"></span></span></p>
+<span id="info-day"><button id="info-back" class="arrow" type="button" aria-label="earlier">&lt;</button><span id="info-gap"></span><span id="info-live" hidden>live</span><span class="sr">, on </span><span id="info-date"></span><span id="info-gap2"></span><button id="info-next" class="arrow" type="button" aria-label="later">&gt;</button></span></p>
+<p id="hint" class="fading" aria-hidden="true" hidden>hint: try scrolling</p>
 </main>
 <script is:inline set:html={script}></script>
 </body>

@@ -168,19 +168,22 @@ const contactW = () => Math.max(...contactLines().map((l) => l.length));
 
 let DAY = "",
   LIVE = false;
-const LIVE_TEXT = "live\u2022";
+const LIVE_TEXT = "live";
+const dayText = () => (LIVE ? LIVE_TEXT : DAY);
 const infoLines = () => {
   const lines = ["info-place", "info-time"].map(
     (id) => document.getElementById(id).textContent
   );
   const w = Math.max(
-    TIME_W,
-    ...lines.map((l) => l.length),
-    LIVE_TEXT.length + 1 + DAY.length
-  );
+      TIME_W,
+      ...lines.map((l) => l.length),
+      "nov 30".length + 4
+    ),
+    mid = dayText(),
+    l = (w - 1 - mid.length) >> 1;
   return [
     ...lines.map((l) => l.padStart(w)),
-    LIVE ? LIVE_TEXT + DAY.padStart(w - LIVE_TEXT.length) : DAY.padStart(w),
+    "<" + " ".repeat(l) + mid + " ".repeat(w - 2 - l - mid.length) + ">",
   ];
 };
 const navItems = () =>
@@ -218,6 +221,8 @@ function setSubtitle(lines) {
 if (!document.getElementById("title-sub").textContent) setSubtitle([SUBTITLE]);
 let TITLE_AT = null;
 let INFO_AT = null;
+let HINT_AT = null;
+let HINT_GONE = false;
 let NAV_AT = null;
 let MAIL_AT = null;
 let NAME = new Map();
@@ -351,7 +356,7 @@ function drawPrev() {
     }
 }
 const revealTitle = () =>
-  ["title", "info", "nav"].forEach((id) =>
+  ["title", "info", "nav", "hint"].forEach((id) =>
     document.getElementById(id).classList.remove("fading")
   );
 
@@ -382,6 +387,12 @@ function placeInfo() {
   const { dpr } = gridText(el, [INFO_AT[0], INFO_AT[1] + 1]);
   el.style.width = (infoLines()[0].length * cw) / dpr + "px";
   el.style.textAlign = "right";
+}
+
+function placeHint() {
+  const el = document.getElementById("hint");
+  el.hidden = !HINT_AT;
+  if (HINT_AT) gridText(el, HINT_AT);
 }
 
 function placeNav() {
@@ -584,6 +595,9 @@ function process() {
   TITLE_AT = boxes && [textX, textY];
   INFO_AT = boxes && [boxes.info.textX, boxes.info.textY];
   if (INFO_AT) for (const [c, v] of boxes.info.cells) boxCells.set(c, v);
+  const hint = boxes && !HINT_GONE && hintLayout(cols, title);
+  HINT_AT = hint && [hint.textX, hint.textY];
+  if (hint) for (const [c, v] of hint.cells) boxCells.set(c, v);
   document.body.classList.toggle("small", SMALL);
   const navRow = textY + TITLE.length + 1 + SUB_LINES.length + 1;
   MAIL_AT = !TITLE_AT
@@ -636,6 +650,13 @@ function process() {
       );
   }
   infoText();
+  if (HINT_AT)
+    [...HINT_TEXT].forEach((c, k) =>
+      TEXT.set(HINT_AT[1] * cols + HINT_AT[0] + k, [
+        Math.max(0, CHARS.indexOf(c)),
+        [220, 220, 220],
+      ])
+    );
   BAR = new Uint8Array(n);
   if (NAV_AT) {
     const row = NAV_AT[1] * cols;
@@ -741,6 +762,7 @@ function layout() {
   placeTitle();
   const q3 = performance.now();
   placeInfo();
+  placeHint();
   placeNav();
   (window.LT = window.LT || []).push({
     resize: Math.round(q0 - LT0),
@@ -1082,11 +1104,14 @@ function setTime(t, off, live) {
     String(z % 60).padStart(2, "0");
   DAY = `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`;
   LIVE = !!live;
-  const line = infoLines()[2];
+  const line = infoLines()[2],
+    at = line.indexOf(dayText());
   document.getElementById("info-live").hidden = !LIVE;
-  document.getElementById("info-gap").textContent = line.slice(
-    LIVE ? LIVE_TEXT.length : 0,
-    line.length - DAY.length
+  document.getElementById("info-date").hidden = LIVE;
+  document.getElementById("info-gap").textContent = line.slice(1, at);
+  document.getElementById("info-gap2").textContent = line.slice(
+    at + dayText().length,
+    -1
   );
   document.getElementById("info-date").textContent = DAY;
   const cells = infoText();
@@ -1492,7 +1517,7 @@ const INTRO_DUR = 0.5;
 let intro = null;
 
 function startIntro(now) {
-  ["title", "info", "nav"].forEach((id) =>
+  ["title", "info", "nav", "hint"].forEach((id) =>
     document.getElementById(id).classList.add("fading")
   );
   const n = COLS * ROWS,
@@ -2188,15 +2213,19 @@ try {
 let scrubQueued = true;
 const replay = () => {
   if (
-    scrub.stats.firstDisplay &&
-    !scrub.playing &&
-    !scrub.cut &&
-    scrub.recs.length
-  ) {
-    scrubQueued = true;
-    pending = true;
-    kick();
+    !scrub.stats.firstDisplay ||
+    scrub.playing ||
+    scrub.cut ||
+    !scrub.recs.length
+  )
+    return;
+  if (HIST.list) {
+    HIST.at = HIST.want = HIST.list.length;
+    HIST.acc = 0;
   }
+  scrubQueued = true;
+  pending = true;
+  kick();
 };
 
 function toCell(e) {
@@ -2271,20 +2300,368 @@ async function poll() {
     console.warn(`latest.bin: ${e.message}`);
   }
   if (!NEXT || !scrub.stats.end || scrub.playing || intro) return;
+  const live = !HIST.list || HIST.at === HIST.list.length;
+  if (HIST.list)
+    HIST.list.push({ t: FIRST.at, off: FIRST.off, body: FIRST.body });
   Object.assign(FIRST, NEXT);
   FIRST_STATE = [NEXT.body.slice(0, FC * FR), NEXT.body.slice(FC * FR)];
   NEXT = null;
-  applyRecord({ kind: 3, t: FIRST.at, off: FIRST.off });
+  if (!live) return;
+  if (HIST.list) HIST.at = HIST.want = HIST.list.length;
+  showRecord({ kind: 3, t: FIRST.at, off: FIRST.off });
+}
+setInterval(poll, POLL_MS);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) poll();
+});
+function showRecord(r) {
+  applyRecord(r);
   refresh(null);
   findRuns();
   emphReady = false;
   redrawAll();
   kick();
 }
-setInterval(poll, POLL_MS);
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) poll();
-});
+
+const HIST_STEP = 60;
+const HIST_AHEAD = 15;
+const HIST_BUFFER = 15;
+const HIST_SLOW_MS = 50;
+const HIST = {
+  list: null,
+  at: 0,
+  want: 0,
+  ahead: HIST_AHEAD,
+  dir: -1,
+  acc: 0,
+  ready: false,
+};
+async function loadHistory(streamIn) {
+  try {
+    const res = await fetch(`${DATA}/ascii/frames.bin${SITE_Q}`, {
+      priority: "low",
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const b = new Uint8Array(await res.arrayBuffer()),
+      v = new DataView(b.buffer);
+    if (String.fromCharCode(...b.subarray(0, 4)) !== "AFL1")
+      throw new Error("not an AFL1 list");
+    if (v.getUint16(4, true) !== FC || v.getUint16(6, true) !== FR) return;
+    const list = [];
+    for (let k = 0, p = 10; k < v.getUint16(8, true); k++, p += 30) {
+      const t = v.getUint32(p, true);
+      if (t < FIRST.at)
+        list.push({
+          t,
+          off: v.getInt16(p + 4, true),
+          group: String.fromCharCode(...b.subarray(p + 6, p + 30)),
+        });
+    }
+    HIST.list = list;
+    HIST.at = HIST.want = list.length;
+    await streamIn;
+    HIST.ready = true;
+    preload();
+  } catch (e) {
+    console.warn(`frames.bin: ${e.message}`);
+  }
+}
+async function loadFrame(f) {
+  try {
+    const url = `${DATA}/ascii/${f.group}.bin${SITE_Q}`,
+      t0 = performance.now();
+    const res = await fetch(url, { priority: "low" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const b = new Uint8Array(await res.arrayBuffer()),
+      v = new DataView(b.buffer),
+      N = FC * FR;
+    if (
+      String.fromCharCode(...b.subarray(0, 4)) !== "ASC1" ||
+      v.getUint16(4, true) !== FC ||
+      v.getUint16(6, true) !== FR ||
+      b.length !== 8 + 4 * N
+    )
+      throw new Error("not a frame of this size");
+    const body = new Uint8Array(4 * N);
+    body.set(b.subarray(8, 8 + N));
+    for (let j = 0, p = 8 + N; j < N; j++, p += 3) {
+      body[N + j] = b[p];
+      body[2 * N + j] = b[p + 1];
+      body[3 * N + j] = b[p + 2];
+    }
+    const e = performance
+      .getEntriesByName(new URL(url, location.href).href)
+      .pop();
+    f.got = {
+      fetch: Math.round(performance.now() - t0),
+      from: !e
+        ? "?"
+        : e.transferSize
+          ? `network ${(e.encodedBodySize / 1024).toFixed(0)} KB`
+          : "browser cache",
+    };
+    f.body = body;
+    f.loading = null;
+    seek();
+  } catch (e) {
+    console.warn(`${f.group}: ${e.message}`);
+    f.loading = null;
+  }
+}
+function trim() {
+  HIST.list.forEach((f, i) => {
+    if (
+      f.body &&
+      f.group &&
+      Math.abs(i - HIST.at) > HIST_BUFFER &&
+      Math.abs(i - HIST.want) > HIST_BUFFER
+    )
+      f.body = null;
+  });
+}
+function preload() {
+  if (!HIST.ready) return;
+  const load = (i) => {
+    const f = HIST.list[i];
+    if (f && !f.body && !f.loading) f.loading = loadFrame(f);
+  };
+  for (let k = 1; k <= HIST.ahead; k++) load(HIST.at + HIST.dir * k);
+  if (HIST.want !== HIST.at)
+    for (let k = -3; k <= 5; k++) load(HIST.want + HIST.dir * k);
+  trim();
+}
+const GLIDE_FPS = 30,
+  GLIDE_EASE = 4,
+  GLIDE_MAX = 12;
+let gliding = false,
+  lastDraw = 0,
+  stallFrom = 0;
+function seek() {
+  if (gliding || !HIST.list || !scrub.stats.end || scrub.playing || intro)
+    return;
+  gliding = true;
+  requestAnimationFrame(glide);
+}
+function glide(now) {
+  if (HIST.at === HIST.want || !histReady()) {
+    gliding = false;
+    stallFrom = 0;
+    return;
+  }
+  if (now - lastDraw < 1000 / GLIDE_FPS - 4)
+    return requestAnimationFrame(glide);
+  const left = HIST.want - HIST.at,
+    d = Math.sign(left);
+  const reach =
+    HIST.at +
+    d *
+      Math.min(
+        Math.abs(left),
+        GLIDE_MAX,
+        Math.max(1, Math.ceil(Math.abs(left) / GLIDE_EASE))
+      );
+  let to = -1;
+  for (let i = reach; i !== HIST.at; i -= d)
+    if (i === HIST.list.length || HIST.list[i].body) {
+      to = i;
+      break;
+    }
+  if (to < 0) {
+    if (!stallFrom) stallFrom = now;
+    preload();
+    return requestAnimationFrame(glide);
+  }
+  const f = HIST.list[to],
+    d0 = performance.now();
+  HIST.at = to;
+  lastDraw = now;
+  showRecord(
+    f
+      ? { kind: 1, t: f.t, off: f.off, body: f.body }
+      : { kind: 3, t: FIRST.at, off: FIRST.off }
+  );
+  if (stallFrom && now - stallFrom > HIST_SLOW_MS)
+    console.log(
+      `history: waited ${Math.round(now - stallFrom)} ms for ${f ? f.group : "now"} (draw ${(performance.now() - d0).toFixed(1)} ms` +
+        (f && f.got
+          ? `, fetched in ${f.got.fetch} ms from ${f.got.from}`
+          : "") +
+        `, ${Math.abs(HIST.want - to)} still to go)`
+    );
+  stallFrom = 0;
+  if (!f) poll();
+  preload();
+  requestAnimationFrame(glide);
+}
+const HINT_FADE = 0.5;
+function dismissHint() {
+  if (HINT_GONE) return;
+  HINT_GONE = true;
+  const at = HINT_AT;
+  document.getElementById("hint").hidden = true;
+  pending = true;
+  kick();
+  if (!at || REDUCED) return;
+  const w = HINT_TEXT.length + 4,
+    x0 = at[0] - 2,
+    y0 = at[1] - 1,
+    cols = w,
+    rows = 3;
+  const L = XE[x0],
+    T = YE[y0],
+    cv = document.createElement("canvas");
+  cv.width = XE[x0 + w] - L;
+  cv.height = YE[y0 + rows] - T;
+  cv.style.cssText = `left: ${L / SCALE}px; top: ${T / SCALE}px; width: ${cv.width / SCALE}px; height: ${cv.height / SCALE}px; pointer-events: none; z-index: 1;`;
+  canvas.after(cv);
+  const c = cv.getContext("2d"),
+    base0 = glyphBase(ch),
+    G = new Uint8Array(cols * rows),
+    S = new Float32Array(cols * rows);
+  [...HINT_TEXT].forEach((t, k) => {
+    G[cols + 2 + k] = Math.max(0, CHARS.indexOf(t));
+  });
+  const cx = cols / 2,
+    cy = rows / 2,
+    dmax = Math.hypot(cx * ASPECT, cy);
+  for (let y = 0, i = 0; y < rows; y++)
+    for (let x = 0; x < cols; x++, i++)
+      S[i] =
+        (Math.hypot((x + 0.5 - cx) * ASPECT, y + 0.5 - cy) / dmax) * 0.6 +
+        Math.random() * 0.25;
+  const cell = (i, g) => {
+    const x = i % cols,
+      y = (i - x) / cols,
+      l = XE[x0 + x] - L,
+      t = YE[y0 + y] - T;
+    c.fillStyle = "#000";
+    c.fillRect(l, t, XE[x0 + x + 1] - XE[x0 + x], YE[y0 + y + 1] - YE[y0 + y]);
+    if (g) {
+      c.fillStyle = "rgb(220,220,220)";
+      c.fillText(CHARS[g], l + cw / 2, (y0 + y) * ch + base0 - T);
+    }
+  };
+  c.font = glyphFont(ch);
+  c.textAlign = "center";
+  c.textBaseline = "alphabetic";
+  for (let i = 0; i < G.length; i++) cell(i, G[i]);
+  const t0 = performance.now(),
+    last = new Int8Array(G.length).fill(8);
+  requestAnimationFrame(function step(now) {
+    const t = (now - t0) / 1000 / HINT_FADE;
+    let left = 0;
+    for (let i = 0; i < G.length; i++) {
+      const lv = Math.max(
+        0,
+        Math.min(8, Math.round((1 - (t - S[i] * 0.85) / 0.15) * 8))
+      );
+      if (lv === last[i]) {
+        left += lv > 0;
+        continue;
+      }
+      last[i] = lv;
+      const x = i % cols,
+        y = (i - x) / cols;
+      if (!lv) {
+        c.clearRect(
+          XE[x0 + x] - L,
+          YE[y0 + y] - T,
+          XE[x0 + x + 1] - XE[x0 + x],
+          YE[y0 + y + 1] - YE[y0 + y]
+        );
+        continue;
+      }
+      left++;
+      cell(i, G[i] ? RAMP_LUT[Math.round(((DENS[G[i]] * lv) / 8) * 255)] : 0);
+    }
+    if (left) requestAnimationFrame(step);
+    else cv.remove();
+  });
+}
+const histReady = () =>
+  HIST.list && scrub.stats.end && !scrub.playing && !intro;
+function stepBy(n) {
+  if (!histReady()) return false;
+  const want = Math.min(HIST.list.length, Math.max(0, HIST.want + n));
+  if (want === HIST.want) return false;
+  HIST.dir = Math.sign(want - HIST.want);
+  HIST.want = want;
+  dismissHint();
+  preload();
+  seek();
+  return true;
+}
+function scrollBy(px) {
+  if (!histReady()) return;
+  HIST.acc += px;
+  const steps = Math.trunc(HIST.acc / HIST_STEP);
+  if (!steps) return;
+  HIST.acc -= steps * HIST_STEP;
+  if (!stepBy(-steps)) HIST.acc = 0;
+}
+const SWEEP_WAIT = 300,
+  SWEEP_MS = 50;
+for (const [id, dir] of [
+  ["info-back", -1],
+  ["info-next", 1],
+]) {
+  const el = document.getElementById(id);
+  let timer = null;
+  const stop = () => {
+    clearTimeout(timer);
+    timer = null;
+  };
+  el.addEventListener("pointerdown", (e) => {
+    if (e.button) return;
+    e.preventDefault();
+    el.setPointerCapture(e.pointerId);
+    stepBy(dir);
+    const sweep = () => {
+      timer = stepBy(dir) ? setTimeout(sweep, SWEEP_MS) : null;
+    };
+    timer = setTimeout(sweep, SWEEP_WAIT);
+  });
+  for (const type of ["pointerup", "pointercancel", "lostpointercapture"])
+    el.addEventListener(type, stop);
+  el.addEventListener("click", (e) => {
+    if (!e.detail) stepBy(dir);
+  });
+}
+addEventListener(
+  "wheel",
+  (e) => {
+    if (e.ctrlKey) return;
+    scrollBy(
+      e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1)
+    );
+  },
+  { passive: true }
+);
+let touchY = null;
+addEventListener(
+  "touchstart",
+  (e) => {
+    touchY = e.touches.length === 1 ? e.touches[0].clientY : null;
+  },
+  { passive: true }
+);
+addEventListener(
+  "touchmove",
+  (e) => {
+    if (touchY === null || e.touches.length !== 1) return;
+    const y = e.touches[0].clientY;
+    scrollBy(touchY - y);
+    touchY = y;
+  },
+  { passive: true }
+);
+addEventListener(
+  "touchend",
+  () => {
+    touchY = null;
+  },
+  { passive: true }
+);
 
 GLR = /[?&]2d\b/.test(location.search) ? null : glInit();
 if (!GLR) ctx = canvas.getContext("2d");
@@ -2295,7 +2672,8 @@ canvas.addEventListener("webglcontextrestored", () => {
   kick();
 });
 const first = loadFirst();
-first.then(loadStream);
+const streamIn = first.then(loadStream);
+first.then(() => loadHistory(streamIn));
 Promise.all([
   first,
   ...[FONT, FONT_BOLD].map((f) =>

@@ -104,6 +104,20 @@ function infoLayout(cols, text, side, top, limit) {
   const box = frameBox(cols, lines, x0, y0, false);
   return { ...box, textX: x0 + 2, textY: y0 };
 }
+const HINT_TEXT = "hint: try scrolling",
+  HINT_GAP = 12;
+function hintLayout(cols, title) {
+  const w = HINT_TEXT.length + 4,
+    lines = ["", "", ""].map(() => " ".repeat(w));
+  const x0 = cols - title.side - w,
+    y0 = title.y1 - lines.length;
+  if (x0 < title.x1 + HINT_GAP) return null;
+  return {
+    ...frameBox(cols, lines, x0, y0, false),
+    textX: x0 + 2,
+    textY: y0 + 1,
+  };
+}
 function boxLines(body) {
   const inner = Math.max(...body.map((l) => l.length)) + 4;
   return [
