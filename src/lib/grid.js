@@ -68,10 +68,16 @@ function grid() {
     "--side",
     `calc(${side} * var(--cell))`
   );
+  const snug =
+    navWidth(2) +
+      (document.documentElement.classList.contains("nav-end") ? 1 : 0) >
+    cols - 2 * side;
+  document.documentElement.style.setProperty("--pad", snug ? 1 : 2);
   document.documentElement.style.setProperty(
-    "--pad",
-    navWidth(2) <= cols - 2 * side ? 2 : 1
+    "--top",
+    `calc(${snug ? 2 : 3} * var(--row))`
   );
+  document.documentElement.classList.toggle("snug", snug);
   window.GRID = {
     side,
     cols,

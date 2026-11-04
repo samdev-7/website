@@ -12,6 +12,8 @@ import {
   PAGES,
   SITE,
 } from "../lib/site.mjs";
+const navEnd =
+  PAGES.at(-1) === (Astro.props.frontmatter?.title ?? Astro.props.title);
 import handoverJs from "../lib/handover.js?raw";
 
 const { frontmatter = {}, title: propTitle } = Astro.props;
@@ -43,7 +45,7 @@ const script = pageJs.replace(
   () => heroJs.match(/const DENS = (Float32Array\.of\([^)]*\));/)[1]
 );
 ---
-<html lang="en">
+<html lang="en" class:list={{ 'nav-end': navEnd }}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

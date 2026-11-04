@@ -80,6 +80,13 @@ nav {
   background: var(--red);
   white-space: pre;
 }
+html.snug nav {
+  display: flex;
+  max-width: calc(72 * var(--cell));
+}
+html.nav-end nav {
+  padding-right: var(--cell);
+}
 nav a {
   padding: 0 calc(var(--pad, 2) * var(--cell) - var(--dx)) 0
     calc(var(--pad, 2) * var(--cell) + var(--dx));
