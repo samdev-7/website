@@ -657,8 +657,6 @@ function process() {
   });
   if (!performance.getEntriesByName("layout").length)
     performance.mark("layout");
-  document.getElementById("busy").textContent =
-    `${cols}x${rows} of ${FC}x${FR} cells, ${RUN_COUNT} SAMLIU, ${Math.round(performance.now() - t0)} ms`;
 }
 
 let BOX_CELLS = new Map(),
@@ -1354,9 +1352,6 @@ function stepScrub(now) {
         ` (${innerWidth}x${innerHeight} at ${devicePixelRatio}x, scale ${SCALE}${LOWRES ? ", capped until the end" : ""}), ${GLR ? "WebGL" : "2D"}, draw ${st.costMs.join("/")} ms avg/max` +
         ` (waited ${st.waited} ms for bytes${st.ready ? ", estimated " + st.ready.rate : ""}; stream in by ${Math.round(st.streamDone)} ms)`
     );
-    document.getElementById("busy").textContent +=
-      `\nfirst frame ${Math.round(st.firstDisplay)} ms (waited ${st.waited} ms for bytes), stream ${st.bytes ? (st.bytes / 1e6).toFixed(2) + " MB, " : ""}in by ${Math.round(st.streamDone)} ms` +
-      `\nscrub ${st.records} records in ${st.draws} draws over ${st.scrubMs} ms, draw ${st.costMs.join("/")} ms (avg/max)`;
   }
   return false;
 }
@@ -2123,7 +2118,6 @@ try {
   }).observe({ type: "longtask" });
 } catch (e) {}
 
-const panel = document.getElementById("panel");
 let scrubQueued = true;
 const replay = () => {
   if (
@@ -2137,7 +2131,6 @@ const replay = () => {
     kick();
   }
 };
-panel.addEventListener("pointermove", (e) => e.stopPropagation());
 
 function toCell(e) {
   const b = canvas.getBoundingClientRect();
@@ -2160,10 +2153,7 @@ addEventListener("pointermove", (e) => {
 addEventListener("pointerdown", (e) => {
   if (
     e.button === 0 &&
-    !(
-      e.target instanceof Element &&
-      e.target.closest("#title, #info, #nav, #panel")
-    )
+    !(e.target instanceof Element && e.target.closest("#title, #info, #nav"))
   )
     getSelection().removeAllRanges();
   if (REDUCED) return;
@@ -2183,8 +2173,7 @@ document.getElementById("nav").addEventListener("click", (e) => {
   if (e.target.closest("a")) saveScreen();
 });
 addEventListener("keydown", (e) => {
-  if (e.key === "h") panel.classList.toggle("hidden");
-  else if (e.key === "r") replay();
+  if (e.key === "r") replay();
   else if (/^[1-9]$/.test(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey)
     document.querySelectorAll("#nav a")[e.key - 1]?.click();
 });

@@ -1,0 +1,39 @@
+---
+import Page from "../../layouts/Page.astro";
+import { posts, formatDate, INTRO } from "../../lib/writing.mjs";
+
+const list = posts().map((p) => ({ ...p, when: formatDate(p.date) }));
+const w = Math.max(0, ...list.map((p) => p.when.length)) + 2;
+---
+<Page title="writing" description={INTRO}>
+  <p>{INTRO}</p>
+  {list.length === 0 ? <p>nothing here yet</p> : <>
+    <label class="search" hidden><span class="prompt">search: </span><input type="search" id="post-search" placeholder="____________________" aria-keyshortcuts="/" autocomplete="off" spellcheck="false"></label>
+    <ul class="posts" id="post-list" style={`--date: ${w}`}>
+      {list.map(p => <li data-search={`${p.when} ${p.title}`.toLowerCase()}><time datetime={p.date.toISOString()}>{p.when.padEnd(w)}</time><a href={`/writing/${p.slug}`}>{p.title}</a></li>)}
+    </ul>
+    <p id="post-empty" aria-live="polite"></p>
+  </>}
+</Page>
+
+<script is:inline>
+  (() => {
+    const input = document.getElementById('post-search');
+    if (!input) return;
+    const items = [...document.querySelectorAll('#post-list li')], empty = document.getElementById('post-empty');
+    input.closest('label').hidden = false;
+    // The query's letters in order, not necessarily together.
+    const fuzzy = (q, text) => { let i = 0; for (const ch of text) if (ch === q[i] && ++i === q.length) return true; return !q.length; };
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const li of items) shown += !(li.hidden = !fuzzy(q, li.dataset.search));
+      empty.textContent = shown ? '' : 'nothing matches that';
+    });
+    // "/" jumps to the search, as in less and vim.
+    document.addEventListener('keydown', e => {
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey || e.target.closest?.('input, textarea')) return;
+      e.preventDefault(); input.focus();
+    });
+  })();
+</script>

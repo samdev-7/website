@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import rehypeTui from "./src/lib/rehype-tui.mjs";
+import compress from "@playform/compress";
 
 const PROXY = {
   "/ascii": {
@@ -16,4 +17,13 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   markdown: { rehypePlugins: [rehypeTui], smartypants: false },
   devToolbar: { enabled: false },
+  integrations: [
+    compress({
+      HTML: { "html-minifier-terser": { collapseWhitespace: false } },
+      CSS: false,
+      Image: false,
+      SVG: false,
+      JSON: false,
+    }),
+  ],
 });

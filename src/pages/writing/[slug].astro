@@ -1,0 +1,26 @@
+---
+import Page from "../../layouts/Page.astro";
+import { posts, formatDate } from "../../lib/writing.mjs";
+import { SITE } from "../../lib/site.mjs";
+
+export function getStaticPaths() {
+  return posts().map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+const { Content } = post;
+const url = `${SITE}/writing/${post.slug}`;
+const jsonLd = {
+  "@type": "BlogPosting",
+  headline: post.title,
+  description: post.description,
+  url,
+  datePublished: post.date.toISOString(),
+  author: { "@id": `${SITE}/#person` },
+  isPartOf: { "@type": "Blog", url: `${SITE}/writing` },
+};
+---
+<Page title={post.title} section="writing" slug={post.slug} description={post.description ?? post.title} type="article" jsonLd={jsonLd}>
+  <p><time datetime={post.date.toISOString()}>{formatDate(post.date)}</time></p>
+  <Content />
+</Page>

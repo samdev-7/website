@@ -7,7 +7,17 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/notes", "destination": "/writing", "permanent": false }
+    { "source": "/notes", "destination": "/writing", "permanent": false },
+    {
+      "source": "/notes/rss.xml",
+      "destination": "/writing/rss.xml",
+      "permanent": false
+    },
+    {
+      "source": "/notes/:slug",
+      "destination": "/writing/:slug",
+      "permanent": false
+    }
   ],
   "headers": [
     {

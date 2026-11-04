@@ -7,17 +7,26 @@ import layoutJs from "../hero/layout.js?raw";
 import { LAYOUT } from "../lib/hero-data.mjs";
 import Meta from "../components/Meta.astro";
 import { DATA_URL, heroWidths, person, PAGES, SITE } from "../lib/site.mjs";
-const navEnd =
-  PAGES.at(-1) === (Astro.props.frontmatter?.title ?? Astro.props.title);
 import handoverJs from "../lib/handover.js?raw";
 
-const { frontmatter = {}, title: propTitle } = Astro.props;
+const {
+  frontmatter = {},
+  title: propTitle,
+  section,
+  slug,
+  jsonLd: propLd,
+  type,
+} = Astro.props;
 const title = frontmatter.title ?? propTitle;
-const description = frontmatter.description ?? `${title} · sam liu`;
+const current = section ?? title;
+const navEnd = PAGES.at(-1) === current;
+const description =
+  frontmatter.description ?? Astro.props.description ?? `${title} · sam liu`;
 const path = Astro.url.pathname,
   notFound = title === "404";
 const jsonLd =
-  title === "about"
+  propLd ??
+  (title === "about"
     ? {
         "@type": "ProfilePage",
         url: SITE + "/about",
@@ -30,7 +39,7 @@ const jsonLd =
         name: `${title} · sam liu`,
         isPartOf: { "@type": "WebSite", "@id": `${SITE}/#site`, url: SITE },
         about: { "@id": `${SITE}/#person` },
-      };
+      });
 const gridScript =
   layoutJs +
   gridJs
@@ -42,8 +51,9 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<Meta title={`${title} · sam liu`} description={description} path={path} type={title === 'about' ? 'profile' : 'website'} jsonLd={notFound ? undefined : jsonLd} noindex={notFound} />
+<Meta title={`${title} · sam liu`} description={description} path={path} type={type ?? (title === 'about' ? 'profile' : 'website')} jsonLd={notFound ? undefined : jsonLd} noindex={notFound} />
 <script is:inline>document.documentElement.classList.add('wait'); setTimeout(() => document.documentElement.classList.remove('wait'), 2000);</script>
+{current === 'writing' && <link rel="alternate" type="application/rss+xml" title="sam liu's writing" href="/writing/rss.xml">}
 <link rel="preload" href="/fonts/IBMPlexMono-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style is:inline set:html={pageCss}></style>
 <script is:inline set:html={gridScript}></script>
@@ -51,7 +61,7 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <body>
 <script is:inline data-from="hero" set:html={handoverJs}></script>
 <p class="small-msg" aria-hidden="true">{LAYOUT.SMALL_TEXT.join('\n')}</p>
-<Nav current={title} />
+<Nav current={current} />
 <main id="content">
   <h1>{title}</h1>
   <div class="rule" aria-hidden="true">{'='.repeat(title.length)}</div>
@@ -59,7 +69,7 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 </main>
 <footer>
   <div class="rule" aria-hidden="true">{'-'.repeat(72)}</div>
-  <span><a href="/">~</a> / {title}</span>
+  <span><a href="/">~</a> / {section ? <><a href={`/${section}`}>{section}</a> / {slug}</> : title}</span>
 </footer>
 <script is:inline set:html={script}></script>
 </body>

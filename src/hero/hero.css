@@ -192,25 +192,3 @@ body.small #nav {
 ::selection {
   background: rgba(236, 55, 80, 0.35);
 }
-#panel {
-  position: fixed;
-  right: 12px;
-  top: 12px;
-  width: 350px;
-  padding: 10px 12px;
-  background: rgba(0, 0, 0, 0.78);
-  color: #bbb;
-  border: 1px solid #333;
-  cursor: default;
-}
-#panel.hidden {
-  display: none;
-}
-#panel .hint {
-  color: #777;
-  margin-top: 6px;
-  white-space: pre;
-}
-#panel .busy {
-  color: #777;
-}
