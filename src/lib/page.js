@@ -126,7 +126,7 @@ const fetchStream = (e) => {
   streamFetched = true;
   const l = document.createElement("link");
   l.rel = "prefetch";
-  l.href = "/scrub.bin";
+  l.href = `${DATA_URL}/ascii/scrub.bin?o=${location.host}`;
   l.as = "fetch";
   l.crossOrigin = "anonymous";
   document.head.append(l);

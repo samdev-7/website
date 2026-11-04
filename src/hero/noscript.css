@@ -32,6 +32,9 @@
 #nav a {
   padding: 0 8px;
 }
+#boot {
+  display: none;
+}
 #info {
   opacity: 1 !important;
   position: static;

@@ -1,4 +1,115 @@
-const FIRST = __FIRST__;
+const DATA = window.DATA_URL,
+  SITE_Q = `?o=${location.host}`;
+async function fetchLatest(res, signal) {
+  res = await (res || fetch(`${DATA}/ascii/latest.bin${SITE_Q}`, { signal }));
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const b = new Uint8Array(await res.arrayBuffer()),
+    v = new DataView(b.buffer);
+  if (String.fromCharCode(...b.subarray(0, 4)) !== "ASL1")
+    throw new Error("not an ASL1 frame");
+  const n = b[14];
+  return {
+    cols: v.getUint16(4, true),
+    rows: v.getUint16(6, true),
+    at: v.getUint32(8, true),
+    off: v.getInt16(12, true),
+    stream: new TextDecoder().decode(b.subarray(15, 15 + n)),
+    body: b.subarray(15 + n),
+  };
+}
+async function* streamMessages(res, net) {
+  if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+  Object.assign(net, {
+    size: +res.headers.get("content-length") || 0,
+    got: 0,
+    t0: 0,
+    mark: null,
+  });
+  const count = (c) => {
+    const now = performance.now();
+    if (!net.t0) net.t0 = now;
+    else if (!net.mark && now - net.t0 >= 100) net.mark = [now, net.got];
+    net.got += c.length;
+  };
+  const raw = res.body.getReader(),
+    head = await raw.read();
+  net.gz = !head.done && head.value[0] === 0x1f && head.value[1] === 0x8b;
+  if (!net.gz) net.size = 0;
+  let body = new ReadableStream({
+    start(c) {
+      if (!head.done) {
+        count(head.value);
+        c.enqueue(head.value);
+      }
+    },
+    async pull(c) {
+      const { value, done } = await raw.read();
+      if (done) c.close();
+      else {
+        count(value);
+        c.enqueue(value);
+      }
+    },
+  });
+  if (net.gz) body = body.pipeThrough(new DecompressionStream("gzip"));
+  const reader = body.getReader(),
+    out = [],
+    parse = scrubParser((m) => out.push(m));
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) return;
+    parse(value);
+    while (out.length) yield out.shift();
+  }
+}
+let STREAM = null;
+let FIRST = null;
+const FIRST_P = (async () => {
+  if (window.scrubStream) {
+    const stuck = setTimeout(
+      () => window.scrubAbort.abort(new Error("no newest frame after 6 s")),
+      6000
+    );
+    try {
+      const net = {},
+        it = streamMessages(await window.scrubStream, net);
+      const head = (await it.next()).value?.head,
+        rec = (await it.next()).value?.rec;
+      if (head?.magic !== "SCR3" || rec?.kind !== 4)
+        throw new Error("not an SCR3 stream");
+      clearTimeout(stuck);
+      STREAM = { it, head, net };
+      return {
+        cols: head.cols,
+        rows: head.rows,
+        at: rec.t,
+        off: rec.off,
+        body: rec.body,
+      };
+    } catch (e) {
+      clearTimeout(stuck);
+      console.warn(
+        `scrub.bin: ${e.message}; showing the newest frame without the scrub`
+      );
+      window.scrubAbort?.abort();
+    }
+  }
+  let res = window.latestFrame,
+    limit = 6000;
+  for (
+    let wait = 1000;
+    ;
+    wait = Math.min(wait * 2, 15000), limit = Math.min(limit * 2, 30000)
+  ) {
+    try {
+      return await fetchLatest(res, AbortSignal.timeout(limit));
+    } catch (e) {
+      console.warn(`latest.bin: ${e.message}; retrying in ${wait / 1000} s`);
+      res = null;
+      await new Promise((r) => setTimeout(r, wait));
+    }
+  }
+})();
 const FONT = new FontFace(
   "IBM Plex Mono",
   "url(data:font/woff2;base64,__FONT__)"
@@ -333,7 +444,7 @@ function placeTitle() {
   name.parentNode.style.height = H + "px";
 }
 const P = {
-  cell: 1470 / FIRST.cols,
+  cell: 1470 / 160,
   bg: 0.2,
 };
 
@@ -818,7 +929,6 @@ function showBase() {
   else ctx.drawImage(base, 0, 0);
 }
 
-const SCRUB_URL = "/scrub.bin";
 const SCRUB_LEAD = 1.25;
 const SLOW_LINK = 2e6 / 8 / 1000;
 const SLOW_LEAD = 1.2;
@@ -835,20 +945,11 @@ const scrub = {
 };
 let FIRST_STATE = null;
 
-async function gunzip(bytes) {
-  return new Uint8Array(
-    await new Response(
-      new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"))
-    ).arrayBuffer()
-  );
-}
 async function loadFirst() {
-  const body = await gunzip(
-    Uint8Array.from(atob(FIRST.data), (c) => c.charCodeAt(0))
-  );
+  FIRST = await FIRST_P;
   FC = FIRST.cols;
   FR = FIRST.rows;
-  FIRST_STATE = [body.slice(0, FC * FR), body.slice(FC * FR)];
+  FIRST_STATE = [FIRST.body.slice(0, FC * FR), FIRST.body.slice(FC * FR)];
   FGL = FIRST_STATE[0].slice();
   FRGB = FIRST_STATE[1].slice();
   setTime(FIRST.at, FIRST.off);
@@ -905,80 +1006,30 @@ function scrubParser(emit) {
 }
 async function loadStream() {
   const st = scrub.stats;
-  if (REDUCED) {
+  if (REDUCED || !STREAM) {
     scrub.ended = true;
     kick();
     return;
   }
-  let gz = true;
-  const take = (m) => {
-    if (scrub.cut) return;
-    if (m.head) {
-      if (
-        m.head.magic !== "SCR2" ||
-        m.head.cols !== FC ||
-        m.head.rows !== FR ||
-        m.head.at !== FIRST.at
-      )
-        throw new Error("not a scrub for this frame");
-      scrub.total = m.head.total;
-      scrub.dur = m.head.dur;
-      if (!gz) scrub.net.size = m.head.size;
-    } else if (m.rec) {
-      scrub.recs.push(m.rec);
+  const { it, head, net } = STREAM;
+  scrub.abort = window.scrubAbort;
+  scrub.net = net;
+  scrub.total = head.total;
+  scrub.dur = head.dur;
+  if (!net.gz) net.size = head.size;
+  performance.mark("fetch");
+  try {
+    for (;;) {
+      const { value, done } = await it.next();
+      if (done || scrub.cut) break;
+      if (!value.rec) continue;
+      scrub.recs.push(value.rec);
       if (!st.firstRecord) st.firstRecord = performance.now();
     }
-  };
-  try {
-    performance.mark("fetch");
-    scrub.abort = new AbortController();
-    const res = await fetch(SCRUB_URL, { signal: scrub.abort.signal });
-    if (!res.ok || !res.body) throw new Error(res.status);
-    const net = (scrub.net = {
-      size: +res.headers.get("content-length") || 0,
-      got: 0,
-      t0: 0,
-      mark: null,
-    });
-    const count = (c) => {
-      const now = performance.now();
-      if (!net.t0) net.t0 = now;
-      else if (!net.mark && now - net.t0 >= 100) net.mark = [now, net.got];
-      net.got += c.length;
-    };
-    const parse = scrubParser(take);
-    const raw = res.body.getReader(),
-      head = await raw.read();
-    gz = net.gz =
-      !head.done && head.value[0] === 0x1f && head.value[1] === 0x8b;
-    if (!gz) net.size = 0;
-    let body = new ReadableStream({
-      start(c) {
-        if (!head.done) {
-          count(head.value);
-          c.enqueue(head.value);
-        }
-      },
-      async pull(c) {
-        const { value, done } = await raw.read();
-        if (done) c.close();
-        else {
-          count(value);
-          c.enqueue(value);
-        }
-      },
-    });
-    if (gz) body = body.pipeThrough(new DecompressionStream("gzip"));
-    const reader = body.getReader();
-    for (;;) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      parse(value);
-    }
     st.streamDone = performance.now();
-    const e = performance.getEntriesByName(
-      new URL(SCRUB_URL, location.href).href
-    )[0];
+    const e = performance
+      .getEntriesByType("resource")
+      .find((e) => e.name.includes("/ascii/scrub.bin"));
     if (e) st.bytes = e.encodedBodySize || e.transferSize;
   } catch (e) {
     if (!scrub.cut) console.warn("scrub stream:", e);
@@ -2153,6 +2204,32 @@ addEventListener("resize", () => {
   );
 })();
 
+const POLL_MS = (+location.search.match(/[?&]poll=(\d+)/)?.[1] || 120) * 1000;
+let NEXT = null;
+async function poll() {
+  if (document.hidden || !FIRST) return;
+  try {
+    const f = await fetchLatest(null, AbortSignal.timeout(20000));
+    if (f.at > (NEXT || FIRST).at && f.cols === FC && f.rows === FR) NEXT = f;
+  } catch (e) {
+    console.warn(`latest.bin: ${e.message}`);
+  }
+  if (!NEXT || !scrub.stats.end || scrub.playing || intro) return;
+  Object.assign(FIRST, NEXT);
+  FIRST_STATE = [NEXT.body.slice(0, FC * FR), NEXT.body.slice(FC * FR)];
+  NEXT = null;
+  applyRecord({ kind: 3, t: FIRST.at, off: FIRST.off });
+  refresh(null);
+  findRuns();
+  emphReady = false;
+  redrawAll();
+  kick();
+}
+setInterval(poll, POLL_MS);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) poll();
+});
+
 GLR = /[?&]2d\b/.test(location.search) ? null : glInit();
 if (!GLR) ctx = canvas.getContext("2d");
 canvas.addEventListener("webglcontextlost", (e) => e.preventDefault());
@@ -2177,6 +2254,7 @@ Promise.all([
   performance.mark("measured");
   calibrate();
   performance.mark("calib");
+  document.getElementById("boot").remove();
   pending = true;
   kick();
 });

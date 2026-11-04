@@ -18,6 +18,8 @@ export const heroMenuHtml = () =>
   );
 
 export const SITE = "https://samliu.dev";
+export const DATA_URL =
+  import.meta.env.PUBLIC_DATA_URL ?? "https://now.samliu.dev";
 
 export const person = (description) => ({
   "@type": "Person",

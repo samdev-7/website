@@ -23,6 +23,39 @@ canvas {
   left: 0;
   top: 0;
 }
+#boot {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #dcdcdc;
+  white-space: pre;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  opacity: 0;
+  animation: boot-in 0s 1s forwards;
+}
+#boot .dots {
+  display: inline-block;
+  width: 3ch;
+  overflow: hidden;
+  vertical-align: bottom;
+  animation: boot-dots 1.4s steps(4, jump-none) infinite;
+}
+@keyframes boot-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes boot-dots {
+  from {
+    width: 0;
+  }
+  to {
+    width: 3ch;
+  }
+}
 #title {
   position: fixed;
   margin: 0;
