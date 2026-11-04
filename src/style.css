@@ -1,0 +1,149 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+body {
+  cursor: crosshair;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  font:
+    12px/1.4 "IBM Plex Mono",
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+}
+canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+#title {
+  position: fixed;
+  margin: 0;
+  white-space: pre;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+#info {
+  position: fixed;
+  margin: 0;
+  white-space: pre;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color: #c8c8c8;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#title.fading,
+#info.fading {
+  opacity: 0;
+}
+#info.loose {
+  top: 16px;
+  right: 16px;
+  padding: 8px 12px;
+  background: #000;
+  border: 1px solid #8c8c8c;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: right;
+}
+#title.loose {
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 12px 14px;
+  background: #000;
+  border: 1px solid #8c8c8c;
+  white-space: normal;
+  font-size: 14px;
+  line-height: 1.45;
+}
+#title.loose #title-name {
+  position: static;
+  color: #fff;
+  font-size: 28px;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+#title.loose #title-sub {
+  margin-top: 6px !important;
+}
+#title h1,
+#title p {
+  margin: 0;
+  font: inherit;
+}
+#title h1 {
+  color: #fff;
+  display: block;
+  position: relative;
+}
+#title-name {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: transparent;
+  white-space: nowrap;
+}
+#title-name::selection {
+  color: transparent;
+}
+#title p {
+  color: #c8c8c8;
+}
+#title .hl {
+  color: #ec3750;
+  cursor: pointer;
+  text-decoration: none;
+}
+#title .hl:hover,
+#title .hl:focus-visible {
+  font-weight: 700;
+}
+#title .hl:focus-visible {
+  outline: 1px solid #ec3750;
+  outline-offset: 2px;
+}
+::selection {
+  background: rgba(236, 55, 80, 0.35);
+}
+#panel {
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  width: 350px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #bbb;
+  border: 1px solid #333;
+  cursor: default;
+}
+#panel.hidden {
+  display: none;
+}
+#panel .hint {
+  color: #777;
+  margin-top: 6px;
+  white-space: pre;
+}
+#panel .busy {
+  color: #777;
+}

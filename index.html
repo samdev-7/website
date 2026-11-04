@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>sam liu</title>
+    <meta
+      name="description"
+      content="getting teens shipping technical projects @ hack club"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="sam liu" />
+    <meta
+      property="og:description"
+      content="getting teens shipping technical projects @ hack club"
+    />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "sam liu",
+        "description": "getting teens shipping technical projects @ hack club",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Hack Club",
+          "url": "https://hackclub.com"
+        }
+      }
+    </script>
+    <link rel="preconnect" href="%VITE_DATA_URL%" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/plex-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/plex-mono-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script>
+      window.latestFrame = fetch(
+        "%VITE_DATA_URL%/ascii/latest.bin?o=" + location.host,
+        { cache: "no-cache" }
+      );
+    </script>
+    <noscript
+      ><style>
+        #title {
+          opacity: 1 !important;
+          position: static;
+          padding: 16px;
+          white-space: normal;
+          color: #ddd;
+          font-size: 14px;
+        }
+        #title-name {
+          color: #fff;
+          font-size: 28px;
+        }
+        #info {
+          opacity: 1 !important;
+          position: static;
+          padding: 0 16px;
+          font-size: 13px;
+        }
+      </style></noscript
+    >
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <canvas
+      id="art"
+      role="img"
+      aria-label="Colour ASCII-art view from a window: autumn trees, a street lamp and a low building under a blue sky"
+    ></canvas>
+    <div id="title" class="fading"
+      ><h1><span id="title-name">sam liu</span></h1
+      ><p id="title-sub"
+        >getting teens shipping technical projects @
+        <a class="hl" href="https://hackclub.com" target="_blank" rel="noopener"
+          >hack club</a
+        ></p
+      ></div
+    >
+    <p id="info" class="fading"
+      ><span class="sr">photo taken in </span
+      ><span id="info-place">waterloo, on</span><span class="sr">, at</span>
+      <time id="info-time"></time
+    ></p>
+    <div id="panel" class="hidden" aria-hidden="true">
+      <div class="hint"
+        >[h] hide panel [r] replay scrub <span class="busy" id="busy"></span
+      ></div>
+    </div>
+  </body>
+</html>
