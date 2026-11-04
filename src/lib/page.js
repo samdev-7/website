@@ -1,5 +1,4 @@
-const SCREEN_KEY = "ascii-screen",
-  SCREEN_TTL = 5000;
+const SCREEN_KEY = "ascii-screen";
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const RED = [0xff, 0x55, 0x55];
 const INTRO_SPEED = 2,

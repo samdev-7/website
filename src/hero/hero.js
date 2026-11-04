@@ -355,9 +355,6 @@ const glyphSize = (h) => Math.min(h, h / (ASC + DESC));
 const glyphBase = (h) =>
   (h - glyphSize(h) * (ASC + DESC)) / 2 + glyphSize(h) * ASC;
 const glyphFont = (h) => `${glyphSize(h)}px ${FONT_STACK}`;
-function drawGlyph(c, ch, x, cw, h) {
-  c.fillText(ch, x + cw / 2, glyphBase(h));
-}
 let RAMP_LUT;
 function calibrate() {
   RAMP_LUT = new Uint8Array(256).map((_, l) => {
