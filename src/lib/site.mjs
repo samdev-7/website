@@ -8,7 +8,7 @@ export function heroWidths(timeW) {
   return {
     navW: PAGES.reduce((s, p) => s + p.length + 2, PAGES.length - 1),
     contactW: EMAIL.length,
-    info: [PLACE.padStart(w), " ".repeat(w)],
+    info: [PLACE.padStart(w), " ".repeat(w), " ".repeat(w)],
   };
 }
 

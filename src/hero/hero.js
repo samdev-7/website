@@ -166,12 +166,22 @@ const contactLines = () =>
   document.getElementById("title-contact").textContent.split("\n");
 const contactW = () => Math.max(...contactLines().map((l) => l.length));
 
+let DAY = "",
+  LIVE = false;
+const LIVE_TEXT = "live\u2022";
 const infoLines = () => {
   const lines = ["info-place", "info-time"].map(
     (id) => document.getElementById(id).textContent
   );
-  const w = Math.max(TIME_W, ...lines.map((l) => l.length));
-  return lines.map((l) => l.padStart(w));
+  const w = Math.max(
+    TIME_W,
+    ...lines.map((l) => l.length),
+    LIVE_TEXT.length + 1 + DAY.length
+  );
+  return [
+    ...lines.map((l) => l.padStart(w)),
+    LIVE ? LIVE_TEXT + DAY.padStart(w - LIVE_TEXT.length) : DAY.padStart(w),
+  ];
 };
 const navItems = () =>
   [...document.querySelectorAll("#nav a")].map((a, k, all) => {
@@ -950,7 +960,7 @@ async function loadFirst() {
   FIRST_STATE = [FIRST.body.slice(0, FC * FR), FIRST.body.slice(FC * FR)];
   FGL = FIRST_STATE[0].slice();
   FRGB = FIRST_STATE[1].slice();
-  setTime(FIRST.at, FIRST.off);
+  setTime(FIRST.at, FIRST.off, REDUCED);
   performance.mark("first");
 }
 
@@ -1037,7 +1047,21 @@ async function loadStream() {
 }
 
 const ZONES = { "-300": "est", "-240": "edt" };
-function setTime(t, off) {
+const MONTHS = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+];
+function setTime(t, off, live) {
   const d = new Date((t + off * 60) * 1000),
     h = d.getUTCHours(),
     m = String(d.getUTCMinutes()).padStart(2, "0");
@@ -1056,6 +1080,15 @@ function setTime(t, off) {
     String((z / 60) | 0).padStart(2, "0") +
     ":" +
     String(z % 60).padStart(2, "0");
+  DAY = `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`;
+  LIVE = !!live;
+  const line = infoLines()[2];
+  document.getElementById("info-live").hidden = !LIVE;
+  document.getElementById("info-gap").textContent = line.slice(
+    LIVE ? LIVE_TEXT.length : 0,
+    line.length - DAY.length
+  );
+  document.getElementById("info-date").textContent = DAY;
   const cells = infoText();
   if (intro && ctx)
     for (const i of cells) {
@@ -1069,7 +1102,7 @@ let IDX = null;
 function applyRecord(r) {
   const N = FC * FR,
     b = r.body;
-  setTime(r.t, r.off);
+  setTime(r.t, r.off, r.kind === 3);
   if (r.kind === 1) {
     FGL.set(b.subarray(0, N));
     FRGB.set(b.subarray(N, 4 * N));

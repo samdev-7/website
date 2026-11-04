@@ -59,7 +59,8 @@ const script = (layoutJs + heroJs)
 <div id="title" class="fading"><h1><span id="title-name">sam liu</span></h1><p id="title-sub" set:html={subHtml}></p><p id="title-contact"><a href={`mailto:${EMAIL}`} target="_blank" rel="noopener">{EMAIL}</a></p></div>
 <nav id="nav" class="fading" aria-label="site" set:html={heroMenuHtml()}></nav>
 <p id="info" class="fading"><span class="sr">photo taken in </span><span id="info-place">{PLACE}</span><span class="sr">, at</span>
-<time id="info-time"></time></p>
+<time id="info-time"></time>
+<span id="info-day"><span id="info-live" hidden>live<span class="dot" aria-hidden="true">&bull;</span></span><span id="info-gap"></span><span class="sr">, on </span><span id="info-date"></span></span></p>
 </main>
 <script is:inline set:html={script}></script>
 </body>
