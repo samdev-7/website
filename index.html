@@ -43,10 +43,18 @@
       crossorigin
     />
     <script>
-      window.latestFrame = fetch(
-        "%VITE_DATA_URL%/ascii/latest.bin?o=" + location.host,
-        { cache: "no-cache", signal: AbortSignal.timeout(6000) }
-      );
+      {
+        const o = "?o=" + location.host;
+        window.latestFrame = fetch("%VITE_DATA_URL%/ascii/latest.bin" + o, {
+          signal: AbortSignal.timeout(6000),
+        });
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.scrubAbort = new AbortController();
+          window.scrubStream = fetch("%VITE_DATA_URL%/ascii/scrub.bin" + o, {
+            signal: window.scrubAbort.signal,
+          });
+        }
+      }
     </script>
     <noscript
       ><style>
