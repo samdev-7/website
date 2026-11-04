@@ -1,0 +1,40 @@
+#title {
+  opacity: 1 !important;
+  position: static;
+  padding: 16px 16px 0;
+  white-space: normal;
+  color: #ddd;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#title h1 {
+  margin-bottom: 8px;
+}
+#title-name {
+  position: static;
+  color: #fff;
+  font-size: 28px;
+}
+#title #title-contact {
+  position: static;
+  margin-top: 8px;
+}
+#nav {
+  opacity: 1 !important;
+  position: static;
+  display: block;
+  margin: 16px;
+  font-size: 14px;
+}
+#nav a:first-child {
+  padding-left: 0;
+}
+#nav a {
+  padding: 0 8px;
+}
+#info {
+  opacity: 1 !important;
+  position: static;
+  padding: 0 16px;
+  font-size: 13px;
+}

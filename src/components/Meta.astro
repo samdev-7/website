@@ -1,0 +1,41 @@
+---
+import { SITE } from "../lib/site.mjs";
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  type?: string;
+  jsonLd?: object;
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  path,
+  type = "website",
+  jsonLd,
+  noindex,
+} = Astro.props;
+const url = SITE + (path === "/" ? "/" : path.replace(/\/$/, ""));
+const md = path === "/" ? "/index.md" : `${path.replace(/\/$/, "")}.md`;
+const ld =
+  jsonLd &&
+  JSON.stringify({ "@context": "https://schema.org", ...jsonLd }).replace(
+    /</g,
+    "\\u003c"
+  );
+---
+<title>{title}</title>
+<meta name="description" content={description}>
+{noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={url}>}
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content={type}>
+<meta property="og:site_name" content="sam liu">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={url}>
+<meta name="twitter:card" content="summary">
+{!noindex && <link rel="alternate" type="text/markdown" href={md} title="this page as Markdown">}
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+{ld && <script type="application/ld+json" set:html={ld}></script>}

@@ -1,0 +1,162 @@
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url(/fonts/IBMPlexMono-Regular-latin.woff2) format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url(/fonts/IBMPlexMono-Bold-latin.woff2) format("woff2");
+  font-weight: 700;
+}
+:root {
+  --red: #ff5555;
+  --red-hover: #ff8080;
+  --text: #dcdcdc;
+  --dim: #8c8c8c;
+  --cell: 9px;
+  --row: 22px;
+  --font: 15px;
+  --spacing: 0px;
+  --dx: 0px;
+  --dy: 0px;
+  --side: calc(6 * var(--cell));
+  --top: calc(3 * var(--row));
+}
+html {
+  background: #000;
+  overscroll-behavior: none;
+}
+html.wait body {
+  visibility: hidden;
+}
+html.wait .handover {
+  visibility: visible;
+}
+body {
+  margin: 0;
+  padding: var(--top) var(--side) calc(4 * var(--row));
+  background: #000;
+  color: var(--text);
+  font:
+    var(--font)/var(--row) "IBM Plex Mono",
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  letter-spacing: var(--spacing);
+  -webkit-text-size-adjust: 100%;
+}
+main,
+footer {
+  position: relative;
+  left: var(--dx);
+  top: var(--dy);
+}
+::selection {
+  background: rgba(236, 55, 80, 0.35);
+}
+a {
+  color: var(--red);
+  text-decoration: none;
+}
+main a,
+footer a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+a:hover,
+a:focus-visible {
+  font-weight: 700;
+  outline: none;
+}
+a:focus-visible {
+  outline: 1px solid var(--red);
+  outline-offset: 2px;
+}
+
+nav {
+  display: inline-flex;
+  background: var(--red);
+  white-space: pre;
+}
+nav a {
+  padding: 0 calc(2 * var(--cell) - var(--dx)) 0
+    calc(2 * var(--cell) + var(--dx));
+  color: #000;
+}
+nav a:first-child {
+  padding: 0 calc(var(--cell) - var(--dx)) 0 calc(var(--cell) + var(--dx));
+}
+nav a span {
+  position: relative;
+  top: var(--dy);
+}
+nav a:hover,
+nav a:focus-visible {
+  background: var(--red-hover);
+  font-weight: 400;
+  outline: none;
+}
+nav a[aria-current] {
+  background: #000;
+  color: var(--red);
+}
+nav a[aria-current]:hover,
+nav a[aria-current]:focus-visible {
+  background: #000;
+  color: var(--red-hover);
+}
+
+main {
+  max-width: calc(72 * var(--cell));
+  margin-top: calc(2 * var(--row));
+}
+h1,
+h2 {
+  margin: 0;
+  font: inherit;
+  color: #fff;
+}
+.rule {
+  color: var(--dim);
+  white-space: pre;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+h2 {
+  margin-top: calc(2 * var(--row));
+}
+.break {
+  margin-top: var(--row);
+}
+p,
+ul {
+  margin: var(--row) 0 0;
+}
+ul {
+  padding: 0;
+  list-style: none;
+}
+li {
+  padding-left: calc(2 * var(--cell));
+  text-indent: calc(-2 * var(--cell));
+}
+.dash {
+  color: var(--dim);
+}
+.meta {
+  color: var(--dim);
+}
+.placeholder {
+  color: var(--dim);
+}
+footer {
+  max-width: calc(72 * var(--cell));
+  margin-top: calc(3 * var(--row));
+  color: var(--dim);
+}
+footer .rule {
+  margin-bottom: var(--row);
+}

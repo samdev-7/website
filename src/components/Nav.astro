@@ -1,0 +1,8 @@
+---
+import { PAGES as pages } from "../lib/site.mjs";
+interface Props {
+  current?: string;
+}
+const { current } = Astro.props;
+---
+<nav aria-label="site"><a href="/" aria-label="home" title="home"><span>~</span></a>{pages.map(p => <a href={`/${p}`} aria-current={p === current ? 'page' : undefined}><span>{p}</span></a>)}</nav>
