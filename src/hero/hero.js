@@ -60,13 +60,14 @@ const TITLE = [
 const SUBTITLE = "getting teens shipping technical projects @ hack club";
 const BOX_MARGIN = [6, 3];
 const MIN_SIDE = 4;
+const EDGE_SIDE = 2;
 const MIN_TEXT_CELL = 6;
 let BOX;
 let BAR = new Uint8Array(0);
 const NAV_RED = [0xff, 0x55, 0x55];
 const HIGHLIGHT = "hack club";
 const TITLE_W = Math.max(...TITLE.map((l) => l.length));
-const minCols = () => Math.max(TITLE_W, navWidth()) + 6 + 2 * MIN_SIDE;
+const minCols = () => Math.max(TITLE_W, navWidth()) + 6 + 2 * EDGE_SIDE;
 function subtitleLines(wrap, width) {
   if (!wrap) return [SUBTITLE];
   const hl = SUBTITLE.indexOf(HIGHLIGHT),
@@ -111,9 +112,10 @@ const contactW = () => Math.max(...contactLines().map((l) => l.length));
 function boxLayout(cols, rows) {
   const [M, MB] = BOX_MARGIN;
   for (const wrap of [0, 2, 3]) {
+    const side = wrap === 3 ? EDGE_SIDE : MIN_SIDE;
     const sub = subtitleLines(
       wrap,
-      Math.max(TITLE_W, navWidth(), cols - 2 * MIN_SIDE - 6)
+      Math.max(TITLE_W, navWidth(), cols - 2 * side - 6)
     );
     const textW = Math.max(TITLE_W, navWidth(), ...sub.map((l) => l.length));
     const wrapMail = textW - contactW() - (navWidth() - 2) < 3;
@@ -134,7 +136,7 @@ function boxLayout(cols, rows) {
       bottom = Math.round((x0 * MB) / M);
     }
     const y0 = rows - bottom - lines.length;
-    if (x0 >= MIN_SIDE && y0 >= 0) {
+    if (x0 >= side && y0 >= 0) {
       SUB_LINES = sub;
       MAIL_WRAP = wrapMail;
       return { ...frameBox(cols, lines, x0, y0), side: x0, bottom, textW };

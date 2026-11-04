@@ -4,6 +4,7 @@ const FC = 160,
   CELL = 1470 / FC,
   MIN_COLS = __MIN_COLS__;
 const TEXT_W = 72;
+const EDGE_SIDE = __EDGE_SIDE__;
 const CHARS = Array.from({ length: 95 }, (_, i) =>
   String.fromCharCode(32 + i)
 ).join("");
@@ -52,12 +53,16 @@ function grid() {
   set("--spacing", cw - adv);
   set("--dx", (cw - adv) / 2);
   set("--dy", base - cssBase);
-  let side = cols >= 60 ? 6 : 4;
+  let side = cols >= 60 ? 6 : cols > MIN_COLS ? 4 : EDGE_SIDE;
   const w = Math.min(TEXT_W, cols - 2 * side);
   if (cols - side - w < 2 * side) side = Math.floor((cols - w) / 2);
   document.documentElement.style.setProperty(
     "--side",
     `calc(${side} * var(--cell))`
+  );
+  document.documentElement.style.setProperty(
+    "--pad",
+    side === EDGE_SIDE ? 1 : 2
   );
   window.GRID = {
     side,

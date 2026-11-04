@@ -1,9 +1,13 @@
 export const PAGES = ["about", "work", "writing", "contact"];
 
+export const heroEdgeSide = (heroJs) =>
+  +heroJs.match(/const EDGE_SIDE = (\d+);/)[1];
 export function heroMinCols(heroJs) {
   const title = JSON.parse(heroJs.match(/const TITLE = (\[.*\]);/)[1]);
   const menu = PAGES.reduce((s, p) => s + p.length + 2, PAGES.length - 1);
-  return Math.max(...title.map((l) => l.length), menu) + 6 + 2 * 4;
+  return (
+    Math.max(...title.map((l) => l.length), menu) + 6 + 2 * heroEdgeSide(heroJs)
+  );
 }
 
 export const heroMenuHtml = () =>

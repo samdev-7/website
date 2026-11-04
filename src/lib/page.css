@@ -81,8 +81,8 @@ nav {
   white-space: pre;
 }
 nav a {
-  padding: 0 calc(2 * var(--cell) - var(--dx)) 0
-    calc(2 * var(--cell) + var(--dx));
+  padding: 0 calc(var(--pad, 2) * var(--cell) - var(--dx)) 0
+    calc(var(--pad, 2) * var(--cell) + var(--dx));
   color: #000;
 }
 nav a:first-child {
