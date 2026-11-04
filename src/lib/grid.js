@@ -5,6 +5,8 @@ const FC = 160,
   MIN_COLS = __MIN_COLS__;
 const TEXT_W = 72;
 const EDGE_SIDE = __EDGE_SIDE__;
+const PAGES = __PAGES__;
+const navWidth = (pad) => PAGES.reduce((w, p) => w + p.length + 2 * pad, 3);
 const CHARS = Array.from({ length: 95 }, (_, i) =>
   String.fromCharCode(32 + i)
 ).join("");
@@ -53,7 +55,13 @@ function grid() {
   set("--spacing", cw - adv);
   set("--dx", (cw - adv) / 2);
   set("--dy", base - cssBase);
-  let side = cols >= 60 ? 6 : cols > MIN_COLS ? 4 : EDGE_SIDE;
+  let side =
+    cols >= 60
+      ? 6
+      : Math.max(
+          EDGE_SIDE,
+          Math.min(4, Math.floor((cols - (MIN_COLS - 2 * EDGE_SIDE)) / 2))
+        );
   const w = Math.min(TEXT_W, cols - 2 * side);
   if (cols - side - w < 2 * side) side = Math.floor((cols - w) / 2);
   document.documentElement.style.setProperty(
@@ -62,7 +70,7 @@ function grid() {
   );
   document.documentElement.style.setProperty(
     "--pad",
-    side === EDGE_SIDE ? 1 : 2
+    navWidth(2) <= cols - 2 * side ? 2 : 1
   );
   window.GRID = {
     side,
