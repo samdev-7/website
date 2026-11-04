@@ -4,11 +4,19 @@ const DATA = import.meta.env.VITE_DATA_URL;
 const SITE = `?o=${location.host}`;
 
 const FIRST = await (async () => {
-  let res = window.latestFrame;
-  for (let wait = 1000; ; wait = Math.min(wait * 2, 15000)) {
+  let res = window.latestFrame,
+    limit = 6000;
+  for (
+    let wait = 1000;
+    ;
+    wait = Math.min(wait * 2, 15000), limit = Math.min(limit * 2, 30000)
+  ) {
     try {
       res = await (res ||
-        fetch(`${DATA}/ascii/latest.bin${SITE}`, { cache: "no-cache" }));
+        fetch(`${DATA}/ascii/latest.bin${SITE}`, {
+          cache: "no-cache",
+          signal: AbortSignal.timeout(limit),
+        }));
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const b = new Uint8Array(await res.arrayBuffer()),
         v = new DataView(b.buffer);

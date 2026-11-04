@@ -28,7 +28,6 @@
         }
       }
     </script>
-    <link rel="preconnect" href="%VITE_DATA_URL%" crossorigin />
     <link
       rel="preload"
       href="/fonts/plex-mono-400.woff2"
@@ -46,7 +45,7 @@
     <script>
       window.latestFrame = fetch(
         "%VITE_DATA_URL%/ascii/latest.bin?o=" + location.host,
-        { cache: "no-cache" }
+        { cache: "no-cache", signal: AbortSignal.timeout(6000) }
       );
     </script>
     <noscript

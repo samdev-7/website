@@ -26,8 +26,9 @@ canvas {
   position: fixed;
   inset: 0;
   margin: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #c8c8c8;
   white-space: pre;
   opacity: 0;
