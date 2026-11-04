@@ -20,7 +20,83 @@ async function fetchLatest(res, signal) {
     body: b.subarray(15 + n),
   };
 }
+async function* streamMessages(res, net) {
+  if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+  Object.assign(net, {
+    size: +res.headers.get("content-length") || 0,
+    got: 0,
+    t0: 0,
+    mark: null,
+  });
+  const count = (c) => {
+    const now = performance.now();
+    if (!net.t0) net.t0 = now;
+    else if (!net.mark && now - net.t0 >= 100) net.mark = [now, net.got];
+    net.got += c.length;
+  };
+  const raw = res.body.getReader(),
+    head = await raw.read();
+  net.gz = !head.done && head.value[0] === 0x1f && head.value[1] === 0x8b;
+  if (!net.gz) net.size = 0;
+  let body = new ReadableStream({
+    start(c) {
+      if (!head.done) {
+        count(head.value);
+        c.enqueue(head.value);
+      }
+    },
+    async pull(c) {
+      const { value, done } = await raw.read();
+      if (done) c.close();
+      else {
+        count(value);
+        c.enqueue(value);
+      }
+    },
+  });
+  if (net.gz) body = body.pipeThrough(new DecompressionStream("gzip"));
+  const reader = body.getReader(),
+    out = [],
+    parse = scrubParser((m) => out.push(m));
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) return;
+    parse(value);
+    while (out.length) yield out.shift();
+  }
+}
+let STREAM = null;
+
 const FIRST = await (async () => {
+  if (window.scrubStream) {
+    const stuck = setTimeout(
+      () => window.scrubAbort.abort(new Error("no newest frame after 6 s")),
+      6000
+    );
+    try {
+      const net = {},
+        it = streamMessages(await window.scrubStream, net);
+      const head = (await it.next()).value?.head,
+        rec = (await it.next()).value?.rec;
+      if (head?.magic !== "SCR3" || rec?.kind !== 4)
+        throw new Error("not an SCR3 stream");
+      clearTimeout(stuck);
+      STREAM = { it, head, net };
+      return {
+        cols: head.cols,
+        rows: head.rows,
+        at: rec.t,
+        off: rec.off,
+        body: rec.body,
+      };
+    } catch (e) {
+      clearTimeout(stuck);
+      console.warn(
+        `scrub.bin: ${e.message}; showing the newest frame without the scrub`
+      );
+      window.scrubAbort?.abort();
+    }
+  }
   let res = window.latestFrame,
     limit = 6000;
   for (
@@ -898,7 +974,6 @@ function showBase() {
   } else ctx.drawImage(base, 0, 0);
 }
 
-const SCRUB_URL = `${DATA}/ascii/${FIRST.stream}.bin${SITE}`;
 const SCRUB_LEAD = 1.25;
 const SLOW_LINK = 2e6 / 8 / 1000;
 const SLOW_LEAD = 1.2;
@@ -977,101 +1052,36 @@ function scrubParser(emit) {
 }
 async function loadStream() {
   const st = scrub.stats;
-  if (REDUCED) {
+  if (REDUCED || !STREAM) {
     scrub.ended = true;
     kick();
     return;
   }
-  let res = window.scrubStream,
-    abort = window.scrubAbort;
-  window.scrubStream = window.scrubAbort = null;
-  for (;;) {
-    try {
-      performance.mark("fetch");
-      scrub.abort = abort || new AbortController();
-      await readStream(
-        await (res || fetch(SCRUB_URL, { signal: scrub.abort.signal }))
-      );
-    } catch (e) {
-      if (e.otherBuild && !scrub.cut) {
-        console.log(
-          "scrub: the stream was from another build; fetching the frame's own"
-        );
-        scrub.abort.abort();
-        res = abort = null;
-        continue;
-      }
-      if (!scrub.cut) console.warn("scrub stream:", e);
+  const { it, head, net } = STREAM;
+  scrub.abort = window.scrubAbort;
+  scrub.net = net;
+  scrub.total = head.total;
+  scrub.dur = head.dur;
+  if (!net.gz) net.size = head.size;
+  performance.mark("fetch");
+  try {
+    for (;;) {
+      const { value, done } = await it.next();
+      if (done || scrub.cut) break;
+      if (!value.rec) continue;
+      scrub.recs.push(value.rec);
+      if (!st.firstRecord) st.firstRecord = performance.now();
     }
-    break;
+    st.streamDone = performance.now();
+    const e = performance
+      .getEntriesByType("resource")
+      .find((e) => e.name.includes("/ascii/scrub.bin"));
+    if (e) st.bytes = e.encodedBodySize || e.transferSize;
+  } catch (e) {
+    if (!scrub.cut) console.warn("scrub stream:", e);
   }
   scrub.ended = true;
   kick();
-}
-async function readStream(res) {
-  const st = scrub.stats;
-  let gz = true;
-  const take = (m) => {
-    if (scrub.cut) return;
-    if (m.head) {
-      if (m.head.magic !== "SCR2" || m.head.cols !== FC || m.head.rows !== FR)
-        throw new Error("not a scrub stream");
-      if (m.head.at !== FIRST.at)
-        throw Object.assign(new Error("a stream for another frame"), {
-          otherBuild: true,
-        });
-      scrub.total = m.head.total;
-      scrub.dur = m.head.dur;
-      if (!gz) scrub.net.size = m.head.size;
-    } else if (m.rec) {
-      scrub.recs.push(m.rec);
-      if (!st.firstRecord) st.firstRecord = performance.now();
-    }
-  };
-  if (!res.ok || !res.body) throw new Error(res.status);
-  const net = (scrub.net = {
-    size: +res.headers.get("content-length") || 0,
-    got: 0,
-    t0: 0,
-    mark: null,
-  });
-  const count = (c) => {
-    const now = performance.now();
-    if (!net.t0) net.t0 = now;
-    else if (!net.mark && now - net.t0 >= 100) net.mark = [now, net.got];
-    net.got += c.length;
-  };
-  const parse = scrubParser(take);
-  const raw = res.body.getReader(),
-    head = await raw.read();
-  gz = net.gz = !head.done && head.value[0] === 0x1f && head.value[1] === 0x8b;
-  if (!gz) net.size = 0;
-  let body = new ReadableStream({
-    start(c) {
-      if (!head.done) {
-        count(head.value);
-        c.enqueue(head.value);
-      }
-    },
-    async pull(c) {
-      const { value, done } = await raw.read();
-      if (done) c.close();
-      else {
-        count(value);
-        c.enqueue(value);
-      }
-    },
-  });
-  if (gz) body = body.pipeThrough(new DecompressionStream("gzip"));
-  const reader = body.getReader();
-  for (;;) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    parse(value);
-  }
-  st.streamDone = performance.now();
-  const e = performance.getEntriesByName(res.url)[0];
-  if (e) st.bytes = e.encodedBodySize || e.transferSize;
 }
 
 const ZONES = { "-300": "est", "-240": "edt" };

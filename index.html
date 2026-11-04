@@ -48,14 +48,13 @@
     <script>
       {
         const o = "?o=" + location.host;
-        window.latestFrame = fetch("%VITE_DATA_URL%/ascii/latest.bin" + o, {
-          priority: "high",
-          signal: AbortSignal.timeout(6000),
-        });
-        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.latestFrame = fetch("%VITE_DATA_URL%/ascii/latest.bin" + o, {
+            signal: AbortSignal.timeout(6000),
+          });
+        } else {
           window.scrubAbort = new AbortController();
           window.scrubStream = fetch("%VITE_DATA_URL%/ascii/scrub.bin" + o, {
-            priority: "low",
             signal: window.scrubAbort.signal,
           });
         }
