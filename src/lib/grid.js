@@ -5,6 +5,7 @@ const FC = 160,
   MIN_COLS = __MIN_COLS__;
 const TEXT_W = 72;
 const EDGE_SIDE = __EDGE_SIDE__;
+const MIN_TEXT_CELL = __MIN_TEXT_CELL__;
 const PAGES = __PAGES__;
 const navWidth = (pad) => PAGES.reduce((w, p) => w + p.length + 2 * pad, 3);
 const CHARS = Array.from({ length: 95 }, (_, i) =>
@@ -32,7 +33,9 @@ function grid() {
     ch = H / rows;
   let cols = Math.min(FC, Math.max(1, Math.round(W / (ch * ASPECT)))),
     cw = W / cols;
-  if (cols < MIN_COLS) {
+  const small = cols < MIN_COLS && W / MIN_COLS / dpr < MIN_TEXT_CELL;
+  document.documentElement.classList.toggle("too-small", small);
+  if (cols < MIN_COLS && !small) {
     cols = MIN_COLS;
     cw = W / cols;
     rows = Math.min(FR, Math.max(1, Math.round(H / (cw / ASPECT))));

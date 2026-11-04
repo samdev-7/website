@@ -29,6 +29,28 @@ html {
 html.wait body {
   visibility: hidden;
 }
+.small-msg {
+  display: none;
+}
+html.too-small .small-msg {
+  display: grid;
+  place-content: center;
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  white-space: pre;
+  text-align: center;
+}
+html.too-small nav,
+html.too-small main,
+html.too-small footer {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 html.wait .handover {
   visibility: visible;
 }

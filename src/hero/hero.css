@@ -91,50 +91,19 @@ canvas {
 #nav .sep span {
   position: relative;
 }
-#nav.loose {
-  top: 16px;
-  left: 16px;
-  font-size: 13px;
-  line-height: 1.6;
-}
-#nav.loose a {
-  padding: 0 8px;
-}
 #title.fading,
 #info.fading,
 #nav.fading {
   opacity: 0;
 }
-#info.loose {
-  top: 16px;
-  right: 16px;
-  padding: 8px 12px;
-  background: #000;
-  border: 1px solid #a0a0a0;
-  font-size: 13px;
-  line-height: 1.45;
-  text-align: right;
-}
-#title.loose {
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  padding: 12px 14px;
-  background: #000;
-  border: 1px solid #a0a0a0;
-  white-space: normal;
-  font-size: 14px;
-  line-height: 1.45;
-}
-#title.loose #title-name {
-  position: static;
-  color: #fff;
-  font-size: 28px;
-  letter-spacing: 0;
-  line-height: 1.2;
-}
-#title.loose #title-sub {
-  margin-top: 6px !important;
+body.small #title,
+body.small #info,
+body.small #nav {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 #title h1,
 #title p {
@@ -161,10 +130,6 @@ canvas {
 }
 #title #title-contact {
   position: absolute;
-}
-#title.loose #title-contact {
-  position: static;
-  margin-top: 6px;
 }
 #title-contact a {
   color: inherit;

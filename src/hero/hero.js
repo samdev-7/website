@@ -133,7 +133,7 @@ function boxLayout(cols, rows) {
       bottom = MB;
     if (cols - M - w < 2 * M) {
       x0 = Math.floor((cols - w) / 2);
-      bottom = Math.round((x0 * MB) / M);
+      bottom = Math.min(MB, Math.round((x0 * MB) / M));
     }
     const y0 = rows - bottom - lines.length;
     if (x0 >= side && y0 >= 0) {
@@ -302,7 +302,7 @@ const prevScreen = () =>
   PREV && (PREV.cols !== COLS || PREV.rows !== ROWS) ? (PREV = null) : PREV;
 const handoverDone = () => window.HANDOVER && window.HANDOVER.done();
 function saveScreen() {
-  if (REDUCED || !COLS) return;
+  if (REDUCED || !COLS || SMALL) return;
   const n = COLS * ROWS,
     d = new Uint8Array(6 * n),
     bg = Math.round(P.bg * 255);
@@ -388,11 +388,9 @@ function gridText(el, at) {
 function placeInfo() {
   const el = document.getElementById("info");
   if (!INFO_AT) {
-    el.classList.add("loose");
     el.removeAttribute("style");
     return;
   }
-  el.classList.remove("loose");
   const { dpr } = gridText(el, [INFO_AT[0], INFO_AT[1] + 1]);
   el.style.width = (infoLines()[0].length * cw) / dpr + "px";
   el.style.textAlign = "right";
@@ -404,12 +402,10 @@ function placeNav() {
     seps = [...el.querySelectorAll(".sep")];
   const texts = [...el.querySelectorAll("a > span, .sep > span")];
   if (!NAV_AT) {
-    el.classList.add("loose");
-    el.removeAttribute("style");
-    for (const e of [...links, ...seps, ...texts]) e.removeAttribute("style");
+    for (const e of [el, ...links, ...seps, ...texts])
+      e.removeAttribute("style");
     return;
   }
-  el.classList.remove("loose");
   const [x, y] = NAV_AT,
     { dpr, adv, fa, fd } = gridText(el, NAV_AT),
     w = navWidth();
@@ -433,14 +429,10 @@ function placeTitle() {
     name = document.getElementById("title-name"),
     mail = document.getElementById("title-contact");
   if (!TITLE_AT) {
-    el.classList.add("loose");
-    el.removeAttribute("style");
-    name.removeAttribute("style");
-    name.parentNode.removeAttribute("style");
-    mail.removeAttribute("style");
+    for (const e of [el, name, name.parentNode, mail])
+      e.removeAttribute("style");
     return;
   }
-  el.classList.remove("loose");
   const { dpr, fs, adv, fa, fd } = gridText(el, TITLE_AT);
   mail.style.left = (XE[MAIL_AT[0]] - XE[TITLE_AT[0]]) / dpr + "px";
   mail.style.top = (YE[MAIL_AT[1]] - YE[TITLE_AT[1]]) / dpr + "px";
@@ -676,34 +668,32 @@ function process() {
   let cols = Math.min(FC, Math.max(1, Math.round(W / (ch * ASPECT))));
   cw = W / cols;
   const MIN_COLS = minCols();
+  let small = false;
   if (cols < MIN_COLS && MIN_COLS <= FC) {
-    cols = MIN_COLS;
-    cw = W / cols;
-    rows = Math.min(FR, Math.max(1, Math.round(H / (cw / ASPECT))));
-    ch = H / rows;
+    if (W / MIN_COLS / dpr < MIN_TEXT_CELL) small = true;
+    else {
+      cols = MIN_COLS;
+      cw = W / cols;
+      rows = Math.min(FR, Math.max(1, Math.round(H / (cw / ASPECT))));
+      ch = H / rows;
+    }
   }
   OX = (FC - cols) >> 1;
   OY = (FR - rows) >> 1;
   COLS = cols;
   ROWS = rows;
   const n = cols * rows;
-  const readable = cw / dpr >= MIN_TEXT_CELL;
-  const title = readable
-    ? boxLayout(cols, rows)
-    : { cells: new Map(), side: BOX_MARGIN[0], bottom: BOX_MARGIN[1] };
+  const title = small ? { cells: new Map() } : boxLayout(cols, rows);
   const { cells: boxCells, textX, textY } = title;
-  TITLE_AT = boxCells.size ? [textX, textY] : null;
-  const info = readable
-    ? infoLayout(
-        cols,
-        rows,
-        title.side,
-        title.bottom,
-        TITLE_AT ? title.y0 : rows
-      )
+  const info = title.cells.size
+    ? infoLayout(cols, rows, title.side, title.bottom, title.y0)
     : { cells: new Map() };
-  INFO_AT = info.cells.size ? [info.textX, info.textY] : null;
+  SMALL = !info.cells.size;
+  if (SMALL) boxCells.clear();
+  TITLE_AT = SMALL ? null : [textX, textY];
+  INFO_AT = SMALL ? null : [info.textX, info.textY];
   if (INFO_AT) for (const [c, v] of info.cells) boxCells.set(c, v);
+  document.body.classList.toggle("small", SMALL);
   const navRow = textY + TITLE.length + 1 + SUB_LINES.length + 1;
   MAIL_AT = !TITLE_AT
     ? null
@@ -1004,7 +994,7 @@ function buildEmphasis() {
 }
 
 function setEmphasis(on, from) {
-  if (on && (!RUN_COUNT || scrub.playing)) return;
+  if (REDUCED || (on && (!RUN_COUNT || scrub.playing))) return;
   if (on) {
     if (EMPH.target) {
       EMPH.from = EMPH.from || from;
@@ -1015,11 +1005,6 @@ function setEmphasis(on, from) {
   } else if (EMPH.from !== from) return;
   EMPH.target = on ? 1 : 0;
   if (!on) EMPH.from = null;
-  if (REDUCED) {
-    EMPH.t = EMPH.target;
-    redrawAll();
-    return;
-  }
   kick();
 }
 
@@ -1566,6 +1551,47 @@ function loadingCells(now) {
   [...text].forEach((c, k) => cells.set(y * COLS + x0 + k, CHARS.indexOf(c)));
   return cells;
 }
+let SMALL = false;
+const SMALL_TEXT = [
+  "oops",
+  "your screen is too small!",
+  "",
+  "try zooming out in settings",
+];
+function smallCells() {
+  const lines = [];
+  for (const l of SMALL_TEXT) {
+    let line = "";
+    for (const w of l.split(" ")) {
+      if (line && line.length + 1 + w.length > COLS) {
+        lines.push(line);
+        line = w;
+      } else line = line ? line + " " + w : w;
+    }
+    lines.push(line);
+  }
+  const cells = new Map(),
+    y0 = (ROWS - lines.length) >> 1;
+  lines.forEach((l, r) =>
+    [...l].forEach((c, k) =>
+      cells.set(
+        (y0 + r) * COLS + ((COLS - l.length) >> 1) + k,
+        CHARS.indexOf(c)
+      )
+    )
+  );
+  return cells;
+}
+function drawSmall() {
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgb(220,220,220)";
+  for (const [i, g] of smallCells()) {
+    const x = i % COLS,
+      y = (i - x) / COLS;
+    ctx.fillText(CHARS[g], x * cw + cw / 2, y * ch + glyphBase(ch));
+  }
+}
 function drawLoading(now) {
   const cells = loadingCells(now),
     y = ROWS >> 1;
@@ -1961,9 +1987,13 @@ function glDraw() {
     A = R.a,
     B = R.b,
     it = intro,
-    dark = scrubQueued && !REDUCED;
-  const wait = dark ? loadingCells(performance.now()) : null,
-    pv = (dark || it) && prevScreen();
+    dark = (scrubQueued && !REDUCED) || SMALL;
+  const wait = SMALL
+      ? smallCells()
+      : dark
+        ? loadingCells(performance.now())
+        : null,
+    pv = !SMALL && (dark || it) && prevScreen();
   for (let i = 0; i < n; i++) {
     let g = 0,
       src = i,
@@ -2196,7 +2226,7 @@ function frame(now) {
     process();
   }
   const waiting = scrubQueued && COLS && !scrubReady(now);
-  if (waiting && ctx) drawLoading(now);
+  if (waiting && ctx && !SMALL) drawLoading(now);
   if (scrubQueued && COLS && !waiting && !setup) {
     scrubQueued = false;
     if (!scrub.stats.firstDisplay) {
@@ -2239,12 +2269,14 @@ function frame(now) {
       if (GLR)
         (scrub.stats.gl = scrub.stats.gl || []).push(performance.now() - g0);
       (scrub.stats.js = scrub.stats.js || []).push(performance.now() - w0);
+      if (SMALL && ctx) drawSmall();
       requestAnimationFrame(frame);
       return;
     }
   }
-  if (waiting && ctx) drawLoading(now);
+  if (waiting && ctx && !SMALL) drawLoading(now);
   const fading = COLS ? stepEmphasis(dt) : false;
+  if (SMALL && ctx) drawSmall();
   const g0 = performance.now();
   if (GLR && COLS) glDraw();
   if (scrub.playing && GLR)

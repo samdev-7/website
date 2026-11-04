@@ -6,8 +6,9 @@ import pageJs from "../lib/page.js?raw";
 import heroJs from "../hero/hero.js?raw";
 import Meta from "../components/Meta.astro";
 import {
-  heroEdgeSide,
+  heroConst,
   heroMinCols,
+  heroSmallText,
   person,
   PAGES,
   SITE,
@@ -38,7 +39,10 @@ const jsonLd =
       };
 const gridScript = gridJs
   .replace("__MIN_COLS__", () => String(heroMinCols(heroJs)))
-  .replace("__EDGE_SIDE__", () => String(heroEdgeSide(heroJs)))
+  .replace("__EDGE_SIDE__", () => String(heroConst(heroJs, "EDGE_SIDE")))
+  .replace("__MIN_TEXT_CELL__", () =>
+    String(heroConst(heroJs, "MIN_TEXT_CELL"))
+  )
   .replace("__PAGES__", () => JSON.stringify(PAGES));
 const script = pageJs.replace(
   "__DENS__",
@@ -57,6 +61,7 @@ const script = pageJs.replace(
 </head>
 <body>
 <script is:inline data-from="hero" set:html={handoverJs}></script>
+<p class="small-msg" aria-hidden="true">{heroSmallText(heroJs).join('\n')}</p>
 <Nav current={title} />
 <main id="content">
   <h1>{title}</h1>
