@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/Page.astro
 title: about
-description: "about sam liu: 19, from ottawa, canada. running programs, events & infra at Hack Club, and a first-year student at the university of waterloo."
+description: "about sam liu"
 ---
 
 hey! i'm 19 from ottawa, canada
@@ -19,13 +19,13 @@ i'm excited about...
 - silly adventures
 - ???
 
-i recently started writing, see [my notes & blog](/writing)
+i recently started writing, see [my writing](/writing)
 
 ---
 
-after graduating high school, i took a gap year with Hack Club in vermont, usa, building gamified software platforms and irl experiences that get teens to ship technical projects.
+after graduating high school, i took a gap year with hack club in vermont, usa, building gamified software platforms and irl experiences that get teens to ship technical projects.
 
-a few things i've led @ Hack Club...
+a few things i've led @ hack club...
 
 - [7-day hardware hackathon](https://youtu.be/dTGFOKblRc4) for 200 teens @ shenzhen, china ([repo](https://github.com/hackclub/fallout))
 - [hardware grant program](https://blueprint.hackclub.com) with amd, reaching 25,000+ teens ([repo](https://github.com/hackclub/blueprint))
@@ -40,7 +40,7 @@ you can always reach me via email
 
 - [sam@samliu.dev](mailto:sam@samliu.dev)
 
-if you're a teenager on Hack Club, i'm almost always active on [slack](https://hack.club/slack)
+if you're a teenager on hack club, i'm almost always active on [slack](https://hack.club/slack)
 
 - [@samliu](https://hackclub.slack.com/team/U03UBRVG2MS)
 
