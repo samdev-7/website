@@ -36,8 +36,11 @@
   display: none;
 }
 #info {
-  opacity: 1 !important;
-  position: static;
+  display: none;
+}
+#nojs {
+  margin: 0;
   padding: 0 16px;
+  color: #dcdcdc;
   font-size: 13px;
 }
