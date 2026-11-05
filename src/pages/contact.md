@@ -1,14 +1,14 @@
 ---
 layout: ../layouts/Page.astro
 title: contact
-description: "how to reach sam liu: email, the Hack Club slack, github and linkedin."
+description: "contact information for sam liu"
 ---
 
 you can always reach me via email
 
 - [sam@samliu.dev](mailto:sam@samliu.dev)
 
-if you're a teenager on Hack Club, i'm almost always active on [slack](https://hack.club/slack)
+if you're a teenager on hack club, i'm almost always active on [slack](https://hack.club/slack)
 
 - [@samliu](https://hackclub.slack.com/team/U03UBRVG2MS)
 
