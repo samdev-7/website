@@ -2,6 +2,7 @@ export const PAGES = ["about", "work", "writing", "contact"];
 
 export const EMAIL = "sam@samliu.dev";
 export const PLACE = "waterloo, on";
+export const DESCRIPTION = "welcome to my corner of the internet!";
 
 export function heroWidths(timeW) {
   const w = Math.max(timeW, PLACE.length);

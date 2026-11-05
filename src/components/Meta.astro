@@ -38,6 +38,10 @@ const ld =
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:url" content={url}>
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content={`${SITE}/og.png`}>
+<meta property="og:image:width" content="2378">
+<meta property="og:image:height" content="886">
+<meta property="og:image:alt" content="sam liu, in ASCII art: welcome to my corner of the internet!">
+<meta name="twitter:card" content="summary_large_image">
 {!noindex && <link rel="alternate" type="text/markdown" href={md} title="this page as Markdown">}
 {ld && <script type="application/ld+json" set:html={ld}></script>}

@@ -6,6 +6,7 @@ import heroJs from "../hero/hero.js?raw";
 import { titleMetadata, fontB64 } from "../lib/hero-data.mjs";
 import {
   DATA_URL,
+  DESCRIPTION,
   EMAIL,
   heroMenuHtml,
   person,
@@ -37,7 +38,7 @@ const script = (layoutJs + heroJs)
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<Meta title="sam liu" description={subText} path="/" jsonLd={jsonLd} />
+<Meta title="sam liu" description={DESCRIPTION} path="/" jsonLd={jsonLd} />
 <script is:inline set:html={`window.DATA_URL = ${JSON.stringify(DATA_URL)};
 {
   const o = '?o=' + location.host;
