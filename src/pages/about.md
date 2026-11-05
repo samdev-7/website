@@ -8,7 +8,7 @@ hey! i'm 19 from ottawa, canada
 
 currently, i'm...
 
-- running programs, events & infra @ Hack Club
+- running programs, events & infra @ [hack club](https://hackclub.com)
 - a first year student @ university of waterloo
 
 i'm excited about...
