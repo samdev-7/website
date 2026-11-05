@@ -3,6 +3,7 @@ import heroCss from "../hero/hero.css?raw";
 import noscriptCss from "../hero/noscript.css?raw";
 import layoutJs from "../hero/layout.js?raw";
 import heroJs from "../hero/hero.js?raw";
+import trainJs from "../hero/train.js?raw";
 import { titleMetadata, titleArt, fontB64 } from "../lib/hero-data.mjs";
 import {
   DATA_URL,
@@ -30,7 +31,7 @@ const jsonLd = {
     person(subText),
   ],
 };
-const script = (layoutJs + heroJs)
+const script = (layoutJs + heroJs + trainJs)
   .replace("__FONT__", () => fontB64("IBMPlexMono-Regular-latin.woff2"))
   .replace("__FONT_BOLD__", () => fontB64("IBMPlexMono-Bold-latin.woff2"));
 ---
