@@ -19,7 +19,12 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [
     compress({
-      HTML: { "html-minifier-terser": { collapseWhitespace: false } },
+      HTML: {
+        "html-minifier-terser": {
+          collapseWhitespace: false,
+          removeAttributeQuotes: false,
+        },
+      },
       CSS: false,
       Image: false,
       SVG: false,
