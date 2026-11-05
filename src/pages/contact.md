@@ -15,4 +15,4 @@ if you're a teenager on Hack Club, i'm almost always active on [slack](https://h
 i'm also on other platforms
 
 - [github (@samdev-7)](https://github.com/samdev-7)
-- [linkedin](https://www.linkedin.com/in/samliu)
+- [linkedin](https://www.linkedin.com/in/sam-cancheng-liu)

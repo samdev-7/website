@@ -41,5 +41,8 @@ export const person = (description) => ({
     name: "University of Waterloo",
     url: "https://uwaterloo.ca",
   },
-  sameAs: ["https://github.com/samdev-7", "https://www.linkedin.com/in/samliu"],
+  sameAs: [
+    "https://github.com/samdev-7",
+    "https://www.linkedin.com/in/sam-cancheng-liu",
+  ],
 });
