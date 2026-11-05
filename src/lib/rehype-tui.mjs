@@ -24,7 +24,7 @@ export default function rehypeTui() {
       if (c.tagName === "li") c.children.unshift(el("span", "dash", "- "));
       if (c.tagName === "hr")
         node.children[k] = el("div", "rule break", "-".repeat(72));
-      if (c.tagName === "a" && /^https?:/.test(c.properties.href ?? ""))
+      if (c.tagName === "a" && !/^[/#]/.test(c.properties.href ?? "/"))
         Object.assign(c.properties, { target: "_blank", rel: "noopener" });
       walk(c);
     }
