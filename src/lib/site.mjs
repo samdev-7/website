@@ -18,7 +18,7 @@ export const heroMenuHtml = () =>
     '<span class="sep" aria-hidden="true"><span>|</span></span>'
   );
 
-export const SITE = "https://new.samliu.dev";
+export const SITE = "https://samliu.dev";
 export const DATA_URL =
   import.meta.env.PUBLIC_DATA_URL ?? "https://now.samliu.dev";
 
