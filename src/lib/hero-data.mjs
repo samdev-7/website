@@ -3,7 +3,7 @@ import { join } from "node:path";
 import layoutJs from "../hero/layout.js?raw";
 
 export const LAYOUT = new Function(
-  `${layoutJs}\nreturn { SUBTITLE, HIGHLIGHT, HIGHLIGHT_URL, SMALL_TEXT, TIME_W };`
+  `${layoutJs}\nreturn { TITLE, SUBTITLE, HIGHLIGHT, HIGHLIGHT_URL, SMALL_TEXT, TIME_W };`
 )();
 
 const esc = (s) =>
@@ -25,6 +25,8 @@ export function titleMetadata() {
         esc(sub.slice(at + hl.length));
   return { subHtml, subText: sub };
 }
+
+export const titleArt = () => LAYOUT.TITLE.join("\n");
 
 export const fontB64 = (name) =>
   readFileSync(join("public/fonts", name)).toString("base64");

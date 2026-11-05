@@ -1,19 +1,29 @@
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url(/fonts/IBMPlexMono-Regular-latin.woff2) format("woff2");
+}
 #title {
   opacity: 1 !important;
   position: static;
-  padding: 16px 16px 0;
+  padding: 0 16px;
   white-space: normal;
   color: #ddd;
   font-size: 14px;
   line-height: 1.5;
 }
 #title h1 {
-  margin-bottom: 8px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
-#title-name {
-  position: static;
+#nojs-name {
+  margin: 0;
+  padding: 16px 16px 8px;
   color: #fff;
-  font-size: 28px;
+  font-size: 14px;
+  line-height: 1.2;
 }
 #title #title-contact {
   position: static;
