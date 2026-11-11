@@ -24,7 +24,6 @@
 }
 html {
   background: #000;
-  overscroll-behavior: none;
 }
 html.wait body {
   visibility: hidden;
