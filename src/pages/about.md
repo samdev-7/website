@@ -28,7 +28,7 @@ after graduating high school, i took a gap year with hack club in vermont, usa, 
 a few things i've led @ hack club...
 
 - [7-day hardware hackathon](https://youtu.be/dTGFOKblRc4) for 200 teens @ shenzhen, china ([repo](https://github.com/hackclub/fallout))
-- [hardware grant program](https://blueprint.hackclub.com) with amd, reaching 25,000+ teens ([repo](https://github.com/hackclub/blueprint))
+- [hardware grant program](https://blueprint.hackclub.com) with amd, distributing $200k+ ([repo](https://github.com/hackclub/blueprint))
 - [ai & robotics hackathon](https://youtu.be/esxk_nScxFQ) with amd, culminating [on-stage at CES](https://youtu.be/28cWcxYd6Tk)
 - [time-lapsing app](https://lookout.hackclub.com/), tracking 60,000+ hours of work. ([repo](https://github.com/hackclub/lookout/))
 
