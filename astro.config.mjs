@@ -15,7 +15,11 @@ export default defineConfig({
   build: { inlineStylesheets: "always" },
   vite: { server: { proxy: PROXY }, preview: { proxy: PROXY } },
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
-  markdown: { rehypePlugins: [rehypeTui], smartypants: false },
+  markdown: {
+    rehypePlugins: [rehypeTui],
+    smartypants: false,
+    syntaxHighlight: false,
+  },
   devToolbar: { enabled: false },
   integrations: [
     compress({

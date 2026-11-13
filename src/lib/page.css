@@ -140,6 +140,7 @@ nav a[aria-current]:focus-visible {
 main {
   max-width: calc(72 * var(--cell));
   margin-top: calc(2 * var(--row));
+  container-type: inline-size;
 }
 h1,
 h2 {
@@ -171,6 +172,116 @@ ul {
 li {
   padding-left: calc(2 * var(--cell));
   text-indent: calc(-2 * var(--cell));
+}
+h3,
+h4 {
+  margin: calc(2 * var(--row)) 0 0;
+  font: inherit;
+  color: #fff;
+}
+h3::before,
+h4::before {
+  content: "## ";
+  content: "## " / "";
+  color: var(--dim);
+}
+h4::before {
+  content: "### ";
+  content: "### " / "";
+}
+h4 {
+  margin-top: var(--row);
+}
+strong {
+  color: #fff;
+}
+a strong,
+a code {
+  color: inherit;
+}
+code {
+  font: inherit;
+  color: #fff;
+}
+pre {
+  margin: var(--row) 0 0;
+  font: inherit;
+  white-space: pre;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+pre::-webkit-scrollbar {
+  display: none;
+}
+.media {
+  display: block;
+  width: min(100%, var(--w));
+  height: round(up, calc(min(100cqw, var(--w)) * var(--ar)), var(--row));
+  margin-top: calc(2 * var(--row));
+  object-fit: contain;
+  object-position: left top;
+}
+img.media[src$=".svg"] {
+  background: #fff;
+}
+.media-link {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: calc(2 * var(--row));
+}
+main .caption {
+  margin-top: 0;
+}
+.media + :not(.caption),
+.media-link + :not(.caption),
+.caption + * {
+  margin-top: calc(2 * var(--row));
+}
+.media-link .media {
+  margin-top: 0;
+}
+.box {
+  margin-top: var(--row);
+}
+.box-edge {
+  display: flex;
+  white-space: pre;
+  color: var(--dim);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.box-label {
+  color: var(--text);
+}
+.box-fill {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.box-body {
+  position: relative;
+  padding: var(--row) calc(3 * var(--cell));
+}
+.box-body::before,
+.box-body::after {
+  content: "|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|\A|";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  white-space: pre;
+  color: var(--dim);
+}
+.box-body::before {
+  left: 0;
+}
+.box-body::after {
+  right: 0;
+}
+.box-body > :first-child,
+.box-body > .media:first-child {
+  margin-top: 0;
 }
 .dash {
   color: var(--dim);
