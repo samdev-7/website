@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const text = (n) =>
   n.type === "text" ? n.value : (n.children ?? []).map(text).join("");
@@ -46,6 +46,13 @@ const size = (src) => {
   return box ? [+box[1], +box[2]] : null;
 };
 
+const poster = (src) => {
+  const p = src.replace(/\.mp4$/, "-poster.webp");
+  return existsSync(new URL("../../public" + p, import.meta.url))
+    ? p
+    : undefined;
+};
+
 const media = (img) => {
   const src = img.properties.src ?? "";
   const video = /\.mp4$/.test(src);
@@ -58,6 +65,7 @@ const media = (img) => {
         controls: true,
         playsInline: true,
         preload: "metadata",
+        poster: poster(src),
         ariaLabel: img.properties.alt,
         style,
       })

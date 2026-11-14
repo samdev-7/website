@@ -20,7 +20,7 @@
   --dx: 0px;
   --dy: 0px;
   --side: calc(6 * var(--cell));
-  --top: calc(3 * var(--row));
+  --top: var(--row);
 }
 html {
   background: #000;
@@ -97,6 +97,18 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+.logo {
+  display: block;
+  width: fit-content;
+  margin-bottom: var(--row);
+  color: #fff;
+  white-space: pre;
+  text-decoration: none;
+}
+.logo:hover {
+  color: var(--red);
+  font-weight: 400;
+}
 nav {
   display: inline-flex;
   background: var(--red);
@@ -114,15 +126,8 @@ nav a {
     calc(var(--pad, 2) * var(--cell) + var(--dx));
   color: #000;
 }
-html.short-home nav a:first-child {
+nav a:first-child {
   padding: 0 calc(var(--cell) - var(--dx)) 0 calc(var(--cell) + var(--dx));
-}
-.home-short,
-html.short-home .home-full {
-  display: none;
-}
-html.short-home .home-short {
-  display: inline;
 }
 nav a span {
   position: relative;
@@ -344,6 +349,9 @@ main .caption {
 .posts time {
   white-space: pre;
 }
+.posts a {
+  text-decoration: none;
+}
 .posts li[hidden] {
   display: none;
 }
@@ -375,7 +383,6 @@ main:has(.prose) + footer {
   margin-right: auto;
   margin-left: auto;
 }
-main:has(.prose) + footer .rule,
 main:has(.prose) > h1 + .rule {
   display: none;
 }
@@ -462,7 +469,7 @@ main:has(.prose) > h1 {
   font: 85% / normal var(--code-font);
 }
 .prose pre {
-  padding: 32px 16px 32px 32px;
+  padding: 18px 20px;
   border-radius: 10px;
   background: #171717;
   font: 13.6px/20.4px var(--code-font);
@@ -479,7 +486,7 @@ main:has(.prose) > h1 {
   color: var(--shiki-dark);
 }
 .prose .media {
-  --mw: min(100cqw, var(--w), calc(420px / var(--ar)));
+  --mw: min(100cqw, calc(480px / var(--ar)));
   height: calc(var(--mw) * var(--ar));
   max-width: 100%;
   border-radius: 2px;

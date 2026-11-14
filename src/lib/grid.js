@@ -5,9 +5,7 @@ const FC = 160,
   MIN_COLS = minCols(HERO.navW);
 const TEXT_W = 72;
 const PAGES = __PAGES__;
-const HOME = __HOME__;
-const navWidth = (pad) =>
-  PAGES.reduce((w, p) => w + p.length + 2 * pad, HOME.length + 2 * pad);
+const navWidth = (pad) => PAGES.reduce((w, p) => w + p.length + 2 * pad, 3);
 const STACK = `'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace`;
 let ASC = 0.8,
   DESC = 0.2;
@@ -69,16 +67,14 @@ function grid() {
     "--side",
     `calc(${side} * var(--cell))`
   );
-  const end = document.documentElement.classList.contains("nav-end") ? 1 : 0;
-  const snug = navWidth(2) + end > cols - 2 * side;
-  document.documentElement.classList.toggle(
-    "short-home",
-    navWidth(1) + end > cols - 2 * side
-  );
+  const snug =
+    navWidth(2) +
+      (document.documentElement.classList.contains("nav-end") ? 1 : 0) >
+    cols - 2 * side;
   document.documentElement.style.setProperty("--pad", snug ? 1 : 2);
   document.documentElement.style.setProperty(
     "--top",
-    `calc(${snug ? 2 : 3} * var(--row))`
+    `calc(${snug ? 0 : 1} * var(--row))`
   );
   document.documentElement.classList.toggle("snug", snug);
   window.GRID = {
