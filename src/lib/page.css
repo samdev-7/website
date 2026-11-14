@@ -214,9 +214,10 @@ pre::-webkit-scrollbar {
   display: none;
 }
 .media {
+  --mw: min(100cqw, var(--w), calc(24 * var(--row) / var(--ar)));
   display: block;
-  width: min(100%, var(--w));
-  height: round(up, calc(min(100cqw, var(--w)) * var(--ar)), var(--row));
+  width: var(--mw);
+  height: round(up, calc(var(--mw) * var(--ar)), var(--row));
   margin-top: calc(2 * var(--row));
   object-fit: contain;
   object-position: left top;

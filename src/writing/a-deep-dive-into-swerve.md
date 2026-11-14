@@ -930,7 +930,7 @@ public Command getAutonomousCommand() {
 
 here's a demonstration of an autonomous routine that still requires tuning
 
-![video](/writing/a-deep-dive-into-swerve/19.mp4)
+![video](/writing/a-deep-dive-into-swerve/18.mp4)
 
 ## physics & vision
 
