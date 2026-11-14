@@ -1,5 +1,6 @@
 ---
-title: "[archive] a deep dive into swerve"
+title: a deep dive into swerve
+tags: [archive]
 description: going down a rabbit hole with FIRST robotics programming
 date: 2024-12-31
 ---

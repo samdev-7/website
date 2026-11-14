@@ -1,5 +1,6 @@
 ---
-title: "[meta] hello, world!"
+title: hello, world!
+tags: [meta]
 description: why does this exist?
 date: 2026-09-15
 ---

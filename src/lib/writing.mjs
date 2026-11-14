@@ -11,11 +11,15 @@ export const posts = () =>
       slug: file.match(/([^/]+)\.md$/)[1],
       ...mod.frontmatter,
       date: new Date(mod.frontmatter.date),
+      tags: mod.frontmatter.tags ?? [],
       Content: mod.Content,
       source: SOURCES[file],
     }))
     .filter((p) => !p.draft)
     .sort((a, b) => b.date - a.date);
+
+export const listTitle = (p) =>
+  (p.tags.length ? `[${p.tags.join(", ")}] ` : "") + p.title;
 
 export const formatDate = (d) =>
   d
