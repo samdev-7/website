@@ -1,4 +1,5 @@
 export const PAGES = ["about", "work", "writing", "contact"];
+export const HOME = "samliu.dev";
 
 export const EMAIL = "sam@samliu.dev";
 export const PLACE = "waterloo, on";

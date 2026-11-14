@@ -114,8 +114,15 @@ nav a {
     calc(var(--pad, 2) * var(--cell) + var(--dx));
   color: #000;
 }
-nav a:first-child {
+html.short-home nav a:first-child {
   padding: 0 calc(var(--cell) - var(--dx)) 0 calc(var(--cell) + var(--dx));
+}
+.home-short,
+html.short-home .home-full {
+  display: none;
+}
+html.short-home .home-short {
+  display: inline;
 }
 nav a span {
   position: relative;
