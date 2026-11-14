@@ -20,6 +20,7 @@ const {
 const title = frontmatter.title ?? propTitle;
 const current = section ?? title;
 const navEnd = PAGES.at(-1) === current;
+const prose = section === "writing" && Boolean(slug);
 const description =
   frontmatter.description ?? Astro.props.description ?? `${title} · sam liu`;
 const path = Astro.url.pathname,
@@ -55,6 +56,7 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <script is:inline>document.documentElement.classList.add('wait'); setTimeout(() => document.documentElement.classList.remove('wait'), 2000);</script>
 {current === 'writing' && <link rel="alternate" type="application/rss+xml" title="sam liu's writing" href="/writing/rss.xml">}
 <link rel="preload" href="/fonts/IBMPlexMono-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
+{prose && <link rel="preload" href="/fonts/IBMPlexSans-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>}
 <style is:inline set:html={pageCss}></style>
 <script is:inline set:html={gridScript}></script>
 </head>
@@ -65,7 +67,9 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <main id="content">
   <h1>{title}</h1>
   <div class="rule" aria-hidden="true">{'='.repeat(title.length)}</div>
-  <slot />
+  <div class:list={{ prose }}>
+    <slot />
+  </div>
 </main>
 <footer>
   <div class="rule" aria-hidden="true">{'-'.repeat(72)}</div>
