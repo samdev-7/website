@@ -1,13 +1,14 @@
 ---
-title: a deep dive into swerve
+title: "[archive] a deep dive into swerve"
 description: going down a rabbit hole with FIRST robotics programming
 date: 2024-12-31
 ---
 
 > [!info]
-> this is not meant to be a tutorial — please read with some salt.
+> nov 13, 2026: this is an old post on my older site that folks found helpful!  
+> i figured i should preserve it here for reference.
 >
-> i wrote this quickly to share my learnings before year-end. while the content may be rough around the edges, i plan to refine it over time.
+> – sam
 
 our FRC team recently bought some swerve modules — [MAXSwerve](https://www.revrobotics.com/rev-21-3005/), to be exact. after putting them together, i decided to dive into the code behind them. here's what i learned over a weekend (plus a few more nights). i've simplified what i originally shared with my team here.
 
@@ -82,7 +83,7 @@ we can translate each of these degrees of motion into specific movements for eac
 
 image credit: [stryke force](https://strykeforce.github.io/classroom/swerve/#/swerve-motion)
 
-these velocity vectors illustrate the robot's movement. the purple arrows show the robot's overall direction and speed, while the red arrows indicate how each wheel moves individually. 
+these velocity vectors illustrate the robot's movement. the purple arrows show the robot's overall direction and speed, while the red arrows indicate how each wheel moves individually.
 
 just like regular vectors, we can combine these movement vectors. for example, if i want the robot to move forwards and to the right with equal speed:
 
@@ -96,7 +97,7 @@ this same principle applies to rotation. for example, if we want the robot to mo
 
 image credit: [stryke force](https://strykeforce.github.io/classroom/swerve/#/swerve-motion)
 
-so what does all this mean in practice? 
+so what does all this mean in practice?
 
 suppose i want the robot to move in a specific way (including rotation). we'll call this the target robot velocity vector. this target can be broken down into simpler velocity vectors. by calculating the wheel velocity vectors for each wheel and combining them, we can determine the final target wheel velocity vector for each wheel.
 
@@ -230,11 +231,11 @@ driveSubsystem.setDefaultCommand(
     new SwerveDriveCmd(
         driveSubsystem,
         () -> Math.sqrt(
-          Math.pow(MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerXAxis), OIConstants.kDriveDeadband), 2) +  
+          Math.pow(MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerXAxis), OIConstants.kDriveDeadband), 2) +
           Math.pow(MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerYAxis), OIConstants.kDriveDeadband), 2)
         ),
         () -> new Rotation2d(Math.atan2(
-          MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerXAxis), OIConstants.kDriveDeadband), 
+          MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerXAxis), OIConstants.kDriveDeadband),
           MathUtil.applyDeadband(controller.getRawAxis(OIConstants.kDriverControllerYAxis), OIConstants.kDriveDeadband)
         ))
     )
@@ -248,11 +249,11 @@ and… that’s it! it should work now provided you’ve set up your swerve modu
 
 ### two (or more) modules
 
-we can actually get a robot working with just two swerve modules (as long as we add a third point of support like a caster wheel). we're using only two modules (front left & back right) to minimize potential damage - these modules aren't cheap! [code for this section](https://github.com/Earl-Of-March-FRC/2025-SwerveDev/blob/two-wheel-scratch/src/main/java/frc/robot/RobotContainer.java)  
+we can actually get a robot working with just two swerve modules (as long as we add a third point of support like a caster wheel). we're using only two modules (front left & back right) to minimize potential damage - these modules aren't cheap! [code for this section](https://github.com/Earl-Of-March-FRC/2025-SwerveDev/blob/two-wheel-scratch/src/main/java/frc/robot/RobotContainer.java)
 
 building on our previous work, we're now exposing two modules through `DriveTrainSubsystem`.
 
-we'll implement all the math logic in `SwerveDriveCmd`. first, we create the "base vectors" that convert velocity vectors into wheel velocity vectors. since there's no straightforward way to represent a 2d vector, we're using `Translation2d` - it serves the same purpose. 
+we'll implement all the math logic in `SwerveDriveCmd`. first, we create the "base vectors" that convert velocity vectors into wheel velocity vectors. since there's no straightforward way to represent a 2d vector, we're using `Translation2d` - it serves the same purpose.
 
 ```java
 // base vectors (front left, back right)
@@ -330,7 +331,7 @@ that’s it!
 
 #### IO interface
 
-let's explore IO interfaces, which use a significantly different code structure. 
+let's explore IO interfaces, which use a significantly different code structure.
 
 let's look at how code traditionally runs on a robot:
 
@@ -352,7 +353,6 @@ since it's an interface implementation, we can swap out the IO class while prese
 > clarification on inputs & outputs:
 >
 > - inputs: everything that flows into the robot logic, including encoder values, limit switches, and vision data
->
 > - outputs: everything that the robot logic sends to the hardware, such as target positions and voltages
 >
 > since inputs remain unprocessed, their logging stays free from any potential code errors.
@@ -361,7 +361,7 @@ but why have a hardware class? why not let the subsystem call methods directly o
 
 #### back to the code
 
-let's define the IO interface for the swerve module, `ModuleIO`. the interface defines inputs that other code can read through an `updateInputs`  method, and setters for hardware control. we'll keep it hardware-agnostic by excluding any device-specific code.  
+let's define the IO interface for the swerve module, `ModuleIO`. the interface defines inputs that other code can read through an `updateInputs` method, and setters for hardware control. we'll keep it hardware-agnostic by excluding any device-specific code.
 
 ```java
 public interface ModuleIO {
@@ -372,7 +372,7 @@ public interface ModuleIO {
     }
 
     public default void updateInputs(ModuleIOInputs inputs) {}
-    
+
     public default void setState(SwerveModuleState state) {}
     public default void resetEncoders() {}
 }
@@ -408,7 +408,7 @@ public void periodic() {
 // more code ...
 ```
 
-the logger automatically logs inputs under `Drive/Module0`, `Drive/Module1`, etc. 
+the logger automatically logs inputs under `Drive/Module0`, `Drive/Module1`, etc.
 
 since this isn't a subsystem, the periodic function isn't an override. instead, it's called by the subsystem's periodic method.
 
@@ -513,7 +513,7 @@ instead of performing the swerve drive calculations manually, we can use WPILib'
 
 the modules themselves remain unchanged, but we need to modify how we generate each swerve module's `SwerveModuleState` in the `Drivetrain` subsystem.
 
-first, we need to define our drivetrain's kinematics in our constants file. 
+first, we need to define our drivetrain's kinematics in our constants file.
 
 ```java
 public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
@@ -586,7 +586,7 @@ private final DCMotorSim turnSim = new DCMotorSim(DCMotor.getNeo550(1), ModuleCo
 in a real robot, the [spark MAX](https://www.revrobotics.com/rev-11-2158/) motor controller handles [PID](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html#introduction-to-pid) control automatically, but we'll need to implement this ourselves for the simulation.
 
 > [!question]
-> **PID:** we can't just tell a motor to go to a specific position—we need to control its direction and voltage based on where it is and where it needs to go. simply commanding a motor to turn until it reaches a target will cause it to overshoot. PID control allows motors to move smoothly to their target positions. since every motor behaves differently, PID settings must be tuned for each one. 
+> **PID:** we can't just tell a motor to go to a specific position—we need to control its direction and voltage based on where it is and where it needs to go. simply commanding a motor to turn until it reaches a target will cause it to overshoot. PID control allows motors to move smoothly to their target positions. since every motor behaves differently, PID settings must be tuned for each one.
 
 ```java
 drivePID = new PIDController(ModuleConstants.kDrivingPSim.get(), ModuleConstants.kDrivingISim.get(), ModuleConstants.kDrivingDSim.get());
@@ -782,13 +782,13 @@ when running the simulation in AdvantageScope, you can see the lag between the t
 
 odometry is a method of pose estimation that tracks where the robot is based on sensor data. by measuring how far and in which direction the wheels have moved, we can calculate the robot's pose relative to its starting point. a pose describes both the robot's position (translation) and orientation (rotation) in space. we can use odometry as a starting point to visualize the robot's pose in an idealized environment.
 
-this isn’t perfect, wheel slippage causes the position estimate to become increasingly inaccurate over time. 
+this isn’t perfect, wheel slippage causes the position estimate to become increasingly inaccurate over time.
 
 WPILib makes odometry really easy. let's modify some code in our `Drivetrain` subsystem.
 
 ```java
 SwerveDriveOdometry odometry = new SwerveDriveOdometry(
-  DriveConstants.kDriveKinematics, 
+  DriveConstants.kDriveKinematics,
   new Rotation2d(),
   new SwerveModulePosition[] {
     new SwerveModulePosition(),
@@ -807,12 +807,12 @@ to track the robot's position, we must continuously update the odometry calculat
 @Override
 public void periodic() {
   // other code ...
-  
+
   Pose2d pose = odometry.update(
     gyroInputs.angle,
     getModulePositions()
-  ); 
-  
+  );
+
   // other code...
 }
 
@@ -859,7 +859,7 @@ first, we need to set up an `AutoBuilder` in the constructor of the `Drivetrain`
 AutoBuilder.configureHolonomic(
   this::getPose,
   this::resetOdometry,
-  this::getRelativeChassisSpeeds, 
+  this::getRelativeChassisSpeeds,
   this::runVelocityRobotRelative,
   new HolonomicPathFollowerConfig(
     new PIDConstants(AutoConstants.kPXController, AutoConstants.kIXController, AutoConstants.kDXController),
@@ -876,7 +876,7 @@ AutoBuilder.configureHolonomic(
 );
 ```
 
-holonomic refers to omnidirectional drives like swerve. PathPlanner needs to know which alliance side the robot is on since some fields are asymmetrical. regardless of alliance color, the field's coordinate origin remains in the same position relative to each alliance's driver station. 
+holonomic refers to omnidirectional drives like swerve. PathPlanner needs to know which alliance side the robot is on since some fields are asymmetrical. regardless of alliance color, the field's coordinate origin remains in the same position relative to each alliance's driver station.
 
 let's create a command that drives the robot autonomously to the speaker. we'll call it `GoToSpeakerCmd`.
 
@@ -907,7 +907,7 @@ new JoystickButton(controller, 3).whileTrue(
 );
 ```
 
-i created similar paths for the amp and human player station. here's how they look together in AdvantageScope. 
+i created similar paths for the amp and human player station. here's how they look together in AdvantageScope.
 
 ![video](/writing/a-deep-dive-into-swerve/18.mp4)
 
@@ -939,7 +939,7 @@ here's a demonstration of an autonomous routine that still requires tuning
 >
 > i'll skip explaining the code migration process to the 2025 version, as each package's documentation provides comprehensive upgrade guides.
 
-  [**code for this section**](https://github.com/Earl-Of-March-FRC/2025-SwerveDev/blob/maple-sim/src/main/java/frc/robot/RobotContainer.java)
+[**code for this section**](https://github.com/Earl-Of-March-FRC/2025-SwerveDev/blob/maple-sim/src/main/java/frc/robot/RobotContainer.java)
 
 ### physics with maple-sim
 
@@ -967,7 +967,7 @@ the `GyroIOSim` implementation will be different from before. by using maple-sim
 ```java
 public class GyroIOSim implements GyroIO {
     private final GyroSimulation gyroSimulation;
-    
+
     public GyroIOSim(GyroSimulation gyroSim) {
         this.gyroSimulation = gyroSim;
     }
@@ -1010,9 +1010,9 @@ back in `RobotContainer`, we need to set up the drivetrain simulation and add it
  DriveTrainSimulationConfig driveTrainSimulationConfig = DriveTrainSimulationConfig.Default()
     .withGyro(COTS.ofGenericGyro())
     .withSwerveModule(COTS.ofMAXSwerve(
-      DCMotor.getNEO(1), 
+      DCMotor.getNEO(1),
       DCMotor.getNeo550(1),
-      COTS.WHEELS.COLSONS.cof, 
+      COTS.WHEELS.COLSONS.cof,
       2))
     .withTrackLengthTrackWidth(
       Units.Meters.of(DriveConstants.kWheelBase),
@@ -1022,7 +1022,7 @@ back in `RobotContainer`, we need to set up the drivetrain simulation and add it
 SwerveDriveSimulation swerveDriveSimulation = new SwerveDriveSimulation(
   driveTrainSimulationConfig,
   new Pose2d(2, 2, new Rotation2d(0))
-); 
+);
 
 gyroIO = new GyroIOSim(swerveDriveSimulation.getGyroSimulation());
 
@@ -1047,7 +1047,7 @@ the physics simulation, including collisions, is now functional! the odometry da
 so far, all our sensor data has been relative to the starting point. as the robot moves, errors in these relative measurements add up, making its position estimate increasingly inaccurate. to fix these errors, we need to know the robot's absolute position. this is where vision comes in - the robot can see AprilTags and calculate its position relative to them. since we know the absolute positions of these tags on the field, we can determine the robot's absolute position.
 
 > [!question]
-> why don't we just use vision and forget about encoders entirely? 
+> why don't we just use vision and forget about encoders entirely?
 >
 > even with multiple cameras on your robot, there will be times when no AprilTags are visible. regular odometry helps estimate the robot's position between AprilTag sightings. in practice, recognizing AprilTags is challenging, particularly when the robot moves at high speeds.
 
@@ -1093,7 +1093,7 @@ public ATVisionIOSim(
       AprilTagFieldLayout aprilTagFieldLayout,
       Supplier<Pose2d> trueRobotPoseSupplier) {
   // more code...
-  
+
   trueRobotPoseSup = trueRobotPoseSupplier;
 }
 
@@ -1119,7 +1119,7 @@ public Drivetrain(ModuleIO flModuleIO, ModuleIO frModuleIO, ModuleIO blModuleIO,
     // more code...
 ```
 
-in `periodic`, we can call `addVisionMeasurement`. the vision’s estimated 3d pose is converted into 2d, ignoring the z axis. we’re assuming robots can’t fly. 
+in `periodic`, we can call `addVisionMeasurement`. the vision’s estimated 3d pose is converted into 2d, ignoring the z axis. we’re assuming robots can’t fly.
 
 ```java
 if (visionPose.isPresent()) {
@@ -1140,7 +1140,7 @@ cam1Properties.setFPS(20);
 visionIO = new ATVisionIOSim(
   List.of(
     Pair.of("camera1", cam1Properties)
-  ), 
+  ),
   List.of(
     new Transform3d(new Translation3d(0.1, 0, 0.5), new Rotation3d(0, Math.toRadians(-15), 0))
   ),

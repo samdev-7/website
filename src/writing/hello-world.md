@@ -1,5 +1,5 @@
 ---
-title: hello, world!
+title: "[meta] hello, world!"
 description: why does this exist?
 date: 2026-09-15
 ---
