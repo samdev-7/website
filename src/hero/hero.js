@@ -335,7 +335,13 @@ function saveScreen() {
     );
   } catch (e) {}
 }
+const overOld = () => document.documentElement.classList.contains("vt-over");
 function drawPrev() {
+  if (overOld()) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    handoverDone();
+    return;
+  }
   const pv = prevScreen(),
     base0 = glyphBase(ch);
   ctx.fillStyle = "#000";
@@ -676,6 +682,7 @@ function process() {
   if (intro) {
     intro = null;
     revealTitle();
+    window.VT?.skipTransition();
   }
   const tc = performance.now();
   compose();
@@ -1472,6 +1479,7 @@ function drawSmall() {
   }
 }
 function drawLoading(now) {
+  if (overOld()) return;
   const cells = loadingCells(now),
     y = ROWS >> 1;
   if (!cells.size) return;
@@ -1653,15 +1661,21 @@ const GL_FS = `#version 300 es
     }
     return col;
   }
+  float seen(ivec2 p) {
+    p = clamp(p, ivec2(0), ivec2(width - 1, height - 1));
+    ivec2 cell = ivec2(texelFetch(colmap, ivec2(p.x, 0), 0).r, texelFetch(rowmap, ivec2(p.y, 0), 0).r);
+    return (texelFetch(attrs, cell, 0).g & 8u) != 0u ? 0.0 : 1.0;
+  }
   void main() {
     ivec2 p = ivec2(gl_FragCoord.xy);
     p.y = height - 1 - p.y;
-    o = vec4(shade(p) / 255.0, 1.0);
+    float a = seen(p);
+    o = vec4(shade(p) / 255.0 * a, a);
   }`;
 
 function glInit() {
   const gl = canvas.getContext("webgl2", {
-    alpha: false,
+    alpha: true,
     antialias: false,
     depth: false,
     stencil: false,
@@ -1899,10 +1913,11 @@ function glDraw() {
     A = R.a,
     B = R.b,
     it = intro,
-    dark = (scrubQueued && !REDUCED) || SMALL;
+    dark = (scrubQueued && !REDUCED) || SMALL,
+    ghost = overOld();
   const wait = SMALL
       ? smallCells()
-      : dark
+      : dark && !ghost
         ? loadingCells(performance.now())
         : null,
     pv = !SMALL && (dark || it) && prevScreen();
@@ -1925,7 +1940,7 @@ function glDraw() {
       A[i * 4] = A[i * 4 + 1] = A[i * 4 + 2] = wait && wait.has(i) ? 220 : 0;
       A[i * 4 + 3] = wait && wait.has(i) ? wait.get(i) : 0;
       B[i * 2] = 0;
-      B[i * 2 + 1] = 2;
+      B[i * 2 + 1] = ghost ? 10 : 2;
       continue;
     }
     const tg = it ? TEXTG[i] : -1;
@@ -2175,6 +2190,7 @@ function frame(now) {
       PREV = null;
       showBase();
       revealTitle();
+      window.VT?.skipTransition();
     } else {
       const g0 = performance.now();
       if (GLR) glDraw();

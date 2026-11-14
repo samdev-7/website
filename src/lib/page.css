@@ -98,6 +98,9 @@ a:focus-visible {
 }
 
 .logo {
+  position: relative;
+  left: var(--dx);
+  top: var(--dy);
   display: block;
   width: fit-content;
   margin-bottom: var(--row);
@@ -106,7 +109,6 @@ a:focus-visible {
   text-decoration: none;
 }
 .logo:hover {
-  color: var(--red);
   font-weight: 400;
 }
 nav {
@@ -555,4 +557,11 @@ main:has(.prose) > h1 {
 }
 .prose .box-body > :first-child {
   margin-top: 0;
+}
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
 }

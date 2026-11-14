@@ -1,4 +1,6 @@
 const SCREEN_KEY = "ascii-screen";
+const PROSE = !!document.querySelector(".prose");
+const CROSS_DOC = "onpageswap" in window;
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const RED = [0xff, 0x55, 0x55];
 const INTRO_SPEED = 2,
@@ -54,9 +56,10 @@ function captureScreen() {
     fill(a.getBoundingClientRect(), 0);
   const colours = new Map(),
     range = document.createRange();
+  const skip = PROSE ? "script, style, main, footer" : "script, style";
   const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode: (t) =>
-      t.parentElement.closest("script, style")
+      t.parentElement.closest(skip)
         ? NodeFilter.FILTER_REJECT
         : NodeFilter.FILTER_ACCEPT,
   });
@@ -86,6 +89,17 @@ function captureScreen() {
   return d;
 }
 
+let overHero = false;
+addEventListener("pageswap", (e) => {
+  if (!e.viewTransition) return;
+  if (
+    overHero &&
+    new URL(e.activation?.entry?.url ?? "/", location).pathname === "/"
+  )
+    return;
+  e.viewTransition.skipTransition();
+});
+
 document.addEventListener("click", (e) => {
   const a = e.target.closest('a[href="/"]');
   if (!a || REDUCED || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
@@ -93,6 +107,17 @@ document.addEventListener("click", (e) => {
     top: Math.round(scrollY / GRID.ch) * GRID.ch,
     behavior: "instant",
   });
+  if (PROSE && CROSS_DOC) {
+    overHero = true;
+    try {
+      sessionStorage.setItem("vt-over", String(Date.now()));
+    } catch (e) {}
+    return;
+  }
+  store();
+});
+
+function store() {
   const g = {
     cw: GRID.dcw,
     ch: GRID.dch,
@@ -118,7 +143,7 @@ document.addEventListener("click", (e) => {
       })
     );
   } catch (e) {}
-});
+}
 
 let streamFetched = false;
 const fetchStream = (e) => {
@@ -129,7 +154,10 @@ const fetchStream = (e) => {
   l.href = `${DATA_URL}/ascii/scrub.bin?o=${location.host}`;
   l.as = "fetch";
   l.crossOrigin = "anonymous";
-  document.head.append(l);
+  const h = document.createElement("link");
+  h.rel = "prefetch";
+  h.href = "/";
+  document.head.append(l, h);
 };
 for (const type of ["pointerover", "touchstart", "focusin"])
   document.addEventListener(type, fetchStream, { passive: true });
@@ -146,8 +174,8 @@ for (const type of ["pointerover", "touchstart", "focusin"])
   }
   const { cols, rows, dcw: cw, dch: ch } = GRID,
     n = cols * rows,
-    mine = captureScreen(),
     { ctx: c, XE, YE } = H0;
+  let mine;
   const draw = (x, y, g, rgb, k, tile) => {
     const dx = XE[x],
       dy = YE[y],
@@ -175,6 +203,7 @@ for (const type of ["pointerover", "touchstart", "focusin"])
       S[i] =
         Math.hypot((x - cx) * ASPECT, y - cy) / dmax + Math.random() * 0.08;
   READY.then(() => {
+    mine = captureScreen();
     const t0 = performance.now();
     requestAnimationFrame(function step(now) {
       const t = ((now - t0) / 1000) * INTRO_SPEED;
@@ -186,7 +215,7 @@ for (const type of ["pointerover", "touchstart", "focusin"])
           left++;
           const p = (t - S[i]) / INTRO_DUR;
           if (p < 0) continue;
-          if (p >= 1) {
+          if (p >= (PROSE ? 0 : 1)) {
             c.clearRect(XE[x], YE[y], XE[x + 1] - XE[x], YE[y + 1] - YE[y]);
             state[i] = 9;
             continue;

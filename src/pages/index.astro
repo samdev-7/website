@@ -40,6 +40,30 @@ const script = (layoutJs + heroJs + trainJs)
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <Meta title="sam liu" description={DESCRIPTION} path="/" jsonLd={jsonLd} />
+<script is:inline>
+  addEventListener("pageswap", (e) => e.viewTransition?.skipTransition());
+  addEventListener("pagereveal", (e) => {
+    const vt = e.viewTransition;
+    if (!vt) return;
+    let at = 0;
+    try {
+      at = Number(sessionStorage.getItem("vt-over")) || 0;
+      sessionStorage.removeItem("vt-over");
+    } catch (err) {}
+    if (Date.now() - at > 5000 || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      vt.skipTransition();
+      return;
+    }
+    const h = document.documentElement;
+    h.classList.add("vt-over");
+    window.VT = vt;
+    setTimeout(() => vt.skipTransition(), 8000);
+    vt.finished.finally(() => {
+      h.classList.remove("vt-over");
+      window.VT = null;
+    });
+  });
+</script>
 <script is:inline set:html={`window.DATA_URL = ${JSON.stringify(DATA_URL)};
 {
   const o = '?o=' + location.host;

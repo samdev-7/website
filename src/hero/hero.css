@@ -219,3 +219,35 @@ body.small #nav {
 ::selection {
   background: rgba(236, 55, 80, 0.35);
 }
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+html.vt-over::view-transition-old(root) {
+  animation: vt-hold 30s linear;
+}
+html.vt-over::view-transition-new(root) {
+  opacity: 0;
+}
+html.vt-over #art {
+  view-transition-name: hero-art;
+}
+html.vt-over::view-transition-group(hero-art),
+html.vt-over::view-transition-new(hero-art) {
+  animation: none;
+}
+@keyframes vt-hold {
+  to {
+    opacity: 1;
+  }
+}
+html.vt-over,
+html.vt-over body {
+  background: transparent;
+}
+html.vt-over #boot {
+  display: none;
+}
