@@ -56,7 +56,6 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <script is:inline>document.documentElement.classList.add('wait'); setTimeout(() => document.documentElement.classList.remove('wait'), 2000);</script>
 {current === 'writing' && <link rel="alternate" type="application/rss+xml" title="sam liu's writing" href="/writing/rss.xml">}
 <link rel="preload" href="/fonts/IBMPlexMono-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
-{prose && <link rel="preload" href="/fonts/IBMPlexSans-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>}
 <style is:inline set:html={pageCss}></style>
 <script is:inline set:html={gridScript}></script>
 </head>

@@ -10,6 +10,33 @@ const PROXY = {
   },
 };
 
+const NOTION = {
+  name: "notion-dark",
+  type: "dark",
+  colors: { "editor.background": "#202020", "editor.foreground": "#f0efed" },
+  tokenColors: [
+    {
+      scope: ["keyword", "storage", "storage.type", "storage.modifier"],
+      settings: { foreground: "#66a2cc" },
+    },
+    {
+      scope: [
+        "entity.name.function",
+        "support.function",
+        "entity.name.type",
+        "entity.name.class",
+        "support.class",
+        "storage.type.java",
+      ],
+      settings: { foreground: "#ecec93" },
+    },
+    { scope: ["keyword.operator"], settings: { foreground: "#f5b83d" } },
+    { scope: ["constant.numeric"], settings: { foreground: "#d1949e" } },
+    { scope: ["string"], settings: { foreground: "#bde052" } },
+    { scope: ["comment"], settings: { foreground: "#998066" } },
+  ],
+};
+
 export default defineConfig({
   compressHTML: false,
   build: { inlineStylesheets: "always" },
@@ -18,7 +45,10 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [rehypeTui],
     smartypants: false,
-    shikiConfig: { themes: { dark: "vitesse-dark" }, defaultColor: false },
+    shikiConfig: {
+      themes: { dark: NOTION },
+      defaultColor: false,
+    },
   },
   devToolbar: { enabled: false },
   integrations: [
