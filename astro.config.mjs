@@ -18,7 +18,7 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [rehypeTui],
     smartypants: false,
-    syntaxHighlight: false,
+    shikiConfig: { themes: { dark: "vitesse-dark" }, defaultColor: false },
   },
   devToolbar: { enabled: false },
   integrations: [

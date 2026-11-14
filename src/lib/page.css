@@ -456,6 +456,10 @@ footer .rule {
 .prose pre code {
   font-size: inherit;
 }
+.astro-code,
+.astro-code span {
+  color: var(--shiki-dark);
+}
 .prose .search,
 .prose .posts time {
   font: var(--font) / var(--row) var(--mono);
