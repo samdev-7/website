@@ -27,6 +27,8 @@ it's so rare to have the opportunity and freedom to experiment and see where ran
 
 ---
 
+one such program...
+
 we ran the world's largest hardware hackathon for teens, and somehow pulled it off in china? [fallout](https://fallout.hackclub.com) began as a "what if there was a hardware hackathon in shenzhen..." then "wait, why don't we just do this??." we did! it was awesome, and then 2 weeks before the event...
 
 "oh shoot we have twice the amount of people coming than planned?"
