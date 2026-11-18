@@ -1,4 +1,36 @@
 const SCREEN_KEY = "ascii-screen";
+for (const box of document.querySelectorAll(".code")) {
+  const pre = box.firstElementChild;
+  const update = () => {
+    box.style.setProperty("--fade-l", pre.scrollLeft > 1 ? 1 : 0);
+    box.style.setProperty(
+      "--fade-r",
+      pre.scrollLeft + pre.clientWidth < pre.scrollWidth - 1 ? 1 : 0
+    );
+  };
+  pre.addEventListener("scroll", update, { passive: true });
+  new ResizeObserver(update).observe(pre);
+  const copy = box.querySelector(".copy");
+  copy.addEventListener("click", async () => {
+    const text = pre.textContent.replace(/\n$/, "");
+    const ok = await navigator.clipboard.writeText(text).then(
+      () => true,
+      () => {
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        const sel = getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        const done = document.execCommand("copy");
+        sel.removeAllRanges();
+        return done;
+      }
+    );
+    if (!ok) return;
+    copy.dataset.copied = "";
+    setTimeout(() => delete copy.dataset.copied, 1500);
+  });
+}
 const PROSE = !!document.querySelector(".prose");
 const CROSS_DOC = "onpageswap" in window;
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -248,6 +248,80 @@ code {
   font: inherit;
   color: #fff;
 }
+.code {
+  --code-bg: #000;
+  --fade-l: 0;
+  --fade-r: 0;
+  position: relative;
+  margin: var(--row) 0 0;
+}
+.code::before,
+.code::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(6 * var(--cell));
+  background: linear-gradient(90deg, transparent, var(--code-bg));
+  opacity: var(--fade-r);
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+.code::before {
+  left: 0;
+  transform: scaleX(-1);
+  opacity: var(--fade-l);
+}
+.code::after {
+  right: 0;
+}
+.code pre {
+  margin: 0;
+}
+.copy {
+  position: absolute;
+  top: calc(0.5 * var(--row));
+  right: calc(0.5 * var(--row));
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: calc(2 * var(--row));
+  height: calc(2 * var(--row));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--code-bg);
+  color: var(--dim);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.code:hover .copy,
+.copy:focus-visible,
+.copy[data-copied] {
+  opacity: 1;
+}
+.copy:hover,
+.copy:focus-visible,
+.copy[data-copied] {
+  color: #fff;
+}
+.copy:focus-visible {
+  outline: 1px solid var(--red);
+  outline-offset: 2px;
+}
+.copy svg:last-child,
+.copy[data-copied] svg:first-child {
+  display: none;
+}
+.copy[data-copied] svg:last-child {
+  display: block;
+}
+@media (hover: none) {
+  .copy {
+    opacity: 1;
+  }
+}
 pre {
   margin: var(--row) 0 0;
   font: inherit;
@@ -442,8 +516,11 @@ main:has(.prose) > h1 {
 }
 .prose p,
 .prose ul,
-.prose pre {
+.prose .code {
   margin: 16px 0 0;
+}
+.prose .code {
+  --code-bg: #171717;
 }
 .prose h2,
 .prose h3,

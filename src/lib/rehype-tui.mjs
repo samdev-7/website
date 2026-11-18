@@ -99,6 +99,26 @@ const callout = (q) => {
   ]);
 };
 
+const icon = (d) =>
+  node(
+    "svg",
+    {
+      viewBox: "0 0 16 16",
+      width: 16,
+      height: 16,
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: 1.5,
+      ariaHidden: "true",
+    },
+    [node("path", { d })]
+  );
+const copyButton = () =>
+  node("button", { className: ["copy"], type: "button", ariaLabel: "copy code" }, [
+    icon("M5.5 5.5h8v8h-8z M10.5 5.5v-3h-8v8h3"),
+    icon("M3 8.5l3.5 3.5 6.5-7"),
+  ]);
+
 const lone = (n, tag) => {
   const kids = only(n);
   return kids.length === 1 && kids[0].tagName === tag ? kids[0] : null;
@@ -142,6 +162,11 @@ export default function rehypeTui() {
         ),
           k++);
       if (c.tagName === "li") c.children.unshift(el("span", "dash", "- "));
+      if (c.tagName === "pre" && !parent.properties?.className?.includes("code"))
+        c = parent.children[k] = node("div", { className: ["code"] }, [
+          c,
+          copyButton(),
+        ]);
       if (c.tagName === "hr")
         parent.children[k] = node("div", { className: ["rule", "dashes", "break"], ariaHidden: "true" });
       if (c.tagName === "a" && !/^[/#]/.test(c.properties.href ?? "/"))
