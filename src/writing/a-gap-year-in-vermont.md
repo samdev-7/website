@@ -51,7 +51,7 @@ if you're considering a gap year:
 - living alone is scary, but you get so much freedom. you'll learn a lot and there's friends to support you!
 - you should [apply](https://manifesto.hackclub.com) even if you think you're not good enough. no one is good at everything and it never hurt to give it a shot
 
-it's impossible to sum up everything i've learned, but here's some key points... **everyone will do things differently, so you should probably think about it** i've found these to be pretty true in the stuff i do:
+it's impossible to sum up everything i've learned, but here's some key points... **everyone will do things differently, so you should probably think about it**. i've found these to be pretty true in the stuff i do:
 
 - build the program you personally would want to participate in
 - weighted projects aren't everything. build the program because it's what you want to see, not because it'll maximize WPs. oftentimes you'll get more WPs just because it's a great program.
