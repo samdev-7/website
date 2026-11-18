@@ -77,3 +77,7 @@ it's impossible to sum up everything i've learned, but here's some key points...
 - kill dead programs and events. if it's not worth it stop doing it
 - oftentimes it's faster to just do the work than to make a tool that speeds up doing the work. (this is a very easy trap for review and reviewer tooling)
 - sleep on it instead of working at 3 am
+
+![spontaneous trip to a fast food restaurant in NYC](/writing/a-gap-year-in-vermont/04.webp)
+
+spontaneous trip to a fast food restaurant in NYC
