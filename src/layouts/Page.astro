@@ -73,7 +73,10 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 </main>
 <footer>
   <div class="rule" aria-hidden="true">{RULE}</div>
-  <span><a href="/">~</a> / {section ? <><a href={`/${section}`}>{section}</a> / {slug}</> : title}</span>
+  <div class="footer-line">
+    <span><a href="/">~</a> / {section ? <><a href={`/${section}`}>{section}</a> / {slug}</> : title}</span>
+    <a href="/writing/rss.xml">rss</a>
+  </div>
 </footer>
 <script is:inline set:html={script}></script>
 </body>

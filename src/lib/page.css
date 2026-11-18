@@ -163,7 +163,7 @@ h2 {
   color: #fff;
 }
 .rule {
-  width: round(down, 100%, var(--cell));
+  width: round(down, calc(100% + 0.5px), var(--cell));
   color: var(--dim);
   white-space: pre;
   overflow: hidden;
@@ -371,6 +371,11 @@ footer {
 }
 footer .rule {
   margin-bottom: var(--row);
+}
+.footer-line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--cell);
 }
 
 main:has(.prose) {
