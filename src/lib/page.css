@@ -41,6 +41,7 @@ html.too-small .small-msg {
   white-space: pre-line;
   text-align: center;
 }
+html.too-small .logo,
 html.too-small nav,
 html.too-small main,
 html.too-small footer {
@@ -111,6 +112,25 @@ a:focus-visible {
 .logo:hover {
   font-weight: 400;
 }
+.logo-art {
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.logo-name {
+  --name-fs: calc(var(--art-rows) * var(--row) / 1.2667);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: var(--name-fs);
+  line-height: calc(var(--art-rows) * var(--row));
+  letter-spacing: calc((var(--art-cols) * var(--cell) - 7 * 0.6 * var(--name-fs)) / 7);
+  white-space: nowrap;
+  color: transparent;
+}
+.logo-name::selection {
+  color: transparent;
+}
 nav {
   display: inline-flex;
   background: var(--red);
@@ -163,7 +183,6 @@ h2 {
   color: #fff;
 }
 .rule {
-  width: round(down, calc(100% + 0.5px), var(--cell));
   color: var(--dim);
   white-space: pre;
   overflow: hidden;
@@ -172,6 +191,17 @@ h2 {
 }
 h2 {
   margin-top: calc(2 * var(--row));
+}
+.dashes,
+.box-fill {
+  height: var(--row);
+  background: linear-gradient(
+      90deg,
+      transparent 26%,
+      var(--dim) 26% 74%,
+      transparent 74%
+    )
+    0 56% / var(--cell) 1.25px round no-repeat;
 }
 .break {
   margin-top: var(--row);
@@ -273,7 +303,6 @@ main .caption {
 .box-fill {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
 }
 .box-body {
   position: relative;
@@ -474,14 +503,12 @@ main:has(.prose) > h1 {
 }
 .prose code {
   padding: 0.2em 0.4em;
-  border-radius: 4px;
   background: #1c1b19;
   color: rgb(130, 180, 220);
   font: 85% / normal var(--code-font);
 }
 .prose pre {
   padding: 18px 20px;
-  border-radius: 10px;
   background: #171717;
   font: 13.6px/20.4px var(--code-font);
   tab-size: 2;
@@ -496,21 +523,11 @@ main:has(.prose) > h1 {
 .astro-code span {
   color: var(--shiki-dark);
 }
-.prose .rule {
-  font:
-    var(--font)/var(--row) "IBM Plex Mono",
-    ui-monospace,
-    Menlo,
-    Consolas,
-    monospace;
-  letter-spacing: var(--spacing);
-}
 .prose .media {
   --mw: min(100cqw, calc(480px / var(--ar)));
   height: calc(var(--mw) * var(--ar));
   max-width: 100%;
   margin-inline: auto;
-  border-radius: 2px;
 }
 .prose .media-link {
   margin-inline: auto;
@@ -539,7 +556,6 @@ main:has(.prose) > h1 {
   column-gap: 8px;
   margin-top: 16px;
   padding: 12px;
-  border-radius: 10px;
   background: #1f1f1e;
 }
 .prose .box[aria-label="info"] {
