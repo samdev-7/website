@@ -4,4 +4,5 @@ dist/
 .vercel/
 ignored/
 
-.DS_Storesrc/writing/.obsidian/
+.DS_Store
+src/writing/.obsidian/
