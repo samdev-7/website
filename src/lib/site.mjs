@@ -18,9 +18,12 @@ export const heroMenuHtml = () =>
     '<span class="sep" aria-hidden="true"><span>|</span></span>'
   );
 
+export const RULE = "-".repeat(160);
+
 export const SITE = "https://samliu.dev";
 export const DATA_URL =
-  import.meta.env.PUBLIC_DATA_URL ?? "https://now.samliu.dev";
+  import.meta.env.PUBLIC_DATA_URL ??
+  (import.meta.env.DEV ? "" : "https://now.samliu.dev");
 
 export const person = (description) => ({
   "@type": "Person",

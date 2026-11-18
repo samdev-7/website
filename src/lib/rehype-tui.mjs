@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import { RULE } from "./site.mjs";
 
 const text = (n) =>
   n.type === "text" ? n.value : (n.children ?? []).map(text).join("");
@@ -81,7 +82,7 @@ const edge = (label) =>
     ...(label
       ? [node("span", { className: ["box-label"] }, [str(label)])]
       : []),
-    node("span", { className: ["box-fill"] }, [str("-".repeat(72))]),
+    node("span", { className: ["box-fill"] }, [str(RULE)]),
     str("+"),
   ]);
 
@@ -143,7 +144,7 @@ export default function rehypeTui() {
           k++);
       if (c.tagName === "li") c.children.unshift(el("span", "dash", "- "));
       if (c.tagName === "hr")
-        parent.children[k] = el("div", "rule break", "-".repeat(72));
+        parent.children[k] = el("div", "rule break", RULE);
       if (c.tagName === "a" && !/^[/#]/.test(c.properties.href ?? "/"))
         Object.assign(c.properties, { target: "_blank", rel: "noopener" });
       walk(c);

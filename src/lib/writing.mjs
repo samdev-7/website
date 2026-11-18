@@ -29,7 +29,7 @@ export const formatDate = (d) =>
       month: "short",
       year: "numeric",
     })
-    .replace(/ (\w+) /, " $1, ")
+    .replace(/ (\w{3})\w* /, " $1, ")
     .toLowerCase();
 
 export const INTRO =

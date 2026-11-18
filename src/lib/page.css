@@ -163,6 +163,7 @@ h2 {
   color: #fff;
 }
 .rule {
+  width: round(down, 100%, var(--cell));
   color: var(--dim);
   white-space: pre;
   overflow: hidden;
@@ -348,6 +349,9 @@ main .caption {
   padding-left: calc(var(--date) * var(--cell));
   text-indent: calc(-1 * var(--date) * var(--cell));
 }
+.posts li + li {
+  margin-top: var(--row);
+}
 .posts time {
   white-space: pre;
 }
@@ -487,11 +491,24 @@ main:has(.prose) > h1 {
 .astro-code span {
   color: var(--shiki-dark);
 }
+.prose .rule {
+  font:
+    var(--font)/var(--row) "IBM Plex Mono",
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  letter-spacing: var(--spacing);
+}
 .prose .media {
   --mw: min(100cqw, calc(480px / var(--ar)));
   height: calc(var(--mw) * var(--ar));
   max-width: 100%;
+  margin-inline: auto;
   border-radius: 2px;
+}
+.prose .media-link {
+  margin-inline: auto;
 }
 .prose .media-link .media {
   margin-top: 0;
@@ -505,7 +522,8 @@ main:has(.prose) > h1 {
 }
 .prose .caption {
   margin: 0;
-  padding: 6px 0 6px 2px;
+  padding: 6px 0;
+  text-align: center;
   font-size: 14px;
   line-height: 19.6px;
   color: rgb(173, 169, 163);
