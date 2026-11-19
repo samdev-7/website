@@ -130,6 +130,11 @@
     },
     {
       "src": "^/(.*)$",
+      "dest": "/$1/index.html",
+      "check": true
+    },
+    {
+      "src": "^/(.*)$",
       "dest": "/$1.html",
       "check": true
     },
