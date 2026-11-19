@@ -4,76 +4,65 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
+  "routes": [
     {
-      "source": "/notes",
-      "destination": "/writing",
-      "permanent": false
+      "src": "^/notes/?$",
+      "headers": {
+        "Location": "/writing"
+      },
+      "status": 307
     },
     {
-      "source": "/notes/rss.xml",
-      "destination": "/writing/rss.xml",
-      "permanent": false
+      "src": "^/notes/rss\\.xml$",
+      "headers": {
+        "Location": "/writing/rss.xml"
+      },
+      "status": 307
     },
     {
-      "source": "/notes/:slug",
-      "destination": "/writing/:slug",
-      "permanent": false
+      "src": "^/notes/([^/]+)$",
+      "headers": {
+        "Location": "/writing/$1"
+      },
+      "status": 307
     },
     {
-      "source": "/blog",
-      "destination": "/writing",
-      "permanent": true
+      "src": "^/blog/?$",
+      "headers": {
+        "Location": "/writing"
+      },
+      "status": 308
     },
     {
-      "source": "/blog/:slug",
-      "destination": "/writing/:slug",
-      "permanent": true
-    }
-  ],
-  "headers": [
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Link",
-          "value": "</index.md>; rel=\"describedby\"; type=\"text/markdown\", </writing/rss.xml>; rel=\"alternate\"; type=\"application/rss+xml\""
-        }
-      ]
+      "src": "^/blog/([^/]+)$",
+      "headers": {
+        "Location": "/writing/$1"
+      },
+      "status": 308
     },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Vary",
-          "value": "Accept"
-        }
-      ]
+      "src": "^/(?:(.*)/)?index\\.html$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
     },
     {
-      "source": "/_astro/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "src": "^/(.*)\\.html$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
     },
     {
-      "source": "/fonts/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
+      "src": "^/(.+)/$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
+    },
     {
-      "source": "/",
+      "src": "^/$",
       "has": [
         {
           "type": "header",
@@ -81,10 +70,11 @@
           "value": ".*text/markdown.*"
         }
       ],
-      "destination": "/index.md"
+      "dest": "/index.md",
+      "check": true
     },
     {
-      "source": "/writing",
+      "src": "^/writing/([^/.]+)$",
       "has": [
         {
           "type": "header",
@@ -92,10 +82,11 @@
           "value": ".*text/markdown.*"
         }
       ],
-      "destination": "/writing.md"
+      "dest": "/writing/$1.md",
+      "check": true
     },
     {
-      "source": "/writing/:slug",
+      "src": "^/([^/.]+)$",
       "has": [
         {
           "type": "header",
@@ -103,18 +94,49 @@
           "value": ".*text/markdown.*"
         }
       ],
-      "destination": "/writing/:slug.md"
+      "dest": "/$1.md",
+      "check": true
     },
     {
-      "source": "/:page",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/:page.md"
+      "src": "^/$",
+      "headers": {
+        "Link": "</index.md>; rel=\"describedby\"; type=\"text/markdown\", </writing/rss.xml>; rel=\"alternate\"; type=\"application/rss+xml\""
+      },
+      "continue": true
+    },
+    {
+      "src": "^/.*$",
+      "headers": {
+        "Vary": "Accept"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/_astro/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/fonts/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "/$1.html",
+      "check": true
+    },
+    {
+      "src": "^/.*$",
+      "status": 404,
+      "dest": "/404.html"
     }
   ]
 }
