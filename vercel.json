@@ -7,7 +7,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/notes", "destination": "/writing", "permanent": false },
+    {
+      "source": "/notes",
+      "destination": "/writing",
+      "permanent": false
+    },
     {
       "source": "/notes/rss.xml",
       "destination": "/writing/rss.xml",
@@ -18,7 +22,11 @@
       "destination": "/writing/:slug",
       "permanent": false
     },
-    { "source": "/blog", "destination": "/writing", "permanent": true },
+    {
+      "source": "/blog",
+      "destination": "/writing",
+      "permanent": true
+    },
     {
       "source": "/blog/:slug",
       "destination": "/writing/:slug",
@@ -26,6 +34,24 @@
     }
   ],
   "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</index.md>; rel=\"describedby\"; type=\"text/markdown\", </writing/rss.xml>; rel=\"alternate\"; type=\"application/rss+xml\""
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
     {
       "source": "/_astro/(.*)",
       "headers": [
@@ -37,7 +63,58 @@
     },
     {
       "source": "/fonts/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/index.md"
+    },
+    {
+      "source": "/writing",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/writing.md"
+    },
+    {
+      "source": "/writing/:slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/writing/:slug.md"
+    },
+    {
+      "source": "/:page",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "destination": "/:page.md"
     }
   ]
 }
