@@ -63,6 +63,34 @@
     },
     {
       "src": "^/$",
+      "headers": {
+        "Link": "</index.md>; rel=\"describedby\"; type=\"text/markdown\", </writing/rss.xml>; rel=\"alternate\"; type=\"application/rss+xml\""
+      },
+      "continue": true
+    },
+    {
+      "src": "^/.*$",
+      "headers": {
+        "Vary": "Accept"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/_astro/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/fonts/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/$",
       "has": [
         {
           "type": "header",
@@ -96,34 +124,6 @@
       ],
       "dest": "/$1.md",
       "check": true
-    },
-    {
-      "src": "^/$",
-      "headers": {
-        "Link": "</index.md>; rel=\"describedby\"; type=\"text/markdown\", </writing/rss.xml>; rel=\"alternate\"; type=\"application/rss+xml\""
-      },
-      "continue": true
-    },
-    {
-      "src": "^/.*$",
-      "headers": {
-        "Vary": "Accept"
-      },
-      "continue": true
-    },
-    {
-      "src": "^/_astro/.*$",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      },
-      "continue": true
-    },
-    {
-      "src": "^/fonts/.*$",
-      "headers": {
-        "Cache-Control": "public, max-age=604800"
-      },
-      "continue": true
     },
     {
       "handle": "filesystem"
