@@ -5,4 +5,4 @@ dist/
 ignored/
 
 .DS_Store
-src/writing/.obsidian/
+.obsidian/
