@@ -15,7 +15,7 @@ thumbnailAlt: a 3d view of the FRC field in AdvantageScope
 
 our FRC team recently bought some swerve modules — [MAXSwerve](https://www.revrobotics.com/rev-21-3005/), to be exact. after putting them together, i decided to dive into the code behind them. here's what i learned over a weekend (plus a few more nights). i've simplified what i originally shared with my team here.
 
-### what’s this FRC thing?
+## what’s this FRC thing?
 
 i should probably explain this before we start. [FIRST robotics competition](https://www.firstinspires.org/robotics/frc) brings together teams of high school students to build large-scale robots and compete in challenges (and no, it's not like battle bots). working alongside adult mentors, we design, build, program, and test a brand new robot each year to tackle FIRST's annual challenge. for 2025, we know the theme revolves around the ocean, but we won't get the full details until january 4, when the season kicks off. here's what last year's game looked like:
 

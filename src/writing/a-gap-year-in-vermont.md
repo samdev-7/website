@@ -13,7 +13,7 @@ i spent a year in vermont at [hack club](https://hackclub.com) after high school
 
 local concert & community gathering
 
-### hack club's hard to describe...
+## hack club's hard to describe...
 
 on paper, hack club is a global nonprofit that supports teenagers to ship technical projects. we run online programs that reward teens for shipping projects and run life-changing events like hackathons where people form their closest friendships and have formative experiences.
 
@@ -43,7 +43,7 @@ if you're curious about the participant's perspective (way less stressful...) yo
 
 group photo at the end of fallout!
 
-### some advice to future gap-years
+## some advice to future gap-years
 
 consume with salt, as usual. in no particular order
 
