@@ -11,7 +11,9 @@ const DESCRIPTION = read("src/lib/site.mjs")
   .match(/DESCRIPTION = ["']([^"']+)["']/)[1];
 
 const W = 1200,
-  MARGIN = 90;
+  MARGIN = 90,
+  OG_W = 1200,
+  OG_H = 630;
 const lines = [...TITLE, "", DESCRIPTION];
 const cols = Math.max(...lines.map((l) => l.length)),
   rows = lines.length;
@@ -66,19 +68,20 @@ document.fonts.load('10px Plex').then(() => {
     c.fillStyle = colour;
     c.fillText(g, ${x0} + (k + 0.5) * ${cw}, ${y0} + r * h + base);
   }
-  // Crop to the ink, MARGIN (at 2x) all round, less at the top: the name's
+  // Pad the ink to a 1.91:1 card, less at the top: the name's
   // first row is only the i's dot, so the name looks centred with its top higher.
-  const cv = c.canvas, d = c.getImageData(0, 0, cv.width, cv.height).data, M = 2 * ${MARGIN}, T = Math.round(0.8 * M);
+  const cv = c.canvas, d = c.getImageData(0, 0, cv.width, cv.height).data;
   let x1 = cv.width, y1 = cv.height, x2 = 0, y2 = 0;
   for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) {
     const i = 4 * (y * cv.width + x);
     if (d[i] + d[i + 1] + d[i + 2] > 24) { x1 = Math.min(x1, x); x2 = Math.max(x2, x); y1 = Math.min(y1, y); y2 = Math.max(y2, y); }
   }
   const out = document.createElement('canvas');
-  out.width = x2 - x1 + 1 + 2 * M; out.height = y2 - y1 + 1 + T + M;
+  out.width = 2 * ${OG_W}; out.height = 2 * ${OG_H};
+  const iw = x2 - x1 + 1, ih = y2 - y1 + 1;
   const o = out.getContext('2d');
   o.fillStyle = '#000'; o.fillRect(0, 0, out.width, out.height);
-  o.drawImage(cv, x1, y1, x2 - x1 + 1, y2 - y1 + 1, M, T, x2 - x1 + 1, y2 - y1 + 1);
+  o.drawImage(cv, x1, y1, iw, ih, Math.round((out.width - iw) / 2), Math.round((out.height - ih) * 0.8 / 1.8), iw, ih);
   window.PNG = out.toDataURL('image/png');
   document.title = 'done';
 });
