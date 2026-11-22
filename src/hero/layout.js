@@ -1,4 +1,9 @@
 const ASPECT = 0.6;
+function viewport() {
+  const v = window.visualViewport;
+  const s = v && Math.abs(innerWidth - v.width) < 2 ? v.scale : 1;
+  return [innerWidth * s, innerHeight * s];
+}
 const CHARS = Array.from({ length: 95 }, (_, i) =>
   String.fromCharCode(32 + i)
 ).join("");

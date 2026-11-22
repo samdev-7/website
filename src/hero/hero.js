@@ -549,19 +549,20 @@ let COLS = 0,
 function process() {
   const t0 = performance.now();
   window.PT = window.PT || [];
+  const [vw, vh] = viewport();
   const full = Math.min(
     devicePixelRatio || 1,
-    Math.sqrt(MAX_CANVAS_PX / (innerWidth * innerHeight))
+    Math.sqrt(MAX_CANVAS_PX / (vw * vh))
   );
   const anim = !REDUCED && !!(scrubQueued || scrub.playing || intro);
   SCALE =
     anim && !GLR
-      ? Math.min(full, 1, Math.sqrt(ANIM_MAX_PX / (innerWidth * innerHeight)))
+      ? Math.min(full, 1, Math.sqrt(ANIM_MAX_PX / (vw * vh)))
       : full;
   LOWRES = SCALE < full;
   const dpr = SCALE,
-    W = Math.round(innerWidth * dpr),
-    H = Math.round(innerHeight * dpr);
+    W = Math.round(vw * dpr),
+    H = Math.round(vh * dpr);
   if (!W || !H) {
     pending = true;
     kick();

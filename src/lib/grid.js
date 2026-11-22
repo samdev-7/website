@@ -21,8 +21,9 @@ function measureFont() {
 }
 function grid() {
   const dpr = devicePixelRatio || 1,
-    W = Math.round(innerWidth * dpr),
-    H = Math.round(innerHeight * dpr);
+    [vw, vh] = viewport(),
+    W = Math.round(vw * dpr),
+    H = Math.round(vh * dpr);
   const c0 = Math.max(H / FR, W / (FC * ASPECT), (CELL * dpr) / ASPECT);
   let rows = Math.min(FR, Math.max(1, Math.round(H / c0))),
     ch = H / rows;
