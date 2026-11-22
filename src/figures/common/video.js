@@ -4,13 +4,20 @@ for (const pair of document.querySelectorAll(".clips[data-sync]")) {
   each((v) => (v.controls = false));
   lead.addEventListener("play", () => each((v) => v.play().catch(() => {})));
   lead.addEventListener("pause", () => each((v) => v.pause()));
-  lead.addEventListener("seeked", () => each((v) => (v.currentTime = lead.currentTime)));
-  lead.addEventListener("timeupdate", () =>
-    each((v) => {
-      if (Math.abs(v.currentTime - lead.currentTime) > 0.15)
-        v.currentTime = lead.currentTime;
-    })
-  );
+  const behind = (v) => {
+    const d = lead.currentTime - v.currentTime;
+    const n = lead.duration;
+    return n ? ((d + n * 1.5) % n) - n / 2 : d;
+  };
+  const align = (v) => {
+    const d = behind(v);
+    if (Math.abs(d) > 1) {
+      v.currentTime = lead.currentTime;
+      v.playbackRate = 1;
+    } else v.playbackRate = 1 + Math.max(-0.1, Math.min(0.1, d));
+  };
+  lead.addEventListener("seeked", () => each(align));
+  lead.addEventListener("timeupdate", () => each(align));
 }
 
 const near = new IntersectionObserver(

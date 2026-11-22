@@ -637,7 +637,7 @@ main:has(.prose) > h1 {
 .prose .caption + :not(h2, h3, h4) {
   margin-top: 16px;
 }
-.prose :is(.media, .media-link, .caption) + :is(h2, h3, h4) {
+.prose :is(.media, .media-link, .caption, .figure) + :is(h2, h3, h4) {
   padding-top: 24px;
 }
 .prose .caption {
@@ -1075,7 +1075,7 @@ img[data-live-src] {
   width: 96px;
   height: 8px;
 }
-.prose .figure-foot > * {
+.prose .figure .figure-foot > * {
   margin: 0;
   padding: 0;
   line-height: inherit;
