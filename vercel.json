@@ -140,6 +140,21 @@
     },
     {
       "src": "^/.*$",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/markdown.*"
+        }
+      ],
+      "headers": {
+        "Content-Type": "text/markdown; charset=utf-8"
+      },
+      "status": 404,
+      "dest": "/404.md"
+    },
+    {
+      "src": "^/.*$",
       "status": 404,
       "dest": "/404.html"
     }
