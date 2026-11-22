@@ -3,12 +3,11 @@ import { defineConfig } from "astro/config";
 import rehypeTui from "./src/lib/rehype-tui.mjs";
 import compress from "@playform/compress";
 
-const PROXY = {
-  "/ascii": {
-    target: process.env.DATA_PROXY || "https://now.samliu.dev",
-    changeOrigin: true,
-  },
+const DATA = {
+  target: process.env.DATA_PROXY || "https://now.samliu.dev",
+  changeOrigin: true,
 };
+const PROXY = { "/ascii": DATA, "/cam.json": DATA };
 
 const NOTION = {
   name: "notion-dark",

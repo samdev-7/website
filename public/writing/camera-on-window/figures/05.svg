@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 176" width="720" height="176">
+<line x1="150.0" y1="2" x2="150.0" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="150.0" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">0</text>
+<line x1="191.0" y1="2" x2="191.0" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="191.0" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">30 s</text>
+<line x1="232.1" y1="2" x2="232.1" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="232.1" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">1 min</text>
+<line x1="314.9" y1="2" x2="314.9" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="314.9" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">4 min</text>
+<line x1="474.4" y1="2" x2="474.4" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="474.4" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">1 h</text>
+<line x1="662.6" y1="2" x2="662.6" y2="128" stroke="rgba(255,255,255,0.094)" stroke-width="1"/>
+<text x="662.6" y="146" font-size="12" fill="#ada9a3" text-anchor="middle">1 day</text>
+<text x="0" y="146" font-size="12" fill="#ada9a3">time after capture</text>
+<text x="0" y="15" font-size="14" fill="#ada9a3">rpi zero 2w</text>
+<rect x="150.0" y="3.0" width="172.4" height="14" fill="#ff5555"/>
+<text x="0" y="47" font-size="14" fill="#ada9a3">rpi 5, raw</text>
+<rect x="259.1" y="35.0" width="219.2" height="14" fill="#ff5555"/>
+<text x="0" y="79" font-size="14" fill="#ada9a3">rpi 5, compressed</text>
+<rect x="286.3" y="67.0" width="376.4" height="14" fill="#ff5555"/>
+<text x="0" y="111" font-size="14" fill="#ada9a3">storage box</text>
+<rect x="314.9" y="99.0" width="391.1" height="14" fill="#ff5555"/>
+<path d="M681 116 L687 96 L693 96 L687 116 Z" fill="#000"/>
+<path d="M681 116 L687 96 M687 116 L693 96" stroke="#ff5555" stroke-width="1.5"/>
+</svg>

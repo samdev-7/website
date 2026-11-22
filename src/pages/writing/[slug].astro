@@ -1,13 +1,27 @@
 ---
 import Page from "../../layouts/Page.astro";
 import { posts, formatDate } from "../../lib/writing.mjs";
-import { SITE } from "../../lib/site.mjs";
+import { SITE, DATA_URL } from "../../lib/site.mjs";
 
 export function getStaticPaths() {
   return posts().map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
 }
 
+const SCRIPTS = import.meta.glob("../../figures/**/*.js", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
 const { post } = Astro.props;
+const used = new Set(
+  [...post.source.matchAll(/<Figure\s[^>]*?\btype="([^"]+)"/g)].map((m) => m[1])
+);
+const blocks = [...used]
+  .map((t) => SCRIPTS[`../../figures/${t.includes("/") ? t : `common/${t}`}.js`])
+  .filter(Boolean);
+const scripts = blocks.length
+  ? `{const DATA = ${JSON.stringify(DATA_URL)};\n${blocks.map((b) => `{${b}}`).join("\n")}}`
+  : "";
 const { Content } = post;
 const url = `${SITE}/writing/${post.slug}`;
 const jsonLd = {
@@ -21,6 +35,7 @@ const jsonLd = {
 };
 ---
 <Page title={post.title} section="writing" slug={post.slug} description={post.description ?? post.title} type="article" jsonLd={jsonLd}>
-  <p><time datetime={post.date.toISOString()}>{formatDate(post.date)}</time></p>
+  <p class="byline">{post.tags.length > 0 && `${post.tags.join(", ")} · `}<time datetime={post.date.toISOString()}>{formatDate(post.date)}</time></p>
   <Content />
+  {scripts && <script is:inline set:html={scripts}></script>}
 </Page>

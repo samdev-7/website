@@ -1,5 +1,5 @@
 const SCREEN_KEY = "ascii-screen";
-for (const box of document.querySelectorAll(".code")) {
+for (const box of document.querySelectorAll(".code, .fades")) {
   const pre = box.firstElementChild;
   const update = () => {
     box.style.setProperty("--fade-l", pre.scrollLeft > 1 ? 1 : 0);
@@ -11,7 +11,7 @@ for (const box of document.querySelectorAll(".code")) {
   pre.addEventListener("scroll", update, { passive: true });
   new ResizeObserver(update).observe(pre);
   const copy = box.querySelector(".copy");
-  copy.addEventListener("click", async () => {
+  copy?.addEventListener("click", async () => {
     const text = pre.textContent.replace(/\n$/, "");
     const ok = await navigator.clipboard.writeText(text).then(
       () => true,

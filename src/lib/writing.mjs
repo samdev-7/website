@@ -15,7 +15,7 @@ export const posts = () =>
       Content: mod.Content,
       source: SOURCES[file],
     }))
-    .filter((p) => !p.draft)
+    .filter((p) => import.meta.env.DEV || !p.draft)
     .sort((a, b) => b.date - a.date);
 
 export const listTitle = (p) =>
