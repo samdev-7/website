@@ -19,6 +19,7 @@ export const heroMenuHtml = () =>
   );
 
 export const SITE = "https://samliu.dev";
+export const CARD = { width: 2400, height: 1260 };
 export const DATA_URL =
   import.meta.env.PUBLIC_DATA_URL ??
   (import.meta.env.DEV ? "" : "https://now.samliu.dev");

@@ -4,6 +4,8 @@ tags:
   - engineering
 description: making of my arducam timelapse system
 date: 2026-11-21
+thumbnail: /writing/camera-on-window/og.webp
+thumbnailAlt: "the view out my window: autumn trees, a lamp post, a brick building and basketball courts"
 ---
 
 > [!info] this page is best viewed with hdr!

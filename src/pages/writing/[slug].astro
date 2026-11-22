@@ -1,6 +1,6 @@
 ---
 import Page from "../../layouts/Page.astro";
-import { posts, formatDate } from "../../lib/writing.mjs";
+import { posts, formatDate, readTime, ogDescription } from "../../lib/writing.mjs";
 import { SITE, DATA_URL } from "../../lib/site.mjs";
 
 export function getStaticPaths() {
@@ -24,18 +24,20 @@ const scripts = blocks.length
   : "";
 const { Content } = post;
 const url = `${SITE}/writing/${post.slug}`;
+const image = { url: `${url}.png`, alt: post.thumbnailAlt ?? post.title };
 const jsonLd = {
   "@type": "BlogPosting",
   headline: post.title,
   description: post.description,
   url,
+  image: image.url,
   datePublished: post.date.toISOString(),
   author: { "@id": `${SITE}/#person` },
   isPartOf: { "@type": "Blog", url: `${SITE}/writing` },
 };
 ---
-<Page title={post.title} section="writing" slug={post.slug} description={post.description ?? post.title} type="article" jsonLd={jsonLd}>
-  <p class="byline">{post.tags.length > 0 && `${post.tags.join(", ")} · `}<time datetime={post.date.toISOString()}>{formatDate(post.date)}</time></p>
+<Page title={post.title} section="writing" slug={post.slug} description={post.description ?? post.title} type="article" jsonLd={jsonLd} image={image} ogDescription={ogDescription(post)}>
+  <p class="byline">{post.tags.length > 0 && `${post.tags.join(", ")} · `}<time datetime={post.date.toISOString()}>{formatDate(post.date)}</time> · {readTime(post)}</p>
   <Content />
   {scripts && <script is:inline set:html={scripts}></script>}
 </Page>

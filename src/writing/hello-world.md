@@ -3,6 +3,8 @@ title: hello, world!
 tags: [meta]
 description: why does this exist?
 date: 2026-09-15
+thumbnail: /writing/hello-world/og.webp
+thumbnailAlt: sam liu, in ASCII art
 ---
 
 i don't know how you stumbled upon this page, but welcome!

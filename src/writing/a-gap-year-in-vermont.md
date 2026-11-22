@@ -3,6 +3,8 @@ title: a gap year in vermont
 tags: [life]
 description: spending a year in the usa with hack club
 date: 2026-11-17
+thumbnail: /writing/a-gap-year-in-vermont/og.webp
+thumbnailAlt: a band playing on a porch to a crowd in lawn chairs at a local concert
 ---
 
 i spent a year in vermont at [hack club](https://hackclub.com) after high school. not to be a broken record (many of my peers have said the same) it was one of the best, most unexpected, very much life changing (insert more adjectives) experience i've had.

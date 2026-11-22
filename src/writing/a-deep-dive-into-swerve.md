@@ -3,6 +3,8 @@ title: a deep dive into swerve
 tags: [archive]
 description: going down a rabbit hole with FIRST robotics programming
 date: 2024-12-31
+thumbnail: /writing/a-deep-dive-into-swerve/og.webp
+thumbnailAlt: a 3d view of the FRC field in AdvantageScope
 ---
 
 > [!info]

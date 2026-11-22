@@ -1,5 +1,5 @@
 ---
-import { SITE } from "../lib/site.mjs";
+import { SITE, CARD } from "../lib/site.mjs";
 interface Props {
   title: string;
   description: string;
@@ -7,6 +7,8 @@ interface Props {
   type?: string;
   jsonLd?: object;
   noindex?: boolean;
+  image?: { url: string; alt: string };
+  ogDescription?: string;
 }
 const {
   title,
@@ -15,6 +17,11 @@ const {
   type = "website",
   jsonLd,
   noindex,
+  ogDescription = description,
+  image = {
+    url: `${SITE}/og.png`,
+    alt: "sam liu, in ASCII art: welcome to my corner of the internet!",
+  },
 } = Astro.props;
 const url = SITE + (path === "/" ? "/" : path.replace(/\/$/, ""));
 const md = path === "/" ? "/index.md" : `${path.replace(/\/$/, "")}.md`;
@@ -37,12 +44,12 @@ const ld =
 <meta property="og:site_name" content="sam liu">
 <meta property="og:locale" content="en_CA">
 <meta property="og:title" content={title}>
-<meta property="og:description" content={description}>
+<meta property="og:description" content={ogDescription}>
 <meta property="og:url" content={url}>
-<meta property="og:image" content={`${SITE}/og.png`}>
-<meta property="og:image:width" content="2400">
-<meta property="og:image:height" content="1260">
-<meta property="og:image:alt" content="sam liu, in ASCII art: welcome to my corner of the internet!">
+<meta property="og:image" content={image.url}>
+<meta property="og:image:width" content={CARD.width}>
+<meta property="og:image:height" content={CARD.height}>
+<meta property="og:image:alt" content={image.alt}>
 <meta name="twitter:card" content="summary_large_image">
 {!noindex && <link rel="alternate" type="text/markdown" href={md} title="this page as Markdown">}
 {ld && <script type="application/ld+json" set:html={ld}></script>}

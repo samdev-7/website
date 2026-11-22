@@ -16,6 +16,8 @@ const {
   slug,
   jsonLd: propLd,
   type,
+  image,
+  ogDescription,
 } = Astro.props;
 const title = frontmatter.title ?? propTitle;
 const current = section ?? title;
@@ -52,7 +54,7 @@ const script = `const DATA_URL = ${JSON.stringify(DATA_URL)};\n` + pageJs;
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<Meta title={`${title} · sam liu`} description={description} path={path} type={type ?? (title === 'about' ? 'profile' : 'website')} jsonLd={notFound ? undefined : jsonLd} noindex={notFound} />
+<Meta title={`${title} · sam liu`} description={description} path={path} type={type ?? (title === 'about' ? 'profile' : 'website')} jsonLd={notFound ? undefined : jsonLd} noindex={notFound} image={image} ogDescription={ogDescription} />
 <script is:inline>document.documentElement.classList.add('wait'); setTimeout(() => document.documentElement.classList.remove('wait'), 2000);</script>
 {current === 'writing' && <link rel="alternate" type="application/rss+xml" title="sam liu's writing" href="/writing/rss.xml">}
 <link rel="preload" href="/fonts/IBMPlexMono-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>

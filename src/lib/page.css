@@ -464,7 +464,7 @@ main .caption {
 .posts li + li {
   margin-top: var(--row);
 }
-.posts time {
+.posts .when {
   white-space: pre;
 }
 .posts a {
@@ -1134,6 +1134,13 @@ img[data-live-src] {
   }
   .sides .r {
     grid-column: 2;
+  }
+  .posts li {
+    padding-left: 0;
+    text-indent: 0;
+  }
+  .posts .when {
+    display: block;
   }
 }
 @view-transition {

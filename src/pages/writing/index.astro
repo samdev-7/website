@@ -1,8 +1,8 @@
 ---
 import Page from "../../layouts/Page.astro";
-import { posts, formatDate, INTRO, listTitle } from "../../lib/writing.mjs";
+import { posts, formatDate, dateline, INTRO, listTitle } from "../../lib/writing.mjs";
 
-const list = posts().map((p) => ({ ...p, when: formatDate(p.date) }));
+const list = posts().map((p) => ({ ...p, day: formatDate(p.date), when: dateline(p) }));
 const w = Math.max(0, ...list.map((p) => p.when.length)) + 2;
 ---
 <Page title="writing" description={INTRO}>
@@ -10,7 +10,7 @@ const w = Math.max(0, ...list.map((p) => p.when.length)) + 2;
   {list.length === 0 ? <p>nothing here yet</p> : <>
     <label class="search" hidden><span class="prompt">search: </span><input type="search" id="post-search" placeholder="____________________" aria-keyshortcuts="/" autocomplete="off" spellcheck="false"></label>
     <ul class="posts" id="post-list" style={`--date: ${w}`}>
-      {list.map(p => <li data-search={`${p.when} ${p.title} ${p.tags.join(" ")}`.toLowerCase()}><time datetime={p.date.toISOString()}>{p.when.padEnd(w)}</time><a href={`/writing/${p.slug}`}>{listTitle(p)}</a></li>)}
+      {list.map(p => <li data-search={`${p.when} ${p.title} ${p.tags.join(" ")}`.toLowerCase()}><span class="when"><time datetime={p.date.toISOString()}>{p.day}</time>{p.when.padEnd(w).slice(p.day.length)}</span><a href={`/writing/${p.slug}`}>{listTitle(p)}</a></li>)}
     </ul>
     <p id="post-empty" aria-live="polite"></p>
   </>}
